@@ -4,12 +4,14 @@ public class Meal {
     private String mealName;
     private String imgUrl;
     private String idMeal;
-    private String instructions;
+    private int type;
 
-    public Meal(String mealName, String imgUrl, String idMeal) {
+
+    public Meal(String mealName, String imgUrl, String idMeal , int type) {
         this.mealName = mealName;
         this.imgUrl = imgUrl;
         this.idMeal = idMeal;
+        this.type = type;
     }
 
 
@@ -23,5 +25,13 @@ public class Meal {
 
     public String getIdMeal() {
         return idMeal;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

@@ -14,7 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.bluetooth.load_json_images_picasso.adapters.HorizontalMealAdapter;
+import com.bluetooth.load_json_images_picasso.adapters.MealAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,20 +22,24 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements HorizontalMealAdapter.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements MealAdapter.OnItemClickListener {
 
     public static final String EXTRA_RECIPE_URL = "imageUrl";
     public static final String EXTRA_RECIPE_NAME = "recipeName";
     public static final String EXTRA_RECIPE_ID = "recipeID";
+
+    //Distinguish between the two TypeViews
+    private final static int HORIZONTAL_VIEW_TYPE = 1;
+    private final static int VERTICAL_VIEW_TYPE = 2;
 
     private static final String TAG = "MainActivity";
     private RecyclerView mRecyclerView;
     private RecyclerView mRecyclerView_2;
     private RecyclerView mRecyclerView_3;
 
-    private HorizontalMealAdapter mFirstHorizontalMealAdapter;
-    private HorizontalMealAdapter mSecondHorizontalMealAdapter;
-    private HorizontalMealAdapter mThirdHorizontalMealAdapter;
+    private MealAdapter mFirstMealAdapter;
+    private MealAdapter mSecondMealAdapter;
+    private MealAdapter mThirdMealAdapter;
 
     private ArrayList<Meal> mFirstMealsList;
     private ArrayList<Meal> mSecondMealsList;
@@ -53,33 +57,33 @@ public class MainActivity extends AppCompatActivity implements HorizontalMealAda
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         mFirstMealsList = new ArrayList<>();
-        mFirstHorizontalMealAdapter = new HorizontalMealAdapter(MainActivity.this, mFirstMealsList);
+        mFirstMealAdapter = new MealAdapter(MainActivity.this, mFirstMealsList);
 
         //Second Recyclerview containing Chinese Recipes
         mRecyclerView_2 = findViewById(R.id.recycler_view_2);
         mRecyclerView_2.setHasFixedSize(true);
         mRecyclerView_2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         mSecondMealsList = new ArrayList<>();
-        mSecondHorizontalMealAdapter = new HorizontalMealAdapter(MainActivity.this, mSecondMealsList);
+        mSecondMealAdapter = new MealAdapter(MainActivity.this, mSecondMealsList);
 
         //Third Recyclerview containing German Recipes
         mRecyclerView_3 = findViewById(R.id.recycler_view_3);
         mRecyclerView_3.setHasFixedSize(true);
         mRecyclerView_3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         mThirdMealsList = new ArrayList<>();
-        mThirdHorizontalMealAdapter = new HorizontalMealAdapter(MainActivity.this, mThirdMealsList);
+        mThirdMealAdapter = new MealAdapter(MainActivity.this, mThirdMealsList);
 
 
         //Populate RecyclerView with recipes from the Database
         mRequestQueue = Volley.newRequestQueue(this);
-        parseJSONrecipesByCountry("Italian", mRecyclerView, mFirstMealsList, mFirstHorizontalMealAdapter);
-        parseJSONrecipesByCountry("Chinese", mRecyclerView_2, mSecondMealsList, mSecondHorizontalMealAdapter);
-        parseJSONrecipesByCountry("Spanish", mRecyclerView_3, mThirdMealsList, mThirdHorizontalMealAdapter);
+        parseJSONrecipesByCountry("Italian", mRecyclerView, mFirstMealsList, mFirstMealAdapter,HORIZONTAL_VIEW_TYPE);
+        parseJSONrecipesByCountry("Chinese", mRecyclerView_2, mSecondMealsList, mSecondMealAdapter, HORIZONTAL_VIEW_TYPE);
+        parseJSONrecipesByCountry("Spanish", mRecyclerView_3, mThirdMealsList, mThirdMealAdapter, VERTICAL_VIEW_TYPE);
 
 
     }
 
-    private void parseJSONrecipesByCountry(String country, final RecyclerView recView, final ArrayList<Meal> mealsList, final HorizontalMealAdapter horizontalMealAdapter){
+    private void parseJSONrecipesByCountry(String country, final RecyclerView recView, final ArrayList<Meal> mealsList, final MealAdapter mealAdapter, final int viewType){
         String Recipes_mealDB = "https://www.themealdb.com/api/json/v1/1/filter.php?a=" + country;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Recipes_mealDB, null,
                 new Response.Listener<JSONObject>() {
@@ -96,13 +100,13 @@ public class MainActivity extends AppCompatActivity implements HorizontalMealAda
                                 String imageUrl = meal.getString("strMealThumb");
                                 String idMeal = meal.getString("idMeal");
 
-                                mealsList.add(new Meal(mealName,imageUrl, idMeal));
+                                mealsList.add(new Meal(mealName,imageUrl, idMeal, viewType));
                                 Log.d(TAG, "onResponse: " + mealName);
                             }
 
 
-                            recView.setAdapter(horizontalMealAdapter);
-                            horizontalMealAdapter.setOnItemClickListener(MainActivity.this);
+                            recView.setAdapter(mealAdapter);
+                            mealAdapter.setOnItemClickListener(MainActivity.this);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
