@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name='Load_JSON_Images_Picasso'
