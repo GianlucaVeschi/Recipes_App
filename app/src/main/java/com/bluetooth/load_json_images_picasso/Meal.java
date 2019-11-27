@@ -4,7 +4,7 @@ public class Meal {
     private String mealName;
     private String imgUrl;
     private String idMeal;
-    private int type;
+    private int type;//comment
 
 
     public Meal(String mealName, String imgUrl, String idMeal , int type) {
