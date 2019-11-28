@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bluetooth.load_json_images_picasso.helpers.JsonHelper;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -21,9 +22,7 @@ import org.json.JSONObject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.bluetooth.load_json_images_picasso.MainActivity.EXTRA_RECIPE_URL;
-import static com.bluetooth.load_json_images_picasso.MainActivity.EXTRA_RECIPE_NAME;
-import static com.bluetooth.load_json_images_picasso.MainActivity.EXTRA_RECIPE_ID;
+import static com.bluetooth.load_json_images_picasso.MainActivity.EXTRA_MEAL;
 
 public class MealDetailsActivity extends AppCompatActivity {
 
@@ -34,6 +33,7 @@ public class MealDetailsActivity extends AppCompatActivity {
     ImageView imageView;
     TextView textViewName;
     TextView textViewInstructions;
+    JsonHelper jsonHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,11 +43,13 @@ public class MealDetailsActivity extends AppCompatActivity {
         imageView = findViewById(R.id.image_view_meal_detail);
         textViewName = findViewById(R.id.name_meal_detail);
         textViewInstructions = findViewById(R.id.instructions_recipe);
+        jsonHelper = new JsonHelper();
 
         Intent intent = getIntent();
-        String imageURL = intent.getStringExtra(EXTRA_RECIPE_URL);
-        String recipeName = intent.getStringExtra(EXTRA_RECIPE_NAME);
-        String idRecipe = intent.getStringExtra(EXTRA_RECIPE_ID);
+        Meal meal = intent.getParcelableExtra(EXTRA_MEAL);
+        String imageURL = meal.getImgUrl();
+        String recipeName = meal.getMealName();
+        String idRecipe = meal.getIdMeal();
         Log.d(TAG, "manage Intent receive name " + recipeName);
         Log.d(TAG, "manage Intent receive ID: " + idRecipe);
 
@@ -59,7 +61,8 @@ public class MealDetailsActivity extends AppCompatActivity {
         textViewName.setText(recipeName);
 
         mRequestQueue = Volley.newRequestQueue(this);
-        getRecipeDetails(idRecipe);
+        mRequestQueue.add(jsonHelper.filterRecipeByID(idRecipe,textViewInstructions));
+        //getRecipeDetails(idRecipe);
     }
 
     private void getRecipeDetails(String idRecipe) {

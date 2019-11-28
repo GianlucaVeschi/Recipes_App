@@ -15,6 +15,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bluetooth.load_json_images_picasso.adapters.MealAdapter;
+import com.bluetooth.load_json_images_picasso.helpers.JsonHelper;
+import com.bluetooth.load_json_images_picasso.helpers.NetworkManager;
+import com.bluetooth.load_json_images_picasso.helpers.VolleyRequestListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,9 +27,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MealAdapter.OnItemClickListener {
 
-    public static final String EXTRA_RECIPE_URL = "imageUrl";
-    public static final String EXTRA_RECIPE_NAME = "recipeName";
-    public static final String EXTRA_RECIPE_ID = "recipeID";
+    public static final String EXTRA_MEAL = "MealParcel";
 
     //Distinguish between the two TypeViews
     private final static int HORIZONTAL_VIEW_TYPE = 1;
@@ -45,12 +46,16 @@ public class MainActivity extends AppCompatActivity implements MealAdapter.OnIte
     private ArrayList<Meal> mSecondMealsList;
     private ArrayList<Meal> mThirdMealsList;
     private RequestQueue mRequestQueue;
+    private JsonHelper jsonHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Set the json helper
+        jsonHelper = new JsonHelper(MainActivity.this);
 
         //First Recycler View containing Italian Recipes
         mRecyclerView = findViewById(R.id.recycler_view);
@@ -76,63 +81,39 @@ public class MainActivity extends AppCompatActivity implements MealAdapter.OnIte
 
         //Populate RecyclerView with recipes from the Database
         mRequestQueue = Volley.newRequestQueue(this);
-        parseJSONrecipesByCountry("Italian", mRecyclerView, mFirstMealsList, mFirstMealAdapter,HORIZONTAL_VIEW_TYPE);
-        parseJSONrecipesByCountry("Chinese", mRecyclerView_2, mSecondMealsList, mSecondMealAdapter, HORIZONTAL_VIEW_TYPE);
-        parseJSONrecipesByCountry("Spanish", mRecyclerView_3, mThirdMealsList, mThirdMealAdapter, VERTICAL_VIEW_TYPE);
+        fillRecView(mFirstMealsList);
+        mRequestQueue.add(jsonHelper.parseJSONrecipesByCountry("Chinese", mRecyclerView_2, mSecondMealsList, mSecondMealAdapter, HORIZONTAL_VIEW_TYPE));
+        mRequestQueue.add(jsonHelper.parseJSONrecipesByCountry("Spanish", mRecyclerView_3, mThirdMealsList, mThirdMealAdapter, VERTICAL_VIEW_TYPE));
 
 
     }
 
-    private void parseJSONrecipesByCountry(String country, final RecyclerView recView, final ArrayList<Meal> mealsList, final MealAdapter mealAdapter, final int viewType){
-        String Recipes_mealDB = "https://www.themealdb.com/api/json/v1/1/filter.php?a=" + country;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, Recipes_mealDB, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d(TAG, "onResponse: about to try to get the JSON ");
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("meals");
-                            Log.d(TAG, "onResponse array length: " + jsonArray.length());
-                            for(int i = 0; i < jsonArray.length(); i++){
-                                JSONObject meal = jsonArray.getJSONObject(i);
+    public void fillRecView(final ArrayList<Meal> mealsList){
+        NetworkManager.getInstance().filterRecipeByCountry("Italian", new VolleyRequestListener<JSONObject>() {
+            @Override
+            public void getResult(JSONObject meal) {
+                try {
 
-                                String mealName = meal.getString("strMeal");
-                                String imageUrl = meal.getString("strMealThumb");
-                                String idMeal = meal.getString("idMeal");
+                    String mealName = meal.getString("strMeal");
+                    String imageUrl = meal.getString("strMealThumb");
+                    String idMeal = meal.getString("idMeal");
 
-                                mealsList.add(new Meal(mealName,imageUrl, idMeal, viewType));
-                                Log.d(TAG, "onResponse: " + mealName);
-                            }
+                    mealsList.add(new Meal(mealName,imageUrl, idMeal, HORIZONTAL_VIEW_TYPE));
+                    mRecyclerView.setAdapter(mFirstMealAdapter);
+                    mFirstMealAdapter.setOnItemClickListener(MainActivity.this);
 
-
-                            recView.setAdapter(mealAdapter);
-                            mealAdapter.setOnItemClickListener(MainActivity.this);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(TAG, "onErrorResponse: ");
-                        error.printStackTrace();
-                    }
-                });
-        mRequestQueue.add(request);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
-
     @Override
     public void onItemClick(int position, ArrayList<Meal> mealsList) {
         Intent detailIntent = new Intent(this, MealDetailsActivity.class);
         Meal clickedItem = mealsList.get(position);
-
-        detailIntent.putExtra(EXTRA_RECIPE_URL, clickedItem.getImgUrl());
-        detailIntent.putExtra(EXTRA_RECIPE_NAME, clickedItem.getMealName());
-        detailIntent.putExtra(EXTRA_RECIPE_ID, clickedItem.getIdMeal());
-        Log.d(TAG, "manage Intent send ID:" + clickedItem.getIdMeal());
-
+        //Send Parcel to the Details Activity
+        detailIntent.putExtra(EXTRA_MEAL,clickedItem);
         startActivity(detailIntent);
     }
 }
