@@ -1,4 +1,4 @@
-package com.bluetooth.load_json_images_picasso.helpers;
+package com.bluetooth.load_json_images_picasso.networking;
 
 import android.content.Context;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.bluetooth.load_json_images_picasso;
+package com.bluetooth.load_json_images_picasso.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -6,10 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.bluetooth.load_json_images_picasso.R;
 import com.bluetooth.load_json_images_picasso.adapters.MealAdapter;
-import com.bluetooth.load_json_images_picasso.helpers.VolleyNetworkManager;
-import com.bluetooth.load_json_images_picasso.helpers.VolleyRequestListener;
+import com.bluetooth.load_json_images_picasso.models.Meal;
+import com.bluetooth.load_json_images_picasso.networking.VolleyNetworkManager;
+import com.bluetooth.load_json_images_picasso.networking.VolleyRequestListener;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements MealAdapter.OnIte
     private ArrayList<Meal> mFirstMealsList;
     private ArrayList<Meal> mSecondMealsList;
     private ArrayList<Meal> mThirdMealsList;
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,20 +79,16 @@ public class MainActivity extends AppCompatActivity implements MealAdapter.OnIte
     private void displayRecipeByCountry(String country, final RecyclerView recyclerView, final ArrayList<Meal> mealsList, final MealAdapter mealAdapter , final int orientation){
         VolleyNetworkManager.getInstance().filterRecipeByCountry(country, new VolleyRequestListener<JSONObject>() {
             @Override
-            public void getResult(JSONObject meal) {
-                try {
+            public void getResult(JSONObject meal_json) {
 
-                    String mealName = meal.getString("strMeal");
-                    String imageUrl = meal.getString("strMealThumb");
-                    String idMeal = meal.getString("idMeal");
+                //Deserialize object
+                Meal meal = gson.fromJson(meal_json.toString(), Meal.class);
+                meal.setorientationType(orientation);
+                //Log.d(TAG, "getResult: GSON " + meal.toString());
 
-                    mealsList.add(new Meal(mealName,imageUrl, idMeal, orientation));
-                    recyclerView.setAdapter(mealAdapter);
-                    mealAdapter.setOnItemClickListener(MainActivity.this);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                mealsList.add(meal);
+                recyclerView.setAdapter(mealAdapter);
+                mealAdapter.setOnItemClickListener(MainActivity.this);
             }
         });
     }

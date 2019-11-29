@@ -2,7 +2,7 @@ package com.bluetooth.load_json_images_picasso;
 
 import android.app.Application;
 
-import com.bluetooth.load_json_images_picasso.helpers.VolleyNetworkManager;
+import com.bluetooth.load_json_images_picasso.networking.VolleyNetworkManager;
 
 public class MyApplication extends Application {
 

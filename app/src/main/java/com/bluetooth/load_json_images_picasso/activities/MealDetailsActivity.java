@@ -1,34 +1,41 @@
-package com.bluetooth.load_json_images_picasso;
+package com.bluetooth.load_json_images_picasso.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
-import com.bluetooth.load_json_images_picasso.helpers.VolleyNetworkManager;
-import com.bluetooth.load_json_images_picasso.helpers.VolleyRequestListener;
+import com.bluetooth.load_json_images_picasso.R;
+import com.bluetooth.load_json_images_picasso.models.Meal;
+import com.bluetooth.load_json_images_picasso.networking.VolleyNetworkManager;
+import com.bluetooth.load_json_images_picasso.networking.VolleyRequestListener;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.bluetooth.load_json_images_picasso.MainActivity.EXTRA_MEAL;
+import static com.bluetooth.load_json_images_picasso.activities.MainActivity.EXTRA_MEAL;
 
 public class MealDetailsActivity extends AppCompatActivity {
 
-    private final String RECIPE_BASE_URL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
     private static final String TAG = "MealDetailsActivity";
-    private RequestQueue mRequestQueue;
 
     ImageView imageView;
     TextView textViewName;
     TextView textViewInstructions;
-    VolleyNetworkManager volleyNetworkManager;
+    TextView textViewIngredients;
+    TextView textViewQuantity;
+    TextView textViewInstructionsTitle;
+    //Gson gson = new Gson();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,15 +44,18 @@ public class MealDetailsActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.image_view_meal_detail);
         textViewName = findViewById(R.id.name_meal_detail);
+        textViewIngredients = findViewById(R.id.ingredient_list);
         textViewInstructions = findViewById(R.id.instructions_recipe);
+        textViewQuantity = findViewById(R.id.ingredient_quantity);
+        textViewInstructionsTitle = findViewById(R.id.ingredients_title);
+        textViewIngredients.setText("");
+        textViewQuantity.setText("");
 
         Intent intent = getIntent();
         Meal meal = intent.getParcelableExtra(EXTRA_MEAL);
         String imageURL = meal.getImgUrl();
         String recipeName = meal.getMealName();
         String idRecipe = meal.getIdMeal();
-        Log.d(TAG, "manage Intent receive name " + recipeName);
-        Log.d(TAG, "manage Intent receive ID: " + idRecipe);
 
         Picasso.get()
                 .load(imageURL)
@@ -62,10 +72,26 @@ public class MealDetailsActivity extends AppCompatActivity {
             @Override
             public void getResult(JSONObject meal_details) {
                 try {
+                    //Deserialize Json to Meal
+                    //Meal currentMeal = gson.fromJson(meal_details.toString(), Meal.class);
 
+                    //Get and Set Instructions to the UI
                     String instructions = meal_details.getString("strInstructions");
-                    Log.d(TAG, "onResponse instructions: " + instructions.length());
                     textViewInstructions.setText(instructions);
+
+                    //Get and Ingredients and Quantities
+                    for(int i = 1; i <= 20; i++){
+                        String currentIngredient = meal_details.getString("strIngredient"+i);
+                        String currentMeasure = meal_details.getString("strMeasure"+i);
+
+                        if(currentIngredient.length() > 0 ){
+                            //currentMeal.getIngredients().put(currentIngredient, currentMeasure);
+
+                            textViewIngredients.append(currentIngredient+"\n");
+                            textViewQuantity.append(currentMeasure+"\n");
+
+                        }
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

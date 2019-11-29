@@ -1,20 +1,36 @@
-package com.bluetooth.load_json_images_picasso;
+package com.bluetooth.load_json_images_picasso.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import androidx.annotation.NonNull;
+
 public class Meal implements Parcelable {
-    private String mealName;
-    private String imgUrl;
+
+    @SerializedName("idMeal")
     private String idMeal;
-    private int type;
 
+    @SerializedName("strMeal")
+    private String mealName;
 
-    public Meal(String mealName, String imgUrl, String idMeal , int type) {
+    @SerializedName("strMealThumb")
+    private String imgUrl;
+
+    //private identifier
+    private int orientationType ;
+
+    private Map<String,String> ingredients;
+
+    public Meal(String mealName, String imgUrl, String idMeal , int orientationType) {
         this.mealName = mealName;
         this.imgUrl = imgUrl;
         this.idMeal = idMeal;
-        this.type = type;
+        this.orientationType = orientationType;
     }
 
     public String getMealName() {
@@ -29,12 +45,26 @@ public class Meal implements Parcelable {
         return idMeal;
     }
 
-    public int getType() {
-        return type;
+    public int getorientationType() {
+        return orientationType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setorientationType(int orientationType) {
+        this.orientationType = orientationType;
+    }
+
+    public Map<String,String> getIngredients() {
+        return ingredients;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        String result =
+                "Name: " + this.mealName + "\n" +
+                "ID: "   + this.idMeal + "\n" +
+                "URL: "  + this.imgUrl + "\n";
+        return result;
     }
 
     /**
@@ -47,7 +77,7 @@ public class Meal implements Parcelable {
         mealName = in.readString();
         imgUrl = in.readString();
         idMeal = in.readString();
-        type = in.readInt();
+        orientationType = in.readInt();
     }
 
     public static final Creator<Meal> CREATOR = new Creator<Meal>() {
@@ -72,6 +102,6 @@ public class Meal implements Parcelable {
         dest.writeString(mealName);
         dest.writeString(imgUrl);
         dest.writeString(idMeal);
-        dest.writeInt(type);
+        dest.writeInt(orientationType);
     }
 }

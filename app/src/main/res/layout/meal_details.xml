@@ -4,13 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="8dp"
-        tools:context=".MealDetailsActivity">
+        tools:context=".activities.MealDetailsActivity">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_id"
@@ -37,7 +37,61 @@
             android:layout_marginStart="6dp"
             android:text="Meal Name"
             android:textColor="@android:color/black"
-            android:textSize="30sp" />
+            android:textSize="34sp"
+            android:layout_below="@+id/card_view_id"/>
+        <TextView
+            android:id="@+id/ingredients_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingredients"
+            android:textSize="24sp"
+            android:layout_marginStart="12dp"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/name_meal_detail">
+        </TextView>
+        <androidx.legacy.widget.Space android:id="@+id/fakeView"
+            android:layout_below="@id/ingredients_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/ingredient_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="ingredients list"
+            android:layout_marginStart="12dp"
+            android:layout_alignRight="@id/fakeView"
+            android:layout_alignParentLeft="true"
+            android:textColor="@android:color/black"
+            android:layout_below="@+id/ingredients_title"
+            android:paddingBottom="20dp">
+        </TextView>
+        <TextView
+            android:id="@+id/ingredient_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="ingredients quantity"
+            android:layout_marginStart="12dp"
+            android:layout_alignLeft="@id/fakeView"
+            android:layout_alignParentRight="true"
+            android:textColor="@android:color/black"
+            android:layout_below="@+id/ingredients_title"
+            android:paddingBottom="20dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/instructions_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instructions"
+            android:layout_below="@+id/ingredient_list"
+            android:textSize="20sp"
+            android:paddingTop="18dp"
+            android:textColor="@android:color/black"
+            android:layout_marginStart="12dp"/>
+
 
         <TextView
             android:id="@+id/instructions_recipe"
@@ -46,8 +100,9 @@
             android:textSize="20sp"
             android:layout_marginStart="12dp"
             android:textColor="@android:color/black"
-            android:text="Instructions"/>
-
-    </LinearLayout>
+            android:text="Instructions Recipe"
+            android:paddingTop="8dp"
+            android:layout_below="@+id/instructions_title"/>
+    </RelativeLayout>
 
 </androidx.core.widget.NestedScrollView>

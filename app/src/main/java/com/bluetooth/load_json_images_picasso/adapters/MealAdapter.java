@@ -1,14 +1,13 @@
 package com.bluetooth.load_json_images_picasso.adapters;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bluetooth.load_json_images_picasso.Meal;
+import com.bluetooth.load_json_images_picasso.models.Meal;
 import com.bluetooth.load_json_images_picasso.R;
 import com.squareup.picasso.Picasso;
 
@@ -143,7 +142,7 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (mMealsList.get(position).getType() == HORIZONTAL_VIEW_TYPE) {
+        if (mMealsList.get(position).getorientationType() == HORIZONTAL_VIEW_TYPE) {
             return HORIZONTAL_VIEW_TYPE;
 
         } else {
