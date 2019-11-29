@@ -2,13 +2,13 @@ package com.bluetooth.load_json_images_picasso;
 
 import android.app.Application;
 
-import com.bluetooth.load_json_images_picasso.helpers.NetworkManager;
+import com.bluetooth.load_json_images_picasso.helpers.VolleyNetworkManager;
 
 public class MyApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        NetworkManager.getInstance(this);
+        VolleyNetworkManager.getInstance(this);
     }
 }

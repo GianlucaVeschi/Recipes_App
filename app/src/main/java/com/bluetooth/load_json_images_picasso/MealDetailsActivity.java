@@ -6,16 +6,11 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.bluetooth.load_json_images_picasso.helpers.JsonHelper;
+import com.bluetooth.load_json_images_picasso.helpers.VolleyNetworkManager;
+import com.bluetooth.load_json_images_picasso.helpers.VolleyRequestListener;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +28,7 @@ public class MealDetailsActivity extends AppCompatActivity {
     ImageView imageView;
     TextView textViewName;
     TextView textViewInstructions;
-    JsonHelper jsonHelper;
+    VolleyNetworkManager volleyNetworkManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +38,6 @@ public class MealDetailsActivity extends AppCompatActivity {
         imageView = findViewById(R.id.image_view_meal_detail);
         textViewName = findViewById(R.id.name_meal_detail);
         textViewInstructions = findViewById(R.id.instructions_recipe);
-        jsonHelper = new JsonHelper();
 
         Intent intent = getIntent();
         Meal meal = intent.getParcelableExtra(EXTRA_MEAL);
@@ -60,45 +54,24 @@ public class MealDetailsActivity extends AppCompatActivity {
                 .into(imageView);
         textViewName.setText(recipeName);
 
-        mRequestQueue = Volley.newRequestQueue(this);
-        mRequestQueue.add(jsonHelper.filterRecipeByID(idRecipe,textViewInstructions));
-        //getRecipeDetails(idRecipe);
+        displayRecipeDetails(idRecipe);
     }
 
-    private void getRecipeDetails(String idRecipe) {
-        String recipe_details_url = RECIPE_BASE_URL + idRecipe;
-        Log.d(TAG, "getRecipeDetails URL:" + recipe_details_url );
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
-                recipe_details_url,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("meals");
-                            Log.d(TAG, "onResponse array length: " + jsonArray.length());
+    private void displayRecipeDetails(String recipe_ID){
+        VolleyNetworkManager.getInstance().filterRecipeByID(recipe_ID, new VolleyRequestListener<JSONObject>() {
+            @Override
+            public void getResult(JSONObject meal_details) {
+                try {
 
-                            for(int i = 0; i < jsonArray.length(); i++){
-                                JSONObject meal_details = jsonArray.getJSONObject(i);
-                                Log.d(TAG, "onResponse instructions: " );
-                                String instructions = meal_details.getString("strInstructions");
-                                Log.d(TAG, "onResponse instructions: " + instructions.length());
-                                textViewInstructions.setText(instructions);
-                            }
-                        } catch (JSONException e) {
-                            Log.d(TAG, "onResponse: catched error " + e.getMessage());
-                            e.printStackTrace();
-                        }
+                    String instructions = meal_details.getString("strInstructions");
+                    Log.d(TAG, "onResponse instructions: " + instructions.length());
+                    textViewInstructions.setText(instructions);
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(TAG, "onErrorResponse: ");
-                        error.printStackTrace();
-                    }
-                });
-        mRequestQueue.add(request);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
 }
