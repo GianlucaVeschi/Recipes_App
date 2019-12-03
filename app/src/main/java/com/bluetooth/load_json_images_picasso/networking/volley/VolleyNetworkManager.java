@@ -1,4 +1,4 @@
-package com.bluetooth.load_json_images_picasso.networking;
+package com.bluetooth.load_json_images_picasso.networking.volley;
 
 import android.content.Context;
 import android.util.Log;
@@ -27,12 +27,10 @@ public class VolleyNetworkManager {
 
     private VolleyNetworkManager(Context context) {
         requestQueue = Volley.newRequestQueue(context.getApplicationContext());
-
     }
 
     /** Singleton Class */
-    public static synchronized VolleyNetworkManager getInstance(Context context)
-    {
+    public static synchronized VolleyNetworkManager getInstance(Context context) {
         if (instance == null)
             instance = new VolleyNetworkManager(context);
         return instance;
@@ -57,7 +55,7 @@ public class VolleyNetworkManager {
                 new Response.Listener<JSONObject>()                {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d(TAG, "onResponse: " + response.toString());
+                        //Log.d(TAG, "onResponse: " + response.toString()); //Prints whole JSON
                         try {
                             JSONArray jsonArray = response.getJSONArray("meals");
                             for(int i = 0; i < jsonArray.length(); i++){

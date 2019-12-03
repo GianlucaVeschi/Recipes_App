@@ -2,23 +2,17 @@ package com.bluetooth.load_json_images_picasso.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
 import com.bluetooth.load_json_images_picasso.R;
 import com.bluetooth.load_json_images_picasso.models.Meal;
-import com.bluetooth.load_json_images_picasso.networking.VolleyNetworkManager;
-import com.bluetooth.load_json_images_picasso.networking.VolleyRequestListener;
-import com.google.gson.Gson;
+import com.bluetooth.load_json_images_picasso.networking.volley.VolleyNetworkManager;
+import com.bluetooth.load_json_images_picasso.networking.volley.VolleyRequestListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +29,7 @@ public class MealDetailsActivity extends AppCompatActivity {
     TextView textViewIngredients;
     TextView textViewQuantity;
     TextView textViewInstructionsTitle;
-    //Gson gson = new Gson();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,14 +66,12 @@ public class MealDetailsActivity extends AppCompatActivity {
             @Override
             public void getResult(JSONObject meal_details) {
                 try {
-                    //Deserialize Json to Meal
-                    //Meal currentMeal = gson.fromJson(meal_details.toString(), Meal.class);
 
                     //Get and Set Instructions to the UI
                     String instructions = meal_details.getString("strInstructions");
                     textViewInstructions.setText(instructions);
 
-                    //Get and Ingredients and Quantities
+                    //Get and set Ingredients and Quantities
                     for(int i = 1; i <= 20; i++){
                         String currentIngredient = meal_details.getString("strIngredient"+i);
                         String currentMeasure = meal_details.getString("strMeasure"+i);

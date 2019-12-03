@@ -11,14 +11,16 @@ import android.util.Log;
 import com.bluetooth.load_json_images_picasso.R;
 import com.bluetooth.load_json_images_picasso.adapters.MealAdapter;
 import com.bluetooth.load_json_images_picasso.models.Meal;
-import com.bluetooth.load_json_images_picasso.networking.VolleyNetworkManager;
-import com.bluetooth.load_json_images_picasso.networking.VolleyRequestListener;
+import com.bluetooth.load_json_images_picasso.networking.retrofit.RetrofitNetworkManager;
+import com.bluetooth.load_json_images_picasso.networking.retrofit.RetrofitRequestListener;
+import com.bluetooth.load_json_images_picasso.networking.volley.VolleyNetworkManager;
+import com.bluetooth.load_json_images_picasso.networking.volley.VolleyRequestListener;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MealAdapter.OnItemClickListener {
 
@@ -70,28 +72,66 @@ public class MainActivity extends AppCompatActivity implements MealAdapter.OnIte
 
 
         //Populate RecyclerView with recipes from the MealDatabase
-        displayRecipeByCountry("Italian", mRecyclerView,mFirstMealsList,mFirstMealAdapter,HORIZONTAL_VIEW_TYPE);
-        displayRecipeByCountry("Chinese", mRecyclerView_2,mSecondMealsList,mSecondMealAdapter,HORIZONTAL_VIEW_TYPE);
-        displayRecipeByCountry("American",mRecyclerView_3,mThirdMealsList,mThirdMealAdapter,VERTICAL_VIEW_TYPE);
+        displayRecipesByCountry("Italian", mRecyclerView,mFirstMealsList,mFirstMealAdapter,HORIZONTAL_VIEW_TYPE);
+        displayRecipesByCountry("Chinese", mRecyclerView_2,mSecondMealsList,mSecondMealAdapter,HORIZONTAL_VIEW_TYPE);
+        displayRecipesByCountry("American",mRecyclerView_3,mThirdMealsList,mThirdMealAdapter,VERTICAL_VIEW_TYPE);
+
+        //Retrofit
+        //displayRecipesByCountryWithRetrofit("Italian", mRecyclerView,mFirstMealsList,mFirstMealAdapter,HORIZONTAL_VIEW_TYPE);
+        //displayRecipeByIDwithRetrofit(52961);
 
     }
 
-    private void displayRecipeByCountry(String country, final RecyclerView recyclerView, final ArrayList<Meal> mealsList, final MealAdapter mealAdapter , final int orientation){
+    private void displayRecipesByCountry(String country, final RecyclerView recyclerView, final ArrayList<Meal> mealsList, final MealAdapter mealAdapter , final int orientation){
         VolleyNetworkManager.getInstance().filterRecipeByCountry(country, new VolleyRequestListener<JSONObject>() {
             @Override
             public void getResult(JSONObject meal_json) {
 
                 //Deserialize object
                 Meal meal = gson.fromJson(meal_json.toString(), Meal.class);
-                meal.setorientationType(orientation);
-                //Log.d(TAG, "getResult: GSON " + meal.toString());
+                meal.setOrientationType(orientation);
 
+                //Update UI
                 mealsList.add(meal);
                 recyclerView.setAdapter(mealAdapter);
                 mealAdapter.setOnItemClickListener(MainActivity.this);
             }
         });
     }
+
+    //Retrofit implementations
+
+    private void displayRecipeByIDwithRetrofit(int idMeal){
+        RetrofitNetworkManager retrofitNetworkManager = new RetrofitNetworkManager();
+        retrofitNetworkManager.getMealByIdAsMealsContainer(idMeal, new RetrofitRequestListener<Meal>() {
+            @Override
+            public void getResult(Meal meal) {
+                //Get and Set Instructions to the
+                Log.d(TAG, "getResult retrofit : " + meal.toString());
+                String instructions = meal.getInstructions();
+                Log.d(TAG, "getResult: instructions " + instructions);
+            }
+        });
+    }
+
+    private void displayRecipesByCountryWithRetrofit(String country, final RecyclerView recyclerView, final ArrayList<Meal> mealsList, final MealAdapter mealAdapter , final int orientation){
+        RetrofitNetworkManager retrofitNetworkManager = new RetrofitNetworkManager();
+        retrofitNetworkManager.getMealsByCountry(country, new RetrofitRequestListener<List<Meal>>() {
+            @Override
+            public void getResult(List<Meal> meals) {
+                Log.d(TAG, "getResult: displayRecipesByCountryWithRetrofit");
+                for(Meal meal : meals){
+                    Log.d(TAG, "getResult: " + meal.toString());
+                    meal.setOrientationType(orientation);
+                }
+                recyclerView.setAdapter(mealAdapter);
+                mealAdapter.setOnItemClickListener(MainActivity.this);
+            }
+        });
+
+    }
+
+
 
     @Override
     public void onItemClick(int position, ArrayList<Meal> mealsList) {

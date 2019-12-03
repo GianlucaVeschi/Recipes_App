@@ -142,7 +142,7 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        if (mMealsList.get(position).getorientationType() == HORIZONTAL_VIEW_TYPE) {
+        if (mMealsList.get(position).getOrientationType() == HORIZONTAL_VIEW_TYPE) {
             return HORIZONTAL_VIEW_TYPE;
 
         } else {

@@ -21,6 +21,9 @@ public class Meal implements Parcelable {
     @SerializedName("strMealThumb")
     private String imgUrl;
 
+    @SerializedName("strInstructions")
+    private String strInstructions;
+
     //private identifier
     private int orientationType ;
 
@@ -45,12 +48,16 @@ public class Meal implements Parcelable {
         return idMeal;
     }
 
-    public int getorientationType() {
+    public int getOrientationType() {
         return orientationType;
     }
 
-    public void setorientationType(int orientationType) {
+    public void setOrientationType(int orientationType) {
         this.orientationType = orientationType;
+    }
+
+    public String getInstructions(){
+        return strInstructions;
     }
 
     public Map<String,String> getIngredients() {
