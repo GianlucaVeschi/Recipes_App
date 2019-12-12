@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">Load_JSON_Images_Picasso</string>
+    <string name="app_name">Miji Recipes App</string>
     <string name="navigation_drawer_open" >Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_btn_stove">Stove</string>
+    <string name="title_btn_cook">Cook</string>
+    <string name="title_btn_about_miji">Miji</string>
+    <string name="title_btn_about_me">About Me</string>
+    <string name="Gala_El_1600W_desc">Resistant aluminum die-cast housing outside and German technology inside – an uncompromising pledge to quality and performance.</string>
+    <string name="Neo_El_1600W_desc">Smart energy control with ergonomic knob and energy saving German technology ensure fast and efficient cooking. </string>
 </resources>

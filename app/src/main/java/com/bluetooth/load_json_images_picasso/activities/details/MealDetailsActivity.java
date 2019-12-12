@@ -1,4 +1,4 @@
-package com.bluetooth.load_json_images_picasso.activities;
+package com.bluetooth.load_json_images_picasso.activities.details;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +20,7 @@ import org.json.JSONObject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.bluetooth.load_json_images_picasso.activities.MainActivity.EXTRA_MEAL;
+import static com.bluetooth.load_json_images_picasso.activities.bottom_nav.MainActivity.EXTRA_MEAL;
 
 public class MealDetailsActivity extends AppCompatActivity {
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.bluetooth.load_json_images_picasso">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,15 +12,25 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.bottom_nav.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MealDetailsActivity"></activity>
+
+        <activity android:name=".activities.details.MealDetailsActivity"/>
+        <activity android:name=".activities.meal_drawer.MealCategoriesActivity"/>
+        <activity android:name=".activities.meal_drawer.MealCountriesActivity"/>
+        <activity android:name=".activities.meal_drawer.MealMainIngredientActivity"/>
+        <activity android:name=".activities.meal_drawer.MealRandomActivity"/>
+
+        <activity android:name=".activities.bottom_nav.AboutMeActivity"/>
+        <activity android:name=".activities.bottom_nav.AboutMiji"/>
+        <activity android:name=".activities.details.StoveDetailsActivity"/>
     </application>
 
 

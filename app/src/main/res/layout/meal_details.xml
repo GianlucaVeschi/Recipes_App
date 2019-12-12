@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="8dp"
-        tools:context=".activities.MealDetailsActivity">
+        tools:context=".activities.details.MealDetailsActivity">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_id"
