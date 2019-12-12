@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recycler_view_4"
+                android:background="@android:color/darker_gray" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recycler_view"
+                android:background="@android:color/holo_blue_light" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recycler_view_2"
+                android:background="@android:color/holo_orange_dark" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

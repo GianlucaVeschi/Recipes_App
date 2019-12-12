@@ -2,11 +2,14 @@ package com.bluetooth.load_json_images_picasso.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bluetooth.load_json_images_picasso.R;
-import com.bluetooth.load_json_images_picasso.models.Meal;
+import com.bluetooth.load_json_images_picasso.models.MealSimple;
+import com.bluetooth.load_json_images_picasso.networking.retrofit.RetrofitNetworkManager;
+import com.bluetooth.load_json_images_picasso.networking.retrofit.RetrofitRequestListener;
 import com.bluetooth.load_json_images_picasso.networking.volley.VolleyNetworkManager;
 import com.bluetooth.load_json_images_picasso.networking.volley.VolleyRequestListener;
 import com.squareup.picasso.Picasso;
@@ -46,10 +49,10 @@ public class MealDetailsActivity extends AppCompatActivity {
         textViewQuantity.setText("");
 
         Intent intent = getIntent();
-        Meal meal = intent.getParcelableExtra(EXTRA_MEAL);
-        String imageURL = meal.getImgUrl();
-        String recipeName = meal.getMealName();
-        String idRecipe = meal.getIdMeal();
+        MealSimple mealSimple = intent.getParcelableExtra(EXTRA_MEAL);
+        String imageURL = mealSimple.getImgUrl();
+        String recipeName = mealSimple.getMealName();
+        String idRecipe = mealSimple.getIdMeal();
 
         Picasso.get()
                 .load(imageURL)
@@ -59,37 +62,65 @@ public class MealDetailsActivity extends AppCompatActivity {
         textViewName.setText(recipeName);
 
         displayRecipeDetails(idRecipe);
+        displayRecipeByIDwithRetrofit(idRecipe);
     }
 
-    private void displayRecipeDetails(String recipe_ID){
+    //Volley
+    private void displayRecipeDetails(String recipe_ID) {
         VolleyNetworkManager.getInstance().filterRecipeByID(recipe_ID, new VolleyRequestListener<JSONObject>() {
             @Override
             public void getResult(JSONObject meal_details) {
                 try {
-
                     //Get and Set Instructions to the UI
                     String instructions = meal_details.getString("strInstructions");
                     textViewInstructions.setText(instructions);
 
                     //Get and set Ingredients and Quantities
-                    for(int i = 1; i <= 20; i++){
-                        String currentIngredient = meal_details.getString("strIngredient"+i);
-                        String currentMeasure = meal_details.getString("strMeasure"+i);
+                    for (int i = 1; i <= 20; i++) {
 
-                        if(currentIngredient.length() > 0 ){
-                            //currentMeal.getIngredients().put(currentIngredient, currentMeasure);
+                        String currentIngredient = meal_details.getString("strIngredient" + i);
+                        String currentMeasure = meal_details.getString("strMeasure" + i);
 
-                            textViewIngredients.append(currentIngredient+"\n");
-                            textViewQuantity.append(currentMeasure+"\n");
-
+                        if (currentIngredient.length() > 0) {
+                            textViewIngredients.append(currentIngredient + "\n");
+                            textViewQuantity.append(currentMeasure + "\n");
                         }
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    //Retrofit
+    private void displayRecipeByIDwithRetrofit(String idMeal) {
+        
+        RetrofitNetworkManager retrofitNetworkManager = new RetrofitNetworkManager();
+        retrofitNetworkManager.getMealByIdAsMealsContainer(idMeal, new RetrofitRequestListener<MealSimple>() {
+            @Override
+            public void getResult(MealSimple mealSimple) {
+                //Get and Set Instructions to the
+                Log.d(TAG, "getResult retrofit : " + mealSimple); //working
+                String instructions = mealSimple.getInstructions();
+                Log.d(TAG, "getResult: instructions " + instructions); //working
+            }
+        });
+
+        /*
+        Log.d(TAG, "displayRecipeByIDwithRetrofit: dummylog");
+        retrofitNetworkManager.getMealDetailsAsJSONObject(idMeal, new RetrofitRequestListener<JSONObject>(){
+            @Override
+            public void getResult(JSONObject object) {
+                try {
+                    Log.d(TAG, "getResult: dummylog" + object.getString("strInstructions"));
+                    Log.d(TAG, "getResult: dummylog" + object.getString("strIngredient0"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        */
     }
 
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bluetooth.load_json_images_picasso.models.Meal;
+import com.bluetooth.load_json_images_picasso.models.MealSimple;
 import com.bluetooth.load_json_images_picasso.R;
 import com.squareup.picasso.Picasso;
 
@@ -19,27 +19,31 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<Meal> mMealsList;
+    private ArrayList<MealSimple> mMealsList;
 
     //Distinguish between the two TypeViews
     private final static int HORIZONTAL_VIEW_TYPE = 1;
     private final static int VERTICAL_VIEW_TYPE = 2;
 
     /**ON CLICK LISTENER utils*/
-    private OnItemClickListener mListener;
 
+    //Create internal Interface
     public interface OnItemClickListener{
-        void onItemClick(int position, ArrayList<Meal> mealsList);
+        void onItemClick(int position, ArrayList<MealSimple> mealsList);
     }
 
+    //Create Member variable
+    private OnItemClickListener mListener;
+
+    //
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener = listener;
     }
 
     /**
-     * CLASS CONSTRUCTOR
+     * ADAPTER CONSTRUCTOR
      * */
-    public MealAdapter(Context context, ArrayList<Meal> mealsList) {
+    public MealAdapter(Context context, ArrayList<MealSimple> mealsList) {
         mContext = context;
         mMealsList = mealsList;
     }
@@ -151,7 +155,7 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void initHorizLayout(HorizontalViewHolder horizontalViewHolder, int position) {
-        Meal currentItem = mMealsList.get(position);
+        MealSimple currentItem = mMealsList.get(position);
 
         String imageUrl = currentItem.getImgUrl();
         String mealName = currentItem.getMealName();
@@ -167,7 +171,7 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private void initVertLayout(VerticalViewHolder verticalViewHolder, int position) {
-        Meal currentItem = mMealsList.get(position);
+        MealSimple currentItem = mMealsList.get(position);
 
         String imageUrl = currentItem.getImgUrl();
         String mealName = currentItem.getMealName();

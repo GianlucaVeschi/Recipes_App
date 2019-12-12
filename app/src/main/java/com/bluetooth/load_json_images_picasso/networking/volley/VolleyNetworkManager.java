@@ -72,7 +72,7 @@ public class VolleyNetworkManager {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (null != error.networkResponse) {
-                            Log.d(TAG + ": ", "Error Response code: " + error.networkResponse.statusCode);
+                            Log.d(TAG + ": ", "Error MealMap code: " + error.networkResponse.statusCode);
                         }
                     }
                 });
@@ -104,7 +104,7 @@ public class VolleyNetworkManager {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (null != error.networkResponse) {
-                            Log.d(TAG + ": ", "Error Response code: " + error.networkResponse.statusCode);
+                            Log.d(TAG + ": ", "Error MealMap code: " + error.networkResponse.statusCode);
                         }
                     }
                 });

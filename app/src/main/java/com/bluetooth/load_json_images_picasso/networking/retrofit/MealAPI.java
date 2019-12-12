@@ -1,15 +1,12 @@
 package com.bluetooth.load_json_images_picasso.networking.retrofit;
 
-import com.bluetooth.load_json_images_picasso.models.Meal;
-import com.bluetooth.load_json_images_picasso.models.MealsContainer;
-import com.google.gson.JsonObject;
+import com.bluetooth.load_json_images_picasso.models.MealContainer;
+import com.bluetooth.load_json_images_picasso.models.MealMap;
 
-
-import java.util.List;
+import org.json.JSONArray;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MealAPI {
@@ -17,13 +14,19 @@ public interface MealAPI {
     /*---------------------GET---------------------*/
 
     @GET("filter.php") //id will be replaced in mainActivity
-    Call<MealsContainer> getMealsByCountry(@Query("a") String country);
+    Call<MealContainer> getMealsByCountry(@Query("a") String country);
 
     @GET("lookup.php")
-    Call<MealsContainer> getMealDetailsAsMealContainer(@Query("i") int mealId);
+    Call<MealContainer> getMealDetailsAsMealContainer(@Query("i") String mealId);
 
+    //Work In Progress
+    @GET("lookup.php")
+    Call<JSONArray> getMealDetailsAsJSONArray(@Query("i") String mealId);
 
+    @GET("filter.php")
+    Call<MealContainer> getMealsByCategory(@Query("c") String category);
 
-
+    @GET("filter.php") //id will be replaced in mainActivity
+    Call<MealMap> getMealsByCountryAsMealSimple(@Query("a") String country);
 
 }

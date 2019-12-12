@@ -5,12 +5,13 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 
-public class Meal implements Parcelable {
+public class MealSimple implements Parcelable {
+
+
 
     @SerializedName("idMeal")
     private String idMeal;
@@ -21,7 +22,6 @@ public class Meal implements Parcelable {
     @SerializedName("strMealThumb")
     private String imgUrl;
 
-    @SerializedName("strInstructions")
     private String strInstructions;
 
     //private identifier
@@ -29,7 +29,7 @@ public class Meal implements Parcelable {
 
     private Map<String,String> ingredients;
 
-    public Meal(String mealName, String imgUrl, String idMeal , int orientationType) {
+    public MealSimple(String mealName, String imgUrl, String idMeal , int orientationType) {
         this.mealName = mealName;
         this.imgUrl = imgUrl;
         this.idMeal = idMeal;
@@ -64,6 +64,10 @@ public class Meal implements Parcelable {
         return ingredients;
     }
 
+    public void setStrInstructions(String strInstructions) {
+        this.strInstructions = strInstructions;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -80,22 +84,22 @@ public class Meal implements Parcelable {
      * ReadString() and WriteString() have to be in the same order.
      * */
 
-    protected Meal(Parcel in) {
+    protected MealSimple(Parcel in) {
         mealName = in.readString();
         imgUrl = in.readString();
         idMeal = in.readString();
         orientationType = in.readInt();
     }
 
-    public static final Creator<Meal> CREATOR = new Creator<Meal>() {
+    public static final Creator<MealSimple> CREATOR = new Creator<MealSimple>() {
         @Override
-        public Meal createFromParcel(Parcel in) {
-            return new Meal(in);
+        public MealSimple createFromParcel(Parcel in) {
+            return new MealSimple(in);
         }
 
         @Override
-        public Meal[] newArray(int size) {
-            return new Meal[size];
+        public MealSimple[] newArray(int size) {
+            return new MealSimple[size];
         }
     };
 
