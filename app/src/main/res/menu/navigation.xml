@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_about_meals"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_btn_cook" />
+
+    <item
+        android:id="@+id/navigation_about_miji"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_btn_about_miji" />
+
+    <item android:id="@+id/navigation_about_me"
+        android:icon ="@drawable/ic_person_button_lady"
+        android:title="@string/title_btn_about_me"/>
+
+</menu>

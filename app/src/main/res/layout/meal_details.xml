@@ -2,7 +2,8 @@
 <androidx.core.widget.NestedScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/cardview_light_background">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="8dp"
-        tools:context=".activities.details.MealDetailsActivity">
+        tools:context="www.gianlucaveschi.load_json_images_picasso.activities.details.MealDetailsActivity">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view_id"
@@ -36,7 +37,7 @@
             android:id="@+id/ingredients_wrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/lightGreen"
+            android:background="@color/LightBlueGrey"
             android:layout_below="@id/card_view_id">
             <TextView
                 android:id="@+id/name_meal_detail"
@@ -98,7 +99,7 @@
             android:id="@+id/instruction_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/lightPink"
+            android:background="@color/LightBlueGrey"
             android:layout_below="@id/ingredients_wrapper">
 
             <TextView

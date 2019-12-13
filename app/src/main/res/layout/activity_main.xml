@@ -7,10 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    tools:context=".activities.bottom_nav.MainActivity">
-
-    <!-- MAIN CONTENT -->
-    <include layout="@layout/main_content" android:id="@+id/main_content"/>
+    tools:context="www.gianlucaveschi.load_json_images_picasso.activities.bottom_nav.MainActivity">
 
     <!-- DRAWER CONTENT -->
     <RelativeLayout
@@ -32,8 +29,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <!-- MAIN CONTENT -->
+        <include layout="@layout/main_content"
+            android:id="@+id/main_content"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_above="@+id/bottom_nav"/>
 
-        <include layout="@layout/bottom_navigation_bar"/>
+        <!-- BOTTOM NAV -->
+        <include layout="@layout/bottom_navigation_bar"
+            android:id="@+id/bottom_nav"/>
 
     </RelativeLayout>
 
@@ -43,7 +49,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu" />
+        app:menu="@menu/drawer_menu"
+        android:fadeScrollbars="true"
+        android:visibility="gone"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 
