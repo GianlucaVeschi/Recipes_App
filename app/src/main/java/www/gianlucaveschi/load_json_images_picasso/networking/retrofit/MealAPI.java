@@ -1,7 +1,7 @@
 package www.gianlucaveschi.load_json_images_picasso.networking.retrofit;
 
-import www.gianlucaveschi.load_json_images_picasso.models.MealContainer;
-import www.gianlucaveschi.load_json_images_picasso.models.MealMap;
+import www.gianlucaveschi.load_json_images_picasso.models.meals.MealContainer;
+import www.gianlucaveschi.load_json_images_picasso.models.meals.MealMap;
 
 import org.json.JSONArray;
 

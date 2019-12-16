@@ -7,14 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
-import www.gianlucaveschi.load_json_images_picasso.models.MealSimple;
+import www.gianlucaveschi.load_json_images_picasso.models.meals.MealSimple;
 import www.gianlucaveschi.load_json_images_picasso.networking.retrofit.RetrofitNetworkManager;
 import www.gianlucaveschi.load_json_images_picasso.networking.retrofit.RetrofitRequestListener;
 import www.gianlucaveschi.load_json_images_picasso.networking.volley.VolleyNetworkManager;
 import www.gianlucaveschi.load_json_images_picasso.networking.volley.VolleyRequestListener;
 
 import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrInterface;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -57,18 +56,14 @@ public class MealDetailsActivity extends AppCompatActivity {
         String recipeName = mealSimple.getMealName();
         String idRecipe = mealSimple.getIdMeal();
 
-        Picasso.get()
-                .load(imageURL)
-                .fit()
-                .centerInside()
-                .into(imageView);
+
         textViewName.setText(recipeName);
+        setImage(imageURL);
 
         displayRecipeDetails(idRecipe);
-        displayRecipeByIDwithRetrofit(idRecipe);
 
         //Slide back to the Previous Activity
-        SlidrInterface slidr = Slidr.attach(this);
+        Slidr.attach(this);
 
     }
 
@@ -127,6 +122,28 @@ public class MealDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+        */
+    }
+
+    private void setImage(String imgUrl){
+        Picasso.get()
+                .load(imgUrl)
+                .fit()
+                .centerInside()
+                .into(imageView);
+
+        /*
+        //ToDo: Find a faster way to load and display images from a remote source
+        //Glide Approach is also slow
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round);
+
+        Glide.with(this)
+                .load(imgUrl)
+                .apply(options)
+                .into(imageView);
         */
     }
 

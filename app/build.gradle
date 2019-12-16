@@ -35,8 +35,13 @@ dependencies {
     //Volley
     implementation 'com.android.volley:volley:1.1.1'
 
-    //Picasso
+    //Image Processing
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
     //GSON
     implementation 'com.google.code.gson:gson:2.8.6'
@@ -60,9 +65,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
-
-    //Universal Image Loader
-    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
     //lifecycle (ViewModel and LiveData)
     implementation "android.arch.lifecycle:extensions:1.1.1"

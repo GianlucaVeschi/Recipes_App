@@ -2,9 +2,9 @@ package www.gianlucaveschi.load_json_images_picasso.networking.retrofit;
 
 import android.content.Context;
 import android.util.Log;
-import www.gianlucaveschi.load_json_images_picasso.models.MealMap;
-import www.gianlucaveschi.load_json_images_picasso.models.MealSimple;
-import www.gianlucaveschi.load_json_images_picasso.models.MealContainer;
+import www.gianlucaveschi.load_json_images_picasso.models.meals.MealMap;
+import www.gianlucaveschi.load_json_images_picasso.models.meals.MealSimple;
+import www.gianlucaveschi.load_json_images_picasso.models.meals.MealContainer;
 import www.gianlucaveschi.load_json_images_picasso.networking.volley.VolleyNetworkManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

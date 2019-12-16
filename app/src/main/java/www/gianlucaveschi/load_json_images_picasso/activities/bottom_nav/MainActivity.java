@@ -14,8 +14,8 @@ import retrofit2.Response;
 import www.gianlucaveschi.load_json_images_picasso.activities.details.MealDetailsActivity;
 import www.gianlucaveschi.load_json_images_picasso.activities.meal_drawer.MealMainIngredientActivity;
 import www.gianlucaveschi.load_json_images_picasso.activities.meal_drawer.MealRandomActivity;
-import www.gianlucaveschi.load_json_images_picasso.models.MealContainer;
-import www.gianlucaveschi.load_json_images_picasso.models.MealSimple;
+import www.gianlucaveschi.load_json_images_picasso.models.meals.MealContainer;
+import www.gianlucaveschi.load_json_images_picasso.models.meals.MealSimple;
 import www.gianlucaveschi.load_json_images_picasso.networking.retrofit.MealAPI;
 import www.gianlucaveschi.load_json_images_picasso.networking.retrofit.RetrofitNetworkManager;
 
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements MealAdapter.OnIte
     private DrawerLayout drawer;
     private RecyclerView mRecyclerView;
     private RecyclerView mRecyclerView_2;
-    private RecyclerView mRecyclerView_3;
     private RecyclerView mRecyclerView_4;
 
     @Override
@@ -111,11 +110,6 @@ public class MainActivity extends AppCompatActivity implements MealAdapter.OnIte
         mRecyclerView_2 = findViewById(R.id.recycler_view_2);
         mRecyclerView_2.setHasFixedSize(true);
         mRecyclerView_2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-
-        //Third Recyclerview containing German Recipes
-        mRecyclerView_3 = findViewById(R.id.recycler_view_3);
-        mRecyclerView_3.setHasFixedSize(true);
-        mRecyclerView_3.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
 
         //Fourth RecyclerView containing Seafood Recipes
         mRecyclerView_4 = findViewById(R.id.recycler_view_4);

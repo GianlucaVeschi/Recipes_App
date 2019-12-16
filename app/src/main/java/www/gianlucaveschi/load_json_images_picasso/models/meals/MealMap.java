@@ -1,4 +1,4 @@
-package www.gianlucaveschi.load_json_images_picasso.models;
+package www.gianlucaveschi.load_json_images_picasso.models.meals;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

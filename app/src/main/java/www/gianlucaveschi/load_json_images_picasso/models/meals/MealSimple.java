@@ -1,4 +1,4 @@
-package www.gianlucaveschi.load_json_images_picasso.models;
+package www.gianlucaveschi.load_json_images_picasso.models.meals;
 
 import android.os.Parcel;
 import android.os.Parcelable;

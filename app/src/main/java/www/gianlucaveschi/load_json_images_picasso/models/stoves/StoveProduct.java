@@ -3,8 +3,6 @@ package www.gianlucaveschi.load_json_images_picasso.models.stoves;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import www.gianlucaveschi.load_json_images_picasso.models.MealSimple;
-
 /**
  * Created by sheck on 25/09/2019.
  */

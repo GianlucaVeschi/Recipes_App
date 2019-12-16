@@ -1,4 +1,4 @@
-package www.gianlucaveschi.load_json_images_picasso.models;
+package www.gianlucaveschi.load_json_images_picasso.models.meals;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,13 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
-@Entity(tableName = "MealContainer_table")
 public class MealContainer {
 
-    @PrimaryKey(autoGenerate = true)
     private int id;
 
     @SerializedName("meals")

@@ -21,6 +21,7 @@ public class VolleyNetworkManager {
     public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     public static final String LOOKUP_ID = "lookup.php?i=";
     public static final String FILTER_COUNTRY = "filter.php?a=";
+    public static final String RANDOM_MEAL = "random.php";
 
     //for Volley API
     public RequestQueue requestQueue;
@@ -92,6 +93,37 @@ public class VolleyNetworkManager {
                             JSONArray jsonArray = response.getJSONArray("meals");
                             for(int i = 0; i < jsonArray.length(); i++){
                                 //Object containing the details of the Recipe is retrieved in the MealDetailsActivity
+                                listener.getResult(jsonArray.getJSONObject(i));
+                            }
+                        }
+                        catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (null != error.networkResponse) {
+                            Log.d(TAG + ": ", "Error MealMap code: " + error.networkResponse.statusCode);
+                        }
+                    }
+                });
+        requestQueue.add(request);
+    }
+
+    /**GET REQUEST
+     * Used to retrieve random recipe*/
+    public void getRandomRecipe(final VolleyRequestListener<JSONObject> listener){
+        String url = BASE_URL + RANDOM_MEAL;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try{
+                            JSONArray jsonArray = response.getJSONArray("meals");
+                            for(int i = 0; i < jsonArray.length(); i++){
+                                //Object containing the details of the Recipe is retrieved in the MealRandomActivity
                                 listener.getResult(jsonArray.getJSONObject(i));
                             }
                         }

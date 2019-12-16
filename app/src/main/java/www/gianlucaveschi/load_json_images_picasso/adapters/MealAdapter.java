@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import www.gianlucaveschi.load_json_images_picasso.models.MealSimple;
+import www.gianlucaveschi.load_json_images_picasso.models.meals.MealSimple;
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.squareup.picasso.Picasso;
 
