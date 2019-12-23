@@ -16,13 +16,19 @@
         app:cardCornerRadius="8dp"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:visibility="visible" />
+
         <ImageView
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:id="@+id/image_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
 

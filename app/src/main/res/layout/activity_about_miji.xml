@@ -5,19 +5,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="www.gianlucaveschi.load_json_images_picasso.activities.bottom_nav.AboutMiji">
+    tools:context="www.gianlucaveschi.mijirecipesapp.activities.details.MijiProductsOverview"
+    android:background="@drawable/kyoto">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/products_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp"
-        android:scrollbars="vertical"
-        android:background="@android:color/darker_gray">
+    <TextView
+        android:id="@+id/textViewAboutMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="116dp"
+        android:text="AboutMiji"
+        android:textSize="30sp" />
 
-    </androidx.recyclerview.widget.RecyclerView>
 
     <!-- BOTTOM -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/goToProducts_btn"
+        android:text="View Miji Products"/>
+
     <include layout="@layout/bottom_navigation_bar" />
 
 </RelativeLayout>

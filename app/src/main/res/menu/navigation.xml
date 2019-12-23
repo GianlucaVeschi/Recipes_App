@@ -12,7 +12,7 @@
         android:title="@string/title_btn_about_miji" />
 
     <item android:id="@+id/navigation_about_me"
-        android:icon ="@drawable/ic_person_button_lady"
+        android:icon ="@drawable/ic_person"
         android:title="@string/title_btn_about_me"/>
 
 </menu>

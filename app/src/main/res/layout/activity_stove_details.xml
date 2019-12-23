@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:weightSum="100"
     android:background="@color/cardview_light_background"
-    tools:context="www.gianlucaveschi.load_json_images_picasso.activities.details.StoveDetailsActivity">
+    tools:context="www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity">
 
 
     <ImageView

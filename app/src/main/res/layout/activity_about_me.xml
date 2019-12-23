@@ -3,15 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="www.gianlucaveschi.load_json_images_picasso.activities.bottom_nav.AboutMeActivity">
-
-
+    tools:context="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeActivity">
 
     <RelativeLayout
         android:id="@+id/rel_layout_whole_screen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:background="@drawable/kyoto">
 
 
         <RelativeLayout

@@ -11,5 +11,6 @@
     <color name="lightYello">#cee312</color>
     <color name="LightBlueGrey">#d4e4ff</color>
     <color name="VeryLightRed">#e84c41</color>
+    <color name="White">#fff</color>
 
 </resources>

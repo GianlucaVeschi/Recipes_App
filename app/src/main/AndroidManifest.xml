@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="www.gianlucaveschi.load_json_images_picasso.MyApplication"
+        android:name="www.gianlucaveschi.mijirecipesapp.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="www.gianlucaveschi.load_json_images_picasso.activities.bottom_nav.MainActivity">
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMiji">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,26 +22,34 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="www.gianlucaveschi.load_json_images_picasso.activities.details.MealDetailsActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.load_json_images_picasso.activities.meal_drawer.MealCategoriesActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCategoriesActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.load_json_images_picasso.activities.meal_drawer.MealCountriesActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.load_json_images_picasso.activities.meal_drawer.MealMainIngredientActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.load_json_images_picasso.activities.meal_drawer.MealRandomActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.load_json_images_picasso.activities.bottom_nav.AboutMeActivity"/>
-        <activity android:name="www.gianlucaveschi.load_json_images_picasso.activities.bottom_nav.AboutMiji"/>
-
-        <activity android:name="www.gianlucaveschi.load_json_images_picasso.activities.details.StoveDetailsActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.MijiProductsOverview"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
+
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
+
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMealCountryActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
+
+        <!-- BOTTOM NAV -->
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeActivity"/>
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeals"/>
+
     </application>
 
 

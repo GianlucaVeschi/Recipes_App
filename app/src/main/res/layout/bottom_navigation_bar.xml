@@ -8,13 +8,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavView_Bar"
+        android:id="@+id/bottom_nav_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:menu="@menu/navigation"
         app:labelVisibilityMode="labeled"
-        android:background="@color/LightBlueGrey"
-        app:itemHorizontalTranslationEnabled="false">
+        android:background="@color/White"
+        app:itemHorizontalTranslationEnabled="false"
+        >
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/container"
