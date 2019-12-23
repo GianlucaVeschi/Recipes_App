@@ -46,6 +46,9 @@
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMealCountryActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMainIngredientActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
+
         <!-- BOTTOM NAV -->
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeActivity"/>
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeals"/>

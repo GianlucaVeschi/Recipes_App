@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/cardview_light_background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <RelativeLayout
+            android:id="@+id/ingredients_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/LightBlueGrey">
+
+            <TextView
+                android:id="@+id/meals_type_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Country Meals"
+                android:textColor="@android:color/black"
+                android:textSize="34sp"
+                android:layout_centerHorizontal="true"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/browse_meals_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/meals_type_name"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/instruction_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/LightBlueGrey"
+            android:layout_below="@id/ingredients_wrapper">
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+</androidx.core.widget.NestedScrollView>

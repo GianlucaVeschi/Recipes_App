@@ -20,7 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMealCountryActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.CountryAdapter;
-import www.gianlucaveschi.mijirecipesapp.models.countries.Country;
+import www.gianlucaveschi.mijirecipesapp.models.others.Country;
+
 
 public class MealCountriesActivity extends AppCompatActivity {
 

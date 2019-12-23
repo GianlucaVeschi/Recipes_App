@@ -7,9 +7,52 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:text="Main Ingredient"
-        android:id="@+id/meal_ingredients_text_view"
-        android:layout_centerInParent="true"/>
+        android:textSize="27sp"
+        android:text="Meat"
+        android:id="@+id/meat_text_view"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:textColor="#000"
+        android:paddingBottom="10dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/meat_rv"
+        android:layout_below="@id/meat_text_view"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="27sp"
+        android:text="Vegetables"
+        android:id="@+id/vegetables_text_view"
+        android:layout_centerInParent="true"
+        android:textColor="#000"
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/meat_rv"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/vegetables_rv"
+        android:layout_below="@id/vegetables_text_view"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="27sp"
+        android:text="Cheese"
+        android:id="@+id/cheese_text_view"
+        android:layout_centerInParent="true"
+        android:textColor="#000"
+        android:paddingBottom="10dp"
+        android:layout_below="@+id/vegetables_rv"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cheese_rv"
+        android:layout_below="@id/cheese_text_view"/>
 
 </RelativeLayout>

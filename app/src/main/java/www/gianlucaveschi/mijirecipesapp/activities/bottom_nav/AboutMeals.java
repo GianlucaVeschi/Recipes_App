@@ -77,7 +77,6 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
         navigationView.setNavigationItemSelectedListener(this);
 
         //Set the toolbar
-        //toolbar.setBackgroundColor(todo set a nice color);
         setSupportActionBar(toolbar);
 
         //Adds the "Hamburger" to the toolbar,which opens the drawer layout
@@ -109,11 +108,13 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
 
     }
 
+    //Inflate the Menu of the Drawer Layout
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.contact_miji_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
     private void initRecyclerViews() {
 
@@ -130,6 +131,7 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
 
     }
 
+    //If the user presses the Back button while the drawer is open
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {

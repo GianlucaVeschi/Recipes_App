@@ -32,4 +32,6 @@ public interface MealAPI {
     @GET("random.php")
     Call<MealContainer> getRandomMeal();
 
+    @GET("filter.php")
+    Call<MealContainer> getMealsByIngredient(@Query("i") String ingredient);
 }

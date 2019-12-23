@@ -9,24 +9,16 @@
         android:id="@+id/rel_layout_whole_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/kyoto">
+        style="@style/AppTheme.NoActionBar">
 
+        <!-- TOP -->
+        <include layout="@layout/nav_header_about_me"/>
 
         <RelativeLayout
+            android:id="@+id/central_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottomBar">
-
-            <TextView
-                android:id="@+id/textViewAboutMe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="116dp"
-                android:text="AboutMe"
-                android:textSize="30sp" />
-        </RelativeLayout>
+            android:layout_above="@+id/bottomBar"/>
 
         <!-- BOTTOM -->
         <include layout="@layout/bottom_navigation_bar" />
