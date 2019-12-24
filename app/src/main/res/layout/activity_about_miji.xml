@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="116dp"
-        android:text="AboutMiji"
+        android:text="Welcome to the Miji App"
         android:textSize="30sp" />
 
 
@@ -23,9 +22,19 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/blue"
+        android:layout_centerVertical="true"
         android:layout_centerInParent="true"
-        android:id="@+id/goToProducts_btn"
-        android:text="View Miji Products"/>
+        android:text="View Miji Products"
+        android:id="@+id/goToProducts_btn"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goToProducts_btn"
+        android:layout_centerInParent="true"
+        android:text="Discover BLE devices"
+        android:id="@+id/goToMainBluetooth_btn"/>
 
     <include layout="@layout/bottom_navigation_bar" />
 

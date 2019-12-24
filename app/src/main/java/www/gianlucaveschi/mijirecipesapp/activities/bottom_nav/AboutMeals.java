@@ -65,8 +65,6 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
     @BindView(R.id.recycler_view_2) RecyclerView mRecyclerView_2;
     @BindView(R.id.recycler_view_4) RecyclerView mRecyclerView_4;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,6 +148,7 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
         mealAPI.getMealsByCountry(country).enqueue(new Callback<MealContainer>() {
             @Override
             public void onResponse(Call<MealContainer> call, Response<MealContainer> response) {
+
                 //Get Retrofit Response
                 MealContainer mealContainer = response.body();
 

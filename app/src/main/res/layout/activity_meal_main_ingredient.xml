@@ -1,58 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightPink">
+    android:background="@color/lightPink"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="27sp"
-        android:text="Meat"
-        android:id="@+id/meat_text_view"
-        android:layout_centerInParent="true"
-        android:layout_alignParentTop="true"
-        android:textColor="#000"
-        android:paddingBottom="10dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/meat_rv"
-        android:layout_below="@id/meat_text_view"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="27sp"
-        android:text="Vegetables"
-        android:id="@+id/vegetables_text_view"
-        android:layout_centerInParent="true"
-        android:textColor="#000"
-        android:paddingBottom="10dp"
-        android:layout_below="@+id/meat_rv"/>
+        <!-- First Category -->
+        <TextView
+            android:id="@+id/meat_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:paddingBottom="10dp"
+            android:text="@string/Meat"
+            android:textColor="#000"
+            android:textSize="27sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/vegetables_rv"
-        android:layout_below="@id/vegetables_text_view"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/meat_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/meat_text_view" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="27sp"
-        android:text="Cheese"
-        android:id="@+id/cheese_text_view"
-        android:layout_centerInParent="true"
-        android:textColor="#000"
-        android:paddingBottom="10dp"
-        android:layout_below="@+id/vegetables_rv"/>
+        <!-- Second Category -->
+        <TextView
+            android:id="@+id/vegetables_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/meat_rv"
+            android:layout_centerInParent="true"
+            android:paddingBottom="10dp"
+            android:text="@string/Vegetables"
+            android:textColor="#000"
+            android:textSize="27sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/cheese_rv"
-        android:layout_below="@id/cheese_text_view"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/vegetables_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vegetables_text_view" />
 
-</RelativeLayout>
+        <!-- Third Category -->
+        <TextView
+            android:id="@+id/cheese_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/vegetables_rv"
+            android:layout_centerInParent="true"
+            android:paddingBottom="10dp"
+            android:text="@string/Cheese"
+            android:textColor="#000"
+            android:textSize="27sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cheese_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cheese_text_view" />
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>

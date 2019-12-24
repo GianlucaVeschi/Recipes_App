@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.MainBluetoothActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.details.MijiProductsOverview;
 import www.gianlucaveschi.mijirecipesapp.utils.BottomNavigationViewHelper;
 
@@ -28,6 +30,7 @@ public class AboutMiji extends AppCompatActivity {
     private static final String TAG = "AboutMiji";
 
     @BindView(R.id.goToProducts_btn) Button goToProductsOverview;
+    @BindView(R.id.goToMainBluetooth_btn) Button goToBtDiscovery;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +52,14 @@ public class AboutMiji extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AboutMiji.this, MijiProductsOverview.class);
+                startActivity(intent);
+            }
+        });
+
+        goToBtDiscovery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AboutMiji.this, MainBluetoothActivity.class);
                 startActivity(intent);
             }
         });

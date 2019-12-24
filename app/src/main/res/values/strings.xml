@@ -8,4 +8,9 @@
     <string name="title_btn_about_me">About Me</string>
     <string name="Gala_El_1600W_desc">Resistant aluminum die-cast housing outside and German technology inside – an uncompromising pledge to quality and performance.</string>
     <string name="Neo_El_1600W_desc">Smart energy control with ergonomic knob and energy saving German technology ensure fast and efficient cooking. </string>
+    <string name="Meat">Meat</string>
+    <string name="Vegetables">Vegetables</string>
+    <string name="Cheese">Cheese</string>
+    <string name="action_settings">Settings</string>
+    <string name="screen_title_main">Device List</string>
 </resources>

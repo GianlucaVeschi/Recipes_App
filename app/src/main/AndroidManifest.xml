@@ -4,6 +4,9 @@
     package="com.gianlucaveschi.load_json_images_picasso">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name="www.gianlucaveschi.mijirecipesapp.MyApplication"
@@ -48,6 +51,12 @@
 
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMainIngredientActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
+
+        <!-- BLUETOOTH -->
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.MainBluetoothActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.PeripheralControlActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
 
         <!-- BOTTOM NAV -->
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeActivity"/>
