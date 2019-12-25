@@ -57,6 +57,9 @@
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.PeripheralControlActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <service
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.BleAdapterService"
+            android:enabled="true" />
 
         <!-- BOTTOM NAV -->
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeActivity"/>
