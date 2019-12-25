@@ -50,6 +50,7 @@ public class BleAdapterService extends Service {
     public static final int GATT_REMOTE_RSSI = 6;
     public static final int MESSAGE = 7;
     public static final int NOTIFICATION_OR_INDICATION_RECEIVED = 8;
+    
 
     // message parms
     public static final String PARCEL_DESCRIPTOR_UUID = "DESCRIPTOR_UUID";
