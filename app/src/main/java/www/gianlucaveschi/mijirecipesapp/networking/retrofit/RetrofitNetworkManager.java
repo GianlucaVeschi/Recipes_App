@@ -2,29 +2,39 @@ package www.gianlucaveschi.mijirecipesapp.networking.retrofit;
 
 import android.content.Context;
 import android.util.Log;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealMap;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
+
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
+import okhttp3.logging.HttpLoggingInterceptor;
+import www.gianlucaveschi.mijirecipesapp.MyApplication;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyNetworkManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitNetworkManager{
 
-    public static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
+    private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     private static final String TAG = "RetrofitNetworkManager";
     private static Gson gson = new GsonBuilder().create();
-    private static OkHttpClient httpClient = new OkHttpClient.Builder().build();
 
-    //todo Create Singleton Class
+    //Caching
+    private static final long cacheSize = 5 * 1024 * 1024; // 5 MB
+    private static final String HEADER_CACHE_CONTROL = "Cache-Control";
+    private static final String HEADER_PRAGMA = "Pragma";
+    private static Cache cache(){
+        return new Cache(new File(MyApplication.getInstance().getCacheDir(),"someIdentifier"), cacheSize);
+    }
+
+    //Retrofit Instace initialized only once
     private static Retrofit retrofit = null;
 
     //Get the Retrofit instance
@@ -33,13 +43,13 @@ public class RetrofitNetworkManager{
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(httpClient)
+                    .client(okHttpClient())
                     .build();
         }
         return retrofit;
     }
 
-    //Context only has to passed once
+    //Context only has to be passed once
     public static synchronized Retrofit getClient() {
         if (null == retrofit) {
             throw new IllegalStateException(VolleyNetworkManager.class.getSimpleName() +
@@ -48,86 +58,82 @@ public class RetrofitNetworkManager{
         return retrofit;
     }
 
-    /*todo: delete this method and use getClient.create() instead.
-    public static <S> S createService(Class<S> serviceClass) {
-        return retrofit.create(serviceClass);
-    }*/
+    private static OkHttpClient okHttpClient(){
+        return new OkHttpClient.Builder()
+                .cache(cache())
+                .addInterceptor(httpLoggingInterceptor())    // used if network off OR on
+                .addNetworkInterceptor(networkInterceptor()) // only used when network is on
+                .addInterceptor(offlineInterceptor())
+                .build();
+    }
 
     /**
-     * API Methods implementation
+     * INTERCEPTORS
      * */
-
-    public void getMealByIdAsMealsContainer(String idMeal, final RetrofitRequestListener<MealSimple> listener){
-        MealAPI mealAPI = getClient().create(MealAPI.class);
-        Call<MealContainer> call = mealAPI.getMealDetailsAsMealContainer(idMeal);
-        call.enqueue(new Callback<MealContainer>() {
-            @Override
-            public void onResponse(Call<MealContainer> call, Response<MealContainer> response) {
-                MealContainer mealContainer = response.body();
-
-                listener.getResult(mealContainer.getContainedMeal());
-            }
-
-            @Override
-            public void onFailure(Call<MealContainer> call, Throwable t) {
-                Log.d(TAG, "onFailure: getMealByIdAsMealsContainer");
-            }
-        });
+    private static HttpLoggingInterceptor httpLoggingInterceptor () {
+        HttpLoggingInterceptor httpLoggingInterceptor =
+                new HttpLoggingInterceptor( new HttpLoggingInterceptor.Logger() {
+                    @Override
+                    public void log (String message) {
+                        Log.d(TAG, "log: http log: " + message);
+                    }
+                } );
+        httpLoggingInterceptor.level(HttpLoggingInterceptor.Level.BODY);
+        return httpLoggingInterceptor;
     }
-
-    //TODO This method is not working
-    // I don't think it is a good practice to map a JSON object into a POJO model when it has too many
-    // parameters that represent the exact same thing (StrIngredients)
-    // I am trying to let retrofit return the JsonArray and then manually handle the parameters
-    // as I do with Volley but this is proving to be a lot of work.
-    public void getMealDetailsAsJSONObject(String idMeal, final RetrofitRequestListener<JSONObject> listener){
-        MealAPI mealAPI = getClient().create(MealAPI.class);
-        Log.d(TAG, "getMealDetailsAsJSONObject: dummylog");
-        Call<JSONArray> call = mealAPI.getMealDetailsAsJSONArray(idMeal);
-
-        call.enqueue(new Callback<JSONArray>() {
-            @Override
-            public void onResponse(Call<JSONArray> call, Response<JSONArray> response) {
-                try{
-                    JSONArray jsonArray = response.body().getJSONArray(0);
-                    Log.d(TAG, "onResponse: jsonArray " + jsonArray);
-
-                }
-                catch (Exception e){
-                    e.getMessage();
-                }
-            }
-            @Override
-            public void onFailure(Call<JSONArray> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-            }
-        });
-    }
-
 
     /**
-     * PROBLEM :
-     *  JsonArray meals (MealContainer) internally contains jsonObjects(MealSimple)
-     *  Can Retrofit retrieve the list of MealSimples directly?
-     * */
-    public void getMealsByCountryAsMealSimple(String country){
-        MealAPI mealAPI = getClient().create(MealAPI.class);
-        Call<MealMap> call = mealAPI.getMealsByCountryAsMealSimple(country);
-
-        call.enqueue(new Callback<MealMap>() {
+     * This interceptor will be called ONLY if the network is available
+     * @return
+     */
+    private static Interceptor networkInterceptor() {
+        return new Interceptor() {
             @Override
-            public void onResponse(Call<MealMap> call, Response<MealMap> response) {
-                Log.d(TAG, "onResponse asMealSimple: " + response);
-                Log.d(TAG, "onResponse asMealSimple: " + response.body());
-                Log.d(TAG, "onResponse asMealSimple: " + response.body().getMealStrings());
-            }
+            public Response intercept(Chain chain) throws IOException {
+                Log.d(TAG, "network interceptor: called.");
 
-            @Override
-            public void onFailure(Call<MealMap> call, Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+                Response response = chain.proceed(chain.request());
 
+                //Change some options that have to do with the caching
+                CacheControl cacheControl = new CacheControl.Builder()
+                        .maxAge(5, TimeUnit.MINUTES)
+                        .build();
+
+                return response.newBuilder()
+                        .removeHeader(HEADER_PRAGMA)    //This header can potentially avoid using caching
+                        .removeHeader(HEADER_CACHE_CONTROL) //Remove Header that comes from the server
+                        .header(HEADER_CACHE_CONTROL, cacheControl.toString()) //Apply own Cache Control
+                        .build();
+            }
+        };
     }
 
+    /**
+     * This interceptor will be called both if the network is available and if the network is not available
+     * @return
+     */
+    private static Interceptor offlineInterceptor() {
+        return new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Log.d(TAG, "offline interceptor: called.");
+                Request request = chain.request();
+
+                // prevent caching when network is on. For that we use the "networkInterceptor"
+                if (!MyApplication.hasNetwork()) {
+                    CacheControl cacheControl = new CacheControl.Builder()
+                            .maxStale(7, TimeUnit.DAYS)
+                            .build();
+
+                    request = request.newBuilder()
+                            .removeHeader(HEADER_PRAGMA)
+                            .removeHeader(HEADER_CACHE_CONTROL)
+                            .cacheControl(cacheControl)
+                            .build();
+                }
+
+                return chain.proceed(request);
+            }
+        };
+    }
 }

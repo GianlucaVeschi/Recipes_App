@@ -81,8 +81,8 @@ public class BleScanner {
 
         //Set Filtering
         List<ScanFilter> filters = new ArrayList<>();
-        ScanFilter filter = new ScanFilter.Builder().setDeviceName("Miji_Bluetooth01").build();
-        filters.add(filter);
+        ScanFilter filter = new ScanFilter.Builder().setDeviceName(Constants.miji_DEVICE_NAME).build();
+        //filters.add(filter);
 
         //Set Settings
         ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).build();

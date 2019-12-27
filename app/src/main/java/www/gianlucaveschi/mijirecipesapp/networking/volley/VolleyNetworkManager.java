@@ -46,39 +46,12 @@ public class VolleyNetworkManager {
         return instance;
     }
 
-    /**GET REQUEST
-     * Used to retrieve filter the Recipe by country*/
-    public void filterRecipeByCountry(String country, final VolleyRequestListener<JSONObject> listener) {
 
-        String url = BASE_URL + FILTER_COUNTRY + country;
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>()                {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.d(TAG, "onResponse: " + response.toString()); //Prints whole JSON
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("meals");
-                            for(int i = 0; i < jsonArray.length(); i++){
-                                //Object containing the meal is then retrieved in the AboutMeals
-                                listener.getResult(jsonArray.getJSONObject(i));
-                            }
-                        }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (null != error.networkResponse) {
-                            Log.d(TAG + ": ", "Error MealMap code: " + error.networkResponse.statusCode);
-                        }
-                    }
-                });
-        requestQueue.add(request);
-    }
+    //TODO
+    // I don't think it is a good practice to map a JSON object into a POJO model when it has too many
+    // parameters that represent the exact same thing (StrIngredients)
+    // I tried to let retrofit return the JsonArray and then manually handle the parameters
+    // as I do with Volley but this is proving to be a lot of work.
 
     /**GET REQUEST
      * Used to retrieve filter the Recipe by ID*/

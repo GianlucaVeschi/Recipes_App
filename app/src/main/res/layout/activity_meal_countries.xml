@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/White">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lightRed"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:text="Choose a country :)"
         android:id="@+id/meal_countries_title"
         android:layout_centerInParent="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/toolbar"
         android:textColor="#000"
-        android:paddingBottom="20dp"/>
+        android:paddingBottom="10dp"/>
+
+    <!--
+    <include layout="@layout/search_view_generic"
+        android:id="@+id/searchCountry"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/meal_countries_title" />
+    -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/flags_rv"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/meal_countries_title"/>
-
 
 </RelativeLayout>

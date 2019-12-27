@@ -25,4 +25,6 @@ public class Constants {
     public static final String miji_TEMPERATURE_CHARACTERISTIC = "0000ffe9-0000-1000-8000-00805f9b34fb";
     public static final String miji_TEMPERATURE_SERVICE_CHAR_2 = "0000ffe0-0000-1000-8000-00805f9b34fb";
 
+    public static final String miji_DEVICE_NAME = "Miji_Bluetooth01";
+
 }

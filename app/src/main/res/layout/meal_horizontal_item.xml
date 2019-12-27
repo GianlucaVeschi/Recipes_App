@@ -2,8 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="300dp"
-    android:layout_width="200dp"
+    android:layout_height="290dp"
+    android:layout_width="180dp"
     android:background="@android:color/background_light"
     android:padding="10dp"
     android:clickable="true"
@@ -12,7 +12,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_id"
         android:layout_height="220dp"
-        android:layout_width="200dp"
+        android:layout_width="1700dp"
         android:layout_margin="2dp"
         app:cardCornerRadius="8dp"
         android:orientation="vertical">
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="recipe_name"
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:layout_below="@+id/recipe_name"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="Recipe ID: "
             android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:textSize="12sp" />
             />
 
     </RelativeLayout>

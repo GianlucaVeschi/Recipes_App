@@ -34,12 +34,10 @@ public class MainBluetoothActivity extends AppCompatActivity implements ScanResu
     @BindView(R.id.scanButton)      Button scanButton;
 
     private boolean ble_scanning = false;
-    private Handler handler = new Handler();
     private BleDeviceAdapter ble_device_list_adapter;
     private BleScanner ble_scanner;
     private static final long SCAN_TIMEOUT = 5000;
     private static final int REQUEST_LOCATION = 0;
-    private static String[] PERMISSIONS_LOCATION = {Manifest.permission.ACCESS_COARSE_LOCATION};
     private boolean permissions_granted=false;
     private int device_count=0;
     private Toast toast;

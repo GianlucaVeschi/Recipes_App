@@ -45,16 +45,19 @@ dependencies {
 
     //GSON
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
 
     //Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.6.1'
+    def RetrofitVersion = "2.6.1"
+    implementation "com.squareup.retrofit2:retrofit:$RetrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$RetrofitVersion"
 
-    //LoggingInterceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:4.2.1")
+    //OkHttp
+    def OkHttpVersion = "4.2.1"
+    implementation("com.squareup.okhttp3:okhttp:$OkHttpVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:$OkHttpVersion")
 
     //ROOM
-    def room_version = "2.2.2"
+    def room_version = "2.2.3"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 

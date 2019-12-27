@@ -84,30 +84,7 @@ public class PeripheralControlActivity extends AppCompatActivity {
         temperatureSwitch.setChecked(false);
         temperatureSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (bluetooth_le_adapter != null && bluetooth_le_adapter.isConnected()) {
-                    if (!isChecked) {
-                        //DESubscribe to temperature indications
-                        showMsg("Switching off temperature monitoring");
-                        if (bluetooth_le_adapter.setIndicationsState(
-                                Constants.miji_TEMPERATURE_SERVICE,
-                                Constants.miji_TEMPERATURE_CHARACTERISTIC,
-                                false)) {
-                            clearTemperature();
-                        } else {
-                            showMsg("Failed to inform temperature monitoring has been disabled");
-                        }
-                    } else {
-                        //Subscribe to temperature indications
-                        if (bluetooth_le_adapter.setIndicationsState(
-                                Constants.miji_TEMPERATURE_SERVICE,
-                                Constants.miji_TEMPERATURE_CHARACTERISTIC,
-                                true)) {
-                            showMsg("Switching on temperature monitoring");
-                        } else {
-                            showMsg("Failed to inform temperature monitoring has been enabled");
-                        }
-                    }
-                }
+                handleTemperatureSwitch(isChecked);
             }
         });
 
@@ -115,7 +92,7 @@ public class PeripheralControlActivity extends AppCompatActivity {
         // TODO: 25/12/2019 :
         //  When sliding left, the bluetooth connection does not get disconnected.
         //  Think about a solution
-        Slidr.attach(this);
+        //Slidr.attach(this);
     }
 
     @Override
@@ -123,6 +100,25 @@ public class PeripheralControlActivity extends AppCompatActivity {
         super.onDestroy();
         unbindService(service_connection);
         bluetooth_le_adapter = null;
+    }
+
+    /**If we’re connected to the peripheral device when the user presses the back button,
+     * we need to respond by first disconnecting and then allowing the default response
+     * to pressing the back button to be taken.
+     * This function will be automatically called*/
+    @Override
+    public void onBackPressed() {
+        Log.d(Constants.BT_TAG, "onBackPressed");
+        backBtnWasPressed = true;
+        if (bluetooth_le_adapter.isConnected()) {
+            try {
+                bluetooth_le_adapter.disconnect();
+            } catch (Exception e) {
+                Log.d(Constants.BT_TAG, "onBackPressed: " + e.getMessage());
+            }
+        } else {
+            finish();
+        }
     }
 
     private final ServiceConnection service_connection = new ServiceConnection() {
@@ -151,27 +147,6 @@ public class PeripheralControlActivity extends AppCompatActivity {
         }
     }
 
-
-
-    /**If we’re connected to the peripheral device when the user presses the back button,
-     * we need to respond by first disconnecting and then allowing the default response
-     * to pressing the back button to be taken.
-     * This function will be automatically called*/
-    @Override
-    public void onBackPressed() {
-        Log.d(Constants.BT_TAG, "onBackPressed");
-        backBtnWasPressed = true;
-        if (bluetooth_le_adapter.isConnected()) {
-            try {
-                bluetooth_le_adapter.disconnect();
-            } catch (Exception e) {
-                Log.d(Constants.BT_TAG, "onBackPressed: " + e.getMessage());
-            }
-        } else {
-            finish();
-        }
-    }
-
     private void showMsg(final String msg) {
         Log.d(Constants.BT_TAG, msg);
         runOnUiThread(new Runnable() {
@@ -187,9 +162,8 @@ public class PeripheralControlActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             Bundle bundle;
-            String service_uuid = "";
-            String characteristic_uuid = "";
-            byte[] b = null;
+            String characteristic_uuid;
+            byte[] b;
 
             // message handling logic
             switch (msg.what) {
@@ -244,26 +218,26 @@ public class PeripheralControlActivity extends AppCompatActivity {
                         if (svc.getUuid().toString().equalsIgnoreCase(Constants.miji_DEVICE_INFORMATION)) {
                             miji_device_information = true;
                             List<BluetoothGattCharacteristic> characteristics_list = svc.getCharacteristics();
-                            //logCharacteristics(characteristics_list,"miji_DEVICE_INFORMATION");
+                            //DataHelper.logCharacteristics(characteristics_list,"miji_DEVICE_INFORMATION");
                             continue;
                         }
 
                         if (svc.getUuid().toString().equalsIgnoreCase(Constants.miji_GENERIC_ACCESS)) {
                             miji_generic_access = true;
                             List<BluetoothGattCharacteristic> characteristics_list = svc.getCharacteristics();
-                            //logCharacteristics(characteristics_list,"miji_GENERIC_ACCESS");
+                            //DataHelper.logCharacteristics(characteristics_list,"miji_GENERIC_ACCESS");
                             continue;
                         }
                         if (svc.getUuid().toString().equalsIgnoreCase(Constants.miji_GENERIC_ATTRIBUTE)) {
                             miji_generic_attribute = true;
                             List<BluetoothGattCharacteristic> characteristics_list = svc.getCharacteristics();
-                            //logCharacteristics(characteristics_list,"miji_GENERIC_ATTRIBUTE");
+                            //DataHelper.logCharacteristics(characteristics_list,"miji_GENERIC_ATTRIBUTE");
                             continue;
                         }
                         if (svc.getUuid().toString().equalsIgnoreCase(Constants.miji_TEMPERATURE_SERVICE)) {
                             miji_service_uuid = true;
                             List<BluetoothGattCharacteristic> characteristics_list = svc.getCharacteristics();
-                            logCharacteristics(characteristics_list,"miji_TEMPERATURE_SERVICE");
+                            DataHelper.logCharacteristics(characteristics_list,"miji_TEMPERATURE_SERVICE");
                             continue;
                         }
                     }
@@ -308,40 +282,35 @@ public class PeripheralControlActivity extends AppCompatActivity {
                     break;
             }
         }
-        
-        //LOG CHARACTERISTICS
-        private void logCharacteristics(List<BluetoothGattCharacteristic> characteristics, String service_name){
-            Log.d(Constants.BT_TAG, "logCharacteristics of: " + service_name + "\n");
-            for(BluetoothGattCharacteristic characteristic: characteristics){
-                Log.d(Constants.BT_TAG, "--->  " + characteristic.toString());
-                Log.d(Constants.BT_TAG, "temp char uuid: " + characteristic.getUuid());
-                try{
-                    Log.d(Constants.BT_TAG, "--->  " + DataHelper.byteArrayAsHexString(characteristic.getValue()));
-                }
-                catch (Exception e){
-                    Log.d(Constants.BT_TAG, "--->  " + "nullPointerException caught");
-                }
-                List<BluetoothGattDescriptor> descriptors = characteristic.getDescriptors();
-                logDescriptors(descriptors,characteristic.toString());
-            }
-        }
     };
 
-    //LOG DESCRIPTORS
-    private void logDescriptors(List<BluetoothGattDescriptor> descriptors, String characteristics_name){
-        Log.d(Constants.BT_TAG, "logDescriptors of: " + characteristics_name + "\n");
-        if(!descriptors.isEmpty()){
-            for(BluetoothGattDescriptor descriptor : descriptors){
-                try{
-                    Log.d(Constants.BT_TAG, "--->  " + DataHelper.byteArrayAsHexString(descriptor.getValue()));
+    /**
+     * Temperature Related
+     * */
+    private void handleTemperatureSwitch(boolean isChecked) {
+        if (bluetooth_le_adapter != null && bluetooth_le_adapter.isConnected()) {
+            if (!isChecked) {
+                //DESubscribe to temperature indications
+                showMsg("Switching off temperature monitoring");
+                if (bluetooth_le_adapter.setIndicationsState(
+                        Constants.miji_TEMPERATURE_SERVICE,
+                        Constants.miji_TEMPERATURE_CHARACTERISTIC,
+                        false)) {
+                    clearTemperature();
+                } else {
+                    showMsg("Failed to inform temperature monitoring has been disabled");
                 }
-                catch (Exception e){
-                    Log.d(Constants.BT_TAG, "--->  " + "nullPointerException caught");
+            } else {
+                //Subscribe to temperature indications
+                if (bluetooth_le_adapter.setIndicationsState(
+                        Constants.miji_TEMPERATURE_SERVICE,
+                        Constants.miji_TEMPERATURE_CHARACTERISTIC,
+                        true)) {
+                    showMsg("Switching on temperature monitoring");
+                } else {
+                    showMsg("Failed to inform temperature monitoring has been enabled");
                 }
             }
-        }
-        else{
-            //Log.d(TAG, "NO DESCRIPTORS FOUND :" + descriptors.size());
         }
     }
 

@@ -80,8 +80,8 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
         //Adds the "Hamburger" to the toolbar,which opens the drawer layout
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
         toggle.syncState(); //Rotates the hamburger Icon
+        drawer.addDrawerListener(toggle);
 
         //Set the Bottom Navigation Bar
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

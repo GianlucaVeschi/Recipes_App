@@ -12,5 +12,6 @@
     <color name="LightBlueGrey">#d4e4ff</color>
     <color name="VeryLightRed">#e84c41</color>
     <color name="White">#fff</color>
+    <color name="fullBlack">#000</color>
 
 </resources>

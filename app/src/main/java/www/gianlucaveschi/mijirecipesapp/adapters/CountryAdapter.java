@@ -2,9 +2,12 @@ package www.gianlucaveschi.mijirecipesapp.adapters;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.gianlucaveschi.load_json_images_picasso.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import www.gianlucaveschi.mijirecipesapp.models.others.Country;
@@ -20,11 +24,14 @@ import www.gianlucaveschi.mijirecipesapp.models.others.Country;
  * Created by sheck on 25/09/2019.
  */
 
-public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder> {
+public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder> implements Filterable {
 
     private Context context;
-    private ArrayList<Country> countriesList;
     private CountryAdapter.OnItemClickListener mListener;
+
+    private ArrayList<Country> countriesList;
+    private ArrayList<Country> countriesListFull;
+
 
     //Click variables
     public interface OnItemClickListener {
@@ -34,6 +41,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     public CountryAdapter(Context context, ArrayList<Country> countriesList) {
         this.context = context;
         this.countriesList = countriesList;
+        countriesListFull = new ArrayList<>(countriesList);
     }
 
     public void setOnItemClickListener(CountryAdapter.OnItemClickListener listener) {
@@ -89,4 +97,40 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
     public int getItemCount() {
         return countriesList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return countryFilter;
+    }
+
+    private Filter countryFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence searchedText) {
+            Log.d("CountryAdapter", "PerformFiltering: ");
+            ArrayList<Country> filteredCountriesList = new ArrayList<>();
+            if (searchedText == null || searchedText.length() == 0) {
+                filteredCountriesList.addAll(countriesListFull);
+            } else {
+
+                //Get what the User wants to search
+                String filterPattern = searchedText.toString().toLowerCase().trim();
+                for (Country item : countriesListFull) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
+                        Log.d("CountryAdapter", "performFiltering: " + item.getName());
+                        filteredCountriesList.add(item);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredCountriesList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence searchedText, FilterResults results) {
+            countriesList.clear();
+            countriesList.addAll((ArrayList) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

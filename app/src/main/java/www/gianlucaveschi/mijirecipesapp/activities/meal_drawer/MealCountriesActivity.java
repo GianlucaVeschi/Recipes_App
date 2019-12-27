@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,8 +16,11 @@ import com.r0adkll.slidr.Slidr;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -27,10 +34,13 @@ public class MealCountriesActivity extends AppCompatActivity {
 
     private static final String TAG = "MealCountriesActivity";
 
+    //@BindView(R.id.searchCountry)           SearchView searchView;
+    @BindView(R.id.toolbar)                 Toolbar toolbar;
     @BindView(R.id.meal_countries_title)    TextView mealCountriesTitle;
     @BindView(R.id.flags_rv)                RecyclerView flagsRecView;
 
     private ArrayList<Country> countriesList = new ArrayList<>();
+    CountryAdapter countryAdapter;
 
 
     @Override
@@ -39,11 +49,38 @@ public class MealCountriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meal_countries);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         createCountriesList();
         buildRecyclerView();
 
         //Slide back to the Previous Activity
         Slidr.attach(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_miji_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        Log.d(TAG, "onCreateOptionsMenu: ");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                countryAdapter.getFilter().filter(newText);
+                Log.d(TAG, "onQueryTextChange:" );
+                return false;
+            }
+        });
+
+
+        return true;
     }
 
     private void createCountriesList(){
@@ -70,7 +107,7 @@ public class MealCountriesActivity extends AppCompatActivity {
     private void buildRecyclerView() {
         flagsRecView.setHasFixedSize(true);
         flagsRecView.setLayoutManager(new GridLayoutManager(this,3));
-        CountryAdapter countryAdapter = new CountryAdapter(this,countriesList);
+        countryAdapter = new CountryAdapter(this,countriesList);
         flagsRecView.setAdapter(countryAdapter);
         handleClickOnFlagEvent(countryAdapter);
     }
