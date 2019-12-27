@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +19,8 @@ import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -28,13 +34,18 @@ import www.gianlucaveschi.mijirecipesapp.models.others.Ingredient;
 
 public class MealMainIngredientActivity extends AppCompatActivity {
 
+    @BindView(R.id.toolbar)         Toolbar toolbar;
     @BindView(R.id.meat_rv)         RecyclerView meatRecView;
     @BindView(R.id.vegetables_rv)   RecyclerView vegetablesRecView;
     @BindView(R.id.cheese_rv)       RecyclerView cheeseRecView;
 
-    private ArrayList<Ingredient> meatList = new ArrayList<>();
-    private ArrayList<Ingredient> vegetablesList = new ArrayList<>();
-    private ArrayList<Ingredient> cheeseList = new ArrayList<>();
+    private ArrayList<Ingredient> meatList      = new ArrayList<>();
+    private ArrayList<Ingredient> veggiesList   = new ArrayList<>();
+    private ArrayList<Ingredient> cheeseList    = new ArrayList<>();
+
+    private IngredientAdapter meatAdapter;
+    private IngredientAdapter veggiesAdapter;
+    private IngredientAdapter cheeseAdapter;
 
     private static final String TAG = "MealMainIngredientActiv";
 
@@ -44,6 +55,7 @@ public class MealMainIngredientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meal_main_ingredient);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         createIngredientsList();
         buildRecyclerView();
 
@@ -51,7 +63,34 @@ public class MealMainIngredientActivity extends AppCompatActivity {
         Slidr.attach(this);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_miji_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        Log.d(TAG, "onCreateOptionsMenu: ");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                meatAdapter.getFilter().filter(newText);
+                veggiesAdapter.getFilter().filter(newText);
+                cheeseAdapter.getFilter().filter(newText);
+                Log.d(TAG, "onQueryTextChange:" );
+                return false;
+            }
+        });
+        return true;
+    }
+
     private void createIngredientsList() {
+
         //Meat
         meatList.add(new Ingredient("Chicken"));
         meatList.add(new Ingredient("Egg"));
@@ -60,14 +99,14 @@ public class MealMainIngredientActivity extends AppCompatActivity {
         meatList.add(new Ingredient("Salmon"));
 
         //Veggies
-        vegetablesList.add(new Ingredient("lemon"));
-        vegetablesList.add(new Ingredient("Mushrooms"));
-        vegetablesList.add(new Ingredient("Potatoes"));
-        vegetablesList.add(new Ingredient("Spinach"));
-        vegetablesList.add(new Ingredient("Tomatoes"));
-        vegetablesList.add(new Ingredient("Zucchini"));
-        vegetablesList.add(new Ingredient("Spaghetti"));
-        vegetablesList.add(new Ingredient("Avocado"));
+        veggiesList.add(new Ingredient("lemon"));
+        veggiesList.add(new Ingredient("Mushrooms"));
+        veggiesList.add(new Ingredient("Potatoes"));
+        veggiesList.add(new Ingredient("Spinach"));
+        veggiesList.add(new Ingredient("Tomatoes"));
+        veggiesList.add(new Ingredient("Zucchini"));
+        veggiesList.add(new Ingredient("Spaghetti"));
+        veggiesList.add(new Ingredient("Avocado"));
 
         //Cheese
         cheeseList.add(new Ingredient("Parmesan"));
@@ -76,22 +115,23 @@ public class MealMainIngredientActivity extends AppCompatActivity {
 
     }
 
+
     private void buildRecyclerView() {
         meatRecView.setHasFixedSize(true);
         meatRecView.setLayoutManager(new GridLayoutManager(this,3));
-        IngredientAdapter meatAdapter = new IngredientAdapter(this,meatList);
+        meatAdapter = new IngredientAdapter(this,meatList);
         meatRecView.setAdapter(meatAdapter);
         handleClickOnFlagEvent(meatAdapter,meatList);
 
         vegetablesRecView.setHasFixedSize(true);
         vegetablesRecView.setLayoutManager(new GridLayoutManager(this,3));
-        IngredientAdapter vegetablesAdapter = new IngredientAdapter(this,vegetablesList);
-        vegetablesRecView.setAdapter(vegetablesAdapter);
-        handleClickOnFlagEvent(vegetablesAdapter,vegetablesList);
+        veggiesAdapter = new IngredientAdapter(this,veggiesList);
+        vegetablesRecView.setAdapter(veggiesAdapter);
+        handleClickOnFlagEvent(veggiesAdapter,veggiesList);
 
         cheeseRecView.setHasFixedSize(true);
         cheeseRecView.setLayoutManager(new GridLayoutManager(this,3));
-        IngredientAdapter cheeseAdapter = new IngredientAdapter(this,cheeseList);
+        cheeseAdapter = new IngredientAdapter(this,cheeseList);
         cheeseRecView.setAdapter(cheeseAdapter);
         handleClickOnFlagEvent(cheeseAdapter,cheeseList);
     }
@@ -108,7 +148,6 @@ public class MealMainIngredientActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER,0,0);
                 toast.show();
-
 
                 //Get Nationality informations of the clicked stove
                 String imageUrl = ingredientsList.get(position).getIngredientImgUrl();

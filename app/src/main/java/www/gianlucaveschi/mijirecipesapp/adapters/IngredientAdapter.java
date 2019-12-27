@@ -2,9 +2,12 @@ package www.gianlucaveschi.mijirecipesapp.adapters;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,11 +24,13 @@ import www.gianlucaveschi.mijirecipesapp.models.others.Ingredient;
  * Created by sheck on 25/09/2019.
  */
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
+public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> implements Filterable {
 
     private Context context;
-    private ArrayList<Ingredient> ingredientsList;
     private IngredientAdapter.OnItemClickListener mListener;
+
+    private ArrayList<Ingredient> ingredientsList;
+    private ArrayList<Ingredient> ingredientsListFull;
 
     //Click variables
     public interface OnItemClickListener {
@@ -35,6 +40,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public IngredientAdapter(Context context, ArrayList<Ingredient> ingredientsList) {
         this.context = context;
         this.ingredientsList = ingredientsList;
+        ingredientsListFull = new ArrayList<>(ingredientsList);
+
     }
 
     public void setOnItemClickListener(IngredientAdapter.OnItemClickListener listener) {
@@ -89,4 +96,38 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public int getItemCount() {
         return ingredientsList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return ingredientFilter;
+    }
+
+    private Filter ingredientFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence searchedText) {
+            ArrayList<Ingredient> filteredIngredientList = new ArrayList<>();
+            if (searchedText == null || searchedText.length() == 0) {
+                filteredIngredientList.addAll(ingredientsListFull);
+            } else {
+
+                //Get what the User wants to search
+                String filterPattern = searchedText.toString().toLowerCase().trim();
+                for (Ingredient item : ingredientsListFull) {
+                    if (item.getName().toLowerCase().contains(filterPattern)) {
+                        filteredIngredientList.add(item);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredIngredientList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence searchedText, FilterResults results) {
+            ingredientsList.clear();
+            ingredientsList.addAll((ArrayList) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

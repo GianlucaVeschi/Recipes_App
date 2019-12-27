@@ -3,6 +3,7 @@ package www.gianlucaveschi.mijirecipesapp.activities.bottom_nav;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,8 +17,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -55,6 +58,7 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
 
     //Retrofit instance
     MealAPI mealAPI;
+    MealAdapter mealAdapter;
 
     //UI components
     @BindView(R.id.drawer_layout)   DrawerLayout drawer;
@@ -109,8 +113,26 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
     //Inflate the Menu of the Drawer Layout
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.contact_miji_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_miji_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        Log.d(TAG, "onCreateOptionsMenu: ");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mealAdapter.getFilter().filter(newText);
+                Log.d(TAG, "onQueryTextChange:" );
+                return false;
+            }
+        });
+        return true;
     }
 
 
@@ -192,7 +214,7 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
      * */
     private void updateUserInterface(MealContainer mealContainer, RecyclerView recyclerView){
         ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
-        MealAdapter mealAdapter = new MealAdapter(AboutMeals.this, mealsList);
+        mealAdapter = new MealAdapter(AboutMeals.this, mealsList);
         recyclerView.setAdapter(mealAdapter);
         mealAdapter.setOnItemClickListener(AboutMeals.this);
     }
@@ -244,23 +266,12 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
         if(id == R.id.contact_miji_button){
             Toast.makeText(this,"Soon you will be able to send me an email",Toast.LENGTH_SHORT)
                     .show();
-            //sendEmailToMiji();
+
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void sendEmailToMiji() {
-        Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"gianluca.veschi00@gmail.com"});
-        i.putExtra(Intent.EXTRA_SUBJECT, "SENT FROM ANDROID");
-        i.putExtra(Intent.EXTRA_TEXT   , "body of email");
-        try {
-            startActivity(Intent.createChooser(i, "Send mail..."));
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(AboutMeals.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     /**
      * Bottom Navigation View

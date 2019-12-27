@@ -1,9 +1,12 @@
 package www.gianlucaveschi.mijirecipesapp.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,15 +18,18 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
+import www.gianlucaveschi.mijirecipesapp.models.others.Country;
 
-public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private Context mContext;
     private ArrayList<MealSimple> mMealsList;
+    private ArrayList<MealSimple> mealsListFull;
 
     //Distinguish between the two TypeViews
     private final static int HORIZONTAL_VIEW_TYPE = 1;
     private final static int VERTICAL_VIEW_TYPE = 2;
+
 
     /**ON CLICK LISTENER utils*/
 
@@ -46,6 +52,7 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public MealAdapter(Context context, ArrayList<MealSimple> mealsList) {
         mContext = context;
         mMealsList = mealsList;
+        mealsListFull = new ArrayList<>(mMealsList);
     }
 
     /**
@@ -193,4 +200,42 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 .centerInside()
                 .into(verticalViewHolder.mImageView);
     }
+
+    @Override
+    public Filter getFilter() {
+        return mealFilter;
+    }
+
+    private Filter mealFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence searchedText) {
+            Log.d("mealAdapter", "PerformFiltering: ");
+            ArrayList<MealSimple> filteredMealsList = new ArrayList<>();
+            if (searchedText == null || searchedText.length() == 0) {
+                filteredMealsList.addAll(mealsListFull);
+            } else {
+
+                //Get what the User wants to search
+                String filterPattern = searchedText.toString().toLowerCase().trim();
+                for (MealSimple item : mealsListFull) {
+                    if (item.getMealName().toLowerCase().contains(filterPattern)) {
+                        Log.d("CountryAdapter", "performFiltering: " + item.getMealName());
+                        filteredMealsList.add(item);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredMealsList;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence searchedText, FilterResults results) {
+            mMealsList.clear();
+            mMealsList.addAll((ArrayList) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
 }

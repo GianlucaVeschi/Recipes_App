@@ -34,13 +34,12 @@ public class MealCountriesActivity extends AppCompatActivity {
 
     private static final String TAG = "MealCountriesActivity";
 
-    //@BindView(R.id.searchCountry)           SearchView searchView;
     @BindView(R.id.toolbar)                 Toolbar toolbar;
     @BindView(R.id.meal_countries_title)    TextView mealCountriesTitle;
     @BindView(R.id.flags_rv)                RecyclerView flagsRecView;
 
     private ArrayList<Country> countriesList = new ArrayList<>();
-    CountryAdapter countryAdapter;
+    private CountryAdapter countryAdapter;
 
 
     @Override
@@ -78,8 +77,6 @@ public class MealCountriesActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
         return true;
     }
 

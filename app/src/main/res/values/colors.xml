@@ -13,5 +13,6 @@
     <color name="VeryLightRed">#e84c41</color>
     <color name="White">#fff</color>
     <color name="fullBlack">#000</color>
+    <color name="randomColor">#124160</color>
 
 </resources>

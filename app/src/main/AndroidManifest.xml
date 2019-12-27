@@ -32,9 +32,6 @@
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCategoriesActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 

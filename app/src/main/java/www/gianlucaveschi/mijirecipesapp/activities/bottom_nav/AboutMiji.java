@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -64,6 +65,19 @@ public class AboutMiji extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void sendEmailToMiji() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"gianluca.veschi00@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "SENT FROM ANDROID");
+        i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(AboutMiji.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
