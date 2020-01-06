@@ -1,6 +1,6 @@
 package www.gianlucaveschi.mijirecipesapp.activities.bluetooth;
 
-public class Constants {
+public class BleConstants {
     public static final String BT_TAG = "BLUETOOTH_TAG";
     public static final String FIND = "Find MIJI Device";
     public static final String STOP_SCANNING = "Stop Scanning";

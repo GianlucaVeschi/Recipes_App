@@ -9,7 +9,6 @@ public class Country {
     public static final String pixelSize  = "/64.png"; //16 24 32 48 64
 
 
-
     public Country(String name, String flag_id) {
         this.name = name;
         this.flag_img_url.append(flag_id).append(shinyTheme).append(pixelSize);

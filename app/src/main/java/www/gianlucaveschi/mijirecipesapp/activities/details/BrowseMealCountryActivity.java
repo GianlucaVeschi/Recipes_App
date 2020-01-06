@@ -22,8 +22,8 @@ import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.adapters.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.MealAPI;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.RetrofitNetworkManager;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 
 
 public class BrowseMealCountryActivity extends AppCompatActivity implements MealAdapter.OnItemClickListener {

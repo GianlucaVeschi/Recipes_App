@@ -98,6 +98,7 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
         return countriesList.size();
     }
 
+    //Search Results
     @Override
     public Filter getFilter() {
         return countryFilter;

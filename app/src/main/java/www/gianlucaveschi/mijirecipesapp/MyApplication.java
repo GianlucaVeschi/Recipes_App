@@ -5,7 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.RetrofitNetworkManager;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyNetworkManager;
 
 public class MyApplication extends Application {

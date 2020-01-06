@@ -41,12 +41,12 @@ public class BleScanner {
 
         // check bluetooth is available and on
         if (bluetooth_adapter == null || !bluetooth_adapter.isEnabled()) {
-            Log.d(Constants.BT_TAG, "Bluetooth is NOT switched on");
+            Log.d(BleConstants.BT_TAG, "Bluetooth is NOT switched on");
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             enableBtIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(enableBtIntent);
         }
-        Log.d(Constants.BT_TAG, "Bluetooth is switched on");
+        Log.d(BleConstants.BT_TAG, "Bluetooth is switched on");
     }
 
     /**
@@ -57,31 +57,31 @@ public class BleScanner {
     public void startScanning(final ScanResultsConsumer scan_results_consumer, long stop_after_ms) {
         //we use a boolean to keep track of whether we’re currently scanning or not
         if (scanning) {
-            Log.d(Constants.BT_TAG, "Already scanning so ignoring startScanning request");
+            Log.d(BleConstants.BT_TAG, "Already scanning so ignoring startScanning request");
             return;
         }
         //this object will start the Bluetooth scanning process
         if (scanner == null) {
             scanner = bluetooth_adapter.getBluetoothLeScanner();
-            Log.d(Constants.BT_TAG, "Created BluetoothScanner object");
+            Log.d(BleConstants.BT_TAG, "Created BluetoothScanner object");
         }
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 if (scanning) {
-                    Log.d(Constants.BT_TAG, "Stopping scanning");
+                    Log.d(BleConstants.BT_TAG, "Stopping scanning");
                     scanner.stopScan(scan_callback);
                     setScanning(false);
                 }
             }
         }, stop_after_ms);
         this.scan_results_consumer = scan_results_consumer;
-        Log.d(Constants.BT_TAG, "Scanning");
+        Log.d(BleConstants.BT_TAG, "Scanning");
 
         //Set Filtering
         List<ScanFilter> filters = new ArrayList<>();
-        ScanFilter filter = new ScanFilter.Builder().setDeviceName(Constants.miji_DEVICE_NAME).build();
+        ScanFilter filter = new ScanFilter.Builder().setDeviceName(BleConstants.miji_DEVICE_NAME).build();
         //filters.add(filter);
 
         //Set Settings
@@ -92,7 +92,7 @@ public class BleScanner {
 
     public void stopScanning() {
         setScanning(false);
-        Log.d(Constants.BT_TAG, "Stopping scanning");
+        Log.d(BleConstants.BT_TAG, "Stopping scanning");
         scanner.stopScan(scan_callback);
     }
 

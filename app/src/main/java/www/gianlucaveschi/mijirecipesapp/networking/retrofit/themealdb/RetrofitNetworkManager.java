@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb;
 
 import android.content.Context;
 import android.util.Log;
@@ -35,7 +35,7 @@ public class RetrofitNetworkManager{
         return new Cache(new File(MyApplication.getInstance().getCacheDir(),"someIdentifier"), cacheSize);
     }
 
-    //Retrofit Instace initialized only once
+    //Retrofit Instance initialized only once
     private static Retrofit retrofit = null;
 
     //Get the Retrofit instance

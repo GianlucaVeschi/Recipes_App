@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
-import com.google.gson.JsonObject;
 import com.r0adkll.slidr.Slidr;
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +22,7 @@ import androidx.cardview.widget.CardView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.MealAPI;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyRequestListener;
 

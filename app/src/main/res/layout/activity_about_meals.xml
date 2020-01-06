@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    tools:context="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeals">
+    tools:context="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMealsActivity">
 
     <!-- DRAWER CONTENT -->
     <RelativeLayout
@@ -28,6 +28,15 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <!-- TOP NAV
+        <include layout="@layout/top_navigation_bar"
+            android:id="@+id/top_nav_bar"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_above="@id/main_content"/>
+        -->
 
         <!-- MAIN CONTENT -->
         <include layout="@layout/main_content"

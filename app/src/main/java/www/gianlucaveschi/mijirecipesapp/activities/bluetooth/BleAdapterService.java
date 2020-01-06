@@ -154,20 +154,20 @@ public class BleAdapterService extends Service {
         // is established or broken.
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            Log.d(Constants.BT_TAG, "onConnectionStateChange: status=" + status);
+            Log.d(BleConstants.BT_TAG, "onConnectionStateChange: status=" + status);
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                Log.d(Constants.BT_TAG, "onConnectionStateChange: CONNECTED");
+                Log.d(BleConstants.BT_TAG, "onConnectionStateChange: CONNECTED");
                 connected = true;
                 Message msg = Message.obtain(activity_handler, GATT_CONNECTED);
                 msg.sendToTarget();
             }
             else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                Log.d(Constants.BT_TAG, "onConnectionStateChange: DISCONNECTED");
+                Log.d(BleConstants.BT_TAG, "onConnectionStateChange: DISCONNECTED");
                 connected = false;
                 Message msg = Message.obtain(activity_handler, GATT_DISCONNECT);
                 msg.sendToTarget();
                 if (bluetooth_gatt != null) {
-                    Log.d(Constants.BT_TAG,"Closing and destroying BluetoothGatt object");
+                    Log.d(BleConstants.BT_TAG,"Closing and destroying BluetoothGatt object");
                     bluetooth_gatt.close();
                     bluetooth_gatt = null;
                 }
@@ -194,13 +194,13 @@ public class BleAdapterService extends Service {
                 msg.setData(bundle);
                 msg.sendToTarget();
             } else {
-                Log.d(Constants.BT_TAG, "failed to read characteristic: "+characteristic.getUuid().toString()+" of service "+characteristic.getService().getUuid().toString()+" : status="+status);
+                Log.d(BleConstants.BT_TAG, "failed to read characteristic: "+characteristic.getUuid().toString()+" of service "+characteristic.getService().getUuid().toString()+" : status="+status);
                 sendConsoleMessage("characteristic read err: "+status);
             }
         }
 
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-            Log.d(Constants.BT_TAG, "onCharacteristicWrite");
+            Log.d(BleConstants.BT_TAG, "onCharacteristicWrite");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Bundle bundle = new Bundle();
                 bundle.putString(PARCEL_CHARACTERISTIC_UUID, characteristic.getUuid().toString());
@@ -259,7 +259,7 @@ public class BleAdapterService extends Service {
         if (bluetooth_adapter == null || bluetooth_gatt == null) {
             return;
         }
-        Log.d(Constants.BT_TAG,"Discovering GATT services");
+        Log.d(BleConstants.BT_TAG,"Discovering GATT services");
         bluetooth_gatt.discoverServices();
     }
 
@@ -272,7 +272,7 @@ public class BleAdapterService extends Service {
     /**These are the public methods which the Activity will call to initiate reading from
      * or writing to a characteristic, specified using a service UUID and a characteristic UUID.*/
     public boolean readCharacteristic(String serviceUuid, String characteristicUuid) {
-        Log.d(Constants.BT_TAG,"readCharacteristic: " + characteristicUuid + " of service " + serviceUuid);
+        Log.d(BleConstants.BT_TAG,"readCharacteristic: " + characteristicUuid + " of service " + serviceUuid);
         if (bluetooth_adapter == null || bluetooth_gatt == null) {
             sendConsoleMessage("readCharacteristic: bluetooth_adapter|bluetooth_gatt null");
             return false;
@@ -291,7 +291,7 @@ public class BleAdapterService extends Service {
     }
 
     public boolean writeCharacteristic(String serviceUuid, String characteristicUuid, byte[] value) {
-        Log.d(Constants.BT_TAG,"writeCharacteristic:"+characteristicUuid+" of service " +serviceUuid);
+        Log.d(BleConstants.BT_TAG,"writeCharacteristic:"+characteristicUuid+" of service " +serviceUuid);
         if (bluetooth_adapter == null || bluetooth_gatt == null) {
             sendConsoleMessage("writeCharacteristic: bluetooth_adapter|bluetooth_gatt null");
             return false;
@@ -340,7 +340,7 @@ public class BleAdapterService extends Service {
         bluetooth_gatt.setCharacteristicNotification(gattChar, enabled);
 
         // Enable remote notifications
-        descriptor = gattChar.getDescriptor(UUID.fromString(Constants.CLIENT_CHARACTERISTIC_CONFIG));
+        descriptor = gattChar.getDescriptor(UUID.fromString(BleConstants.CLIENT_CHARACTERISTIC_CONFIG));
         if (enabled) {
             descriptor.setValue(BluetoothGattDescriptor.ENABLE_INDICATION_VALUE);
         } else {
@@ -359,11 +359,11 @@ public class BleAdapterService extends Service {
     /**MONITORING SIGNAL STRENGTH*/
     public void readRemoteRssi() {
         if (bluetooth_adapter == null || bluetooth_gatt == null) {
-            Log.d(Constants.BT_TAG, "readRemoteRssi: adapter or gatt == null");
+            Log.d(BleConstants.BT_TAG, "readRemoteRssi: adapter or gatt == null");
             return;
         }
 
-        Log.d(Constants.BT_TAG, "readRemoteRssi: ");
+        Log.d(BleConstants.BT_TAG, "readRemoteRssi: ");
         //will call the callback onReadRemoteRssi
         bluetooth_gatt.readRemoteRssi();
     }

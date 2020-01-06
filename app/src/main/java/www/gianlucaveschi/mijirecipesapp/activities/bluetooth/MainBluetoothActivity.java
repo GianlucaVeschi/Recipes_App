@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -76,8 +75,8 @@ public class MainBluetoothActivity extends AppCompatActivity implements ScanResu
                 BluetoothDevice device = ble_device_list_adapter.getDevice(position);
                 if (toast != null) { toast.cancel(); }
                 Intent intent = new Intent(MainBluetoothActivity.this, PeripheralControlActivity.class);
-                intent.putExtra(Constants.EXTRA_NAME, device.getName());
-                intent.putExtra(Constants.EXTRA_ID, device.getAddress());
+                intent.putExtra(BleConstants.EXTRA_NAME, device.getName());
+                intent.putExtra(BleConstants.EXTRA_ID, device.getAddress());
                 startActivity(intent);
             }
         });
@@ -99,7 +98,7 @@ public class MainBluetoothActivity extends AppCompatActivity implements ScanResu
                     permissions_granted = false;
                     requestLocationPermission();
                 } else {
-                    Log.i(Constants.BT_TAG, "Location permission has already been granted. Starting scanning.");
+                    Log.i(BleConstants.BT_TAG, "Location permission has already been granted. Starting scanning.");
                     permissions_granted = true;
                 }
             } else {
@@ -122,17 +121,17 @@ public class MainBluetoothActivity extends AppCompatActivity implements ScanResu
                     ble_device_list_adapter.notifyDataSetChanged();
                 }
             });
-            simpleToast(Constants.SCANNING, 2000);
+            simpleToast(BleConstants.SCANNING, 2000);
             ble_scanner.startScanning(this, SCAN_TIMEOUT);
         } else {
-            Log.i(Constants.BT_TAG, "Permission to perform Bluetooth scanning was not yet granted");
+            Log.i(BleConstants.BT_TAG, "Permission to perform Bluetooth scanning was not yet granted");
         }
     }
 
 
     private void setScanState(boolean value) {
         ble_scanning = value;
-        scanButton.setText(value ? Constants.STOP_SCANNING : Constants.FIND);
+        scanButton.setText(value ? BleConstants.STOP_SCANNING : BleConstants.FIND);
     }
 
     @Override
@@ -172,17 +171,17 @@ public class MainBluetoothActivity extends AppCompatActivity implements ScanResu
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_LOCATION) {
-            Log.i(Constants.BT_TAG, "Received response for location permission request.");
+            Log.i(BleConstants.BT_TAG, "Received response for location permission request.");
             // Check if the only required permission has been granted
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Location permission has been granted
-                Log.i(Constants.BT_TAG, "Location permission has now been granted. Scanning.....");
+                Log.i(BleConstants.BT_TAG, "Location permission has now been granted. Scanning.....");
                 permissions_granted = true;
                 if (ble_scanner.isScanning()) {
                     startScanning();
                 }
             } else {
-                Log.i(Constants.BT_TAG, "Location permission was NOT granted.");
+                Log.i(BleConstants.BT_TAG, "Location permission was NOT granted.");
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -190,16 +189,16 @@ public class MainBluetoothActivity extends AppCompatActivity implements ScanResu
     }
 
     public void requestLocationPermission() {
-        Log.i(Constants.BT_TAG, "Location permission has NOT yet been granted. Requesting permission.");
+        Log.i(BleConstants.BT_TAG, "Location permission has NOT yet been granted. Requesting permission.");
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            Log.i(Constants.BT_TAG, "Displaying location permission rationale to provide additional context.");
+            Log.i(BleConstants.BT_TAG, "Displaying location permission rationale to provide additional context.");
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Permission Required");
             builder.setMessage("Please grant Location access so this application can perform Bluetooth scanning");
             builder.setPositiveButton(android.R.string.ok, null);
             builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 public void onDismiss(DialogInterface dialog) {
-                    Log.d(Constants.BT_TAG, "Requesting permissions after explanation");
+                    Log.d(BleConstants.BT_TAG, "Requesting permissions after explanation");
                     ActivityCompat.requestPermissions(MainBluetoothActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
                 }
             });

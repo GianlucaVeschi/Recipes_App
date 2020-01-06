@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMiji">
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMijiActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,6 +53,9 @@
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMainIngredientActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMealCountryActivityUsingVM"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
+
         <!-- BLUETOOTH -->
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.MainBluetoothActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
@@ -64,7 +67,7 @@
 
         <!-- BOTTOM NAV -->
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeActivity"/>
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeals"/>
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMealsActivity"/>
 
     </application>
 

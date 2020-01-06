@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -26,9 +25,9 @@ import www.gianlucaveschi.mijirecipesapp.utils.BottomNavigationViewHelper;
  * Created by sheck on 26/09/2019.
  */
 
-public class AboutMiji extends AppCompatActivity {
+public class AboutMijiActivity extends AppCompatActivity {
 
-    private static final String TAG = "AboutMiji";
+    private static final String TAG = "AboutMijiActivity";
 
     @BindView(R.id.goToProducts_btn) Button goToProductsOverview;
     @BindView(R.id.goToMainBluetooth_btn) Button goToBtDiscovery;
@@ -52,7 +51,7 @@ public class AboutMiji extends AppCompatActivity {
         goToProductsOverview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AboutMiji.this, MijiProductsOverview.class);
+                Intent intent = new Intent(AboutMijiActivity.this, MijiProductsOverview.class);
                 startActivity(intent);
             }
         });
@@ -60,7 +59,7 @@ public class AboutMiji extends AppCompatActivity {
         goToBtDiscovery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AboutMiji.this, MainBluetoothActivity.class);
+                Intent intent = new Intent(AboutMijiActivity.this, MainBluetoothActivity.class);
                 startActivity(intent);
             }
         });
@@ -76,7 +75,7 @@ public class AboutMiji extends AppCompatActivity {
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(AboutMiji.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AboutMijiActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -92,13 +91,13 @@ public class AboutMiji extends AppCompatActivity {
 
             switch(item.getItemId()){
                 case R.id.navigation_about_me:
-                    Intent intentAboutMe = new Intent(AboutMiji.this, AboutMeActivity.class);
+                    Intent intentAboutMe = new Intent(AboutMijiActivity.this, AboutMeActivity.class);
                     startActivity(intentAboutMe);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     break;
 
                 case R.id.navigation_about_meals:
-                    Intent intentAboutMeals = new Intent(AboutMiji.this, AboutMeals.class);
+                    Intent intentAboutMeals = new Intent(AboutMijiActivity.this, AboutMealsActivity.class);
                     startActivity(intentAboutMeals);
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                     break;

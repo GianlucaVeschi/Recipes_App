@@ -34,8 +34,8 @@ import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivi
 import www.gianlucaveschi.mijirecipesapp.adapters.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.MealAPI;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.RetrofitNetworkManager;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.utils.BottomNavigationViewHelper;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
@@ -44,7 +44,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemClickListener , NavigationView.OnNavigationItemSelectedListener {
+public class AboutMealsActivity extends AppCompatActivity implements MealAdapter.OnItemClickListener , NavigationView.OnNavigationItemSelectedListener {
 
     public static final String EXTRA_MEAL = "MealParcel";
 
@@ -52,7 +52,7 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
     private final static int HORIZONTAL_VIEW_TYPE = 1;
     private final static int VERTICAL_VIEW_TYPE = 2;
 
-    private static final String TAG = "AboutMeals";
+    private static final String TAG = "AboutMealsActivity";
 
     //Retrofit instance
     MealAPI mealAPI;
@@ -212,9 +212,9 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
      * */
     private void updateUserInterface(MealContainer mealContainer, RecyclerView recyclerView){
         ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
-        mealAdapter = new MealAdapter(AboutMeals.this, mealsList);
+        mealAdapter = new MealAdapter(AboutMealsActivity.this, mealsList);
         recyclerView.setAdapter(mealAdapter);
-        mealAdapter.setOnItemClickListener(AboutMeals.this);
+        mealAdapter.setOnItemClickListener(AboutMealsActivity.this);
     }
 
     /**
@@ -283,13 +283,13 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
 
             switch(item.getItemId()){
                 case R.id.navigation_about_me:
-                    Intent intentAboutMe = new Intent(AboutMeals.this, AboutMeActivity.class);
+                    Intent intentAboutMe = new Intent(AboutMealsActivity.this, AboutMeActivity.class);
                     startActivity(intentAboutMe);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     break;
 
                 case R.id.navigation_about_miji:
-                    Intent intentAboutMiji = new Intent(AboutMeals.this, AboutMiji.class);
+                    Intent intentAboutMiji = new Intent(AboutMealsActivity.this, AboutMijiActivity.class);
                     startActivity(intentAboutMiji);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     break;

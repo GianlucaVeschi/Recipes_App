@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb;
 
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealMap;
