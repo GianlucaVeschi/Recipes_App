@@ -2,10 +2,15 @@ package www.gianlucaveschi.mijirecipesapp.activities.bottom_nav;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.utils.BottomNavigationViewHelper;
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,15 +23,31 @@ import androidx.appcompat.app.AppCompatActivity;
  * Created by sheck on 23/09/2019.
  */
 
-public class AboutMeActivity extends AppCompatActivity {
+public class AboutMeActivity extends BaseActivity {
+
+    private static final String TAG = "AboutMeActivity";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_me);
 
-        //Set the text View
-        TextView title = findViewById(R.id.textViewAboutMe);
+        //Set the button
+        Button aboutUsBtn = findViewById(R.id.about_us_btn);
+
+        aboutUsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: about us");
+                if(baseActivityText.getVisibility() == View.VISIBLE){
+                    showText(false);
+                }
+                else{
+                    showText(true);
+                }
+            }
+        });
 
         //removes the animation in the bottom bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav_view);

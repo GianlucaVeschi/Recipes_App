@@ -19,9 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import retrofit2.Call;
@@ -141,7 +139,7 @@ public class AboutMeals extends AppCompatActivity implements MealAdapter.OnItemC
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
 
-        //Second Recyclerview containing Chinese Recipes
+        //Second RecyclerView containing Chinese Recipes
         mRecyclerView_2.setHasFixedSize(true);
         mRecyclerView_2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
 

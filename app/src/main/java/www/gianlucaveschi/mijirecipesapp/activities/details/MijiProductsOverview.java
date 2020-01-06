@@ -80,7 +80,7 @@ public class MijiProductsOverview extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new StoveAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.d(TAG, "onItemClick: clicked " + position);
+
 
                 //Get StoveProduct Informations of the clicked stove
                 String stoveTitle = mProductsList.get(position).getTitle();

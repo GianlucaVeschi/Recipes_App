@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitNetworkManager{
 
+    private static final String MITCH_BASE_URL = "https://recipesapi.herokuapp.com/";
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     private static final String TAG = "RetrofitNetworkManager";
     private static Gson gson = new GsonBuilder().create();
