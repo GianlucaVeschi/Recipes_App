@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 
-public class RecipeResponse {
+public class RecipeGetResponse {
 
     @SerializedName("recipe")
     @Expose
@@ -17,7 +17,7 @@ public class RecipeResponse {
 
     @Override
     public String toString() {
-        return "RecipeResponse{" +
+        return "RecipeGetResponse{" +
                 "recipe=" + recipe +
                 '}';
     }

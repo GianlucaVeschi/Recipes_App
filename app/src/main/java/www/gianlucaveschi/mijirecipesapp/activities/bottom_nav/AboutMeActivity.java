@@ -7,8 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMealCountryActivityUsingVM;
 import www.gianlucaveschi.mijirecipesapp.utils.BottomNavigationViewHelper;
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -50,8 +50,7 @@ public class AboutMeActivity extends BaseActivity {
         testGetData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(AboutMeActivity.this, BrowseMealCountryActivityUsingVM.class);
-                startActivity(i);
+                Toast.makeText(AboutMeActivity.this, "NO EXIT PATH", Toast.LENGTH_SHORT).show();
             }
         });
 

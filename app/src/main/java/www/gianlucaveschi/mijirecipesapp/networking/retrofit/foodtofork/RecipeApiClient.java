@@ -40,26 +40,6 @@ public class RecipeApiClient {
         mRecipes = new MutableLiveData<>();
     }
 
-    public LiveData<List<Recipe>> getRecipes(){
-        return mRecipes;
-    }
-
-    public void searchRecipesApi(String query, int pageNumber){
-        if(mRetrieveRecipesRunnable != null){
-            mRetrieveRecipesRunnable = null;
-        }
-        mRetrieveRecipesRunnable = new RetrieveRecipesRunnable(query, pageNumber);
-        final Future handler = AppExecutors.get().networkIO().submit(mRetrieveRecipesRunnable);
-
-        // Set a timeout for the data refresh
-        AppExecutors.get().networkIO().schedule(new Runnable() {
-            @Override
-            public void run() {
-                // let the user know it timed out
-                handler.cancel(true);
-            }
-        }, NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
-    }
 
     private class RetrieveRecipesRunnable implements Runnable{
 
@@ -114,6 +94,30 @@ public class RecipeApiClient {
             Log.d(TAG, "cancelRequest: canceling the retrieval query");
             cancelRequest = true;
         }
+    }
+
+    /**
+     * Public
+     * */
+    public LiveData<List<Recipe>> getRecipes(){
+        return mRecipes;
+    }
+
+    public void searchRecipesApi(String query, int pageNumber){
+        if(mRetrieveRecipesRunnable != null){
+            mRetrieveRecipesRunnable = null;
+        }
+        mRetrieveRecipesRunnable = new RetrieveRecipesRunnable(query, pageNumber);
+        final Future handler = AppExecutors.get().networkIO().submit(mRetrieveRecipesRunnable);
+
+        // Set a timeout for the data refresh
+        AppExecutors.get().networkIO().schedule(new Runnable() {
+            @Override
+            public void run() {
+                // let the user know it timed out
+                handler.cancel(true);
+            }
+        }, NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
     }
 }
 

@@ -41,19 +41,22 @@
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.MijiProductsOverview"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.stove_tabs.MijiProductsOverview"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMealCountryActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealCountryActivity_DEPRECATED"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMainIngredientActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMainIngredientActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMealCountryActivityUsingVM"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealCountryActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
+
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
         <!-- BLUETOOTH -->

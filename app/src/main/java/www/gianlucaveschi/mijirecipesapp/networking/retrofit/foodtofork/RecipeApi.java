@@ -3,8 +3,7 @@ package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeResponse;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeGetResponse;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeSearchResponse;
 
 public interface RecipeApi {
@@ -19,7 +18,7 @@ public interface RecipeApi {
 
     // GET SPECIFIC RECIPE
     @GET("api/get")
-    Call<RecipeResponse> getRecipe(
+    Call<RecipeGetResponse> getRecipe(
             @Query("key") String key,
             @Query("rId") String recipe_id
     );

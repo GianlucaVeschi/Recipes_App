@@ -51,10 +51,6 @@ public class Recipe implements Parcelable {
         }
     };
 
-    public String getTitle() {
-        return title;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -82,5 +78,34 @@ public class Recipe implements Parcelable {
                 "image_url='"       + image_url                     + "\n" +
                 "social_rank="      + social_rank                   + "\n" +
                 '}'                                                 + "\n";
+    }
+
+    //GETTERS
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getRecipe_id() {
+        return recipe_id;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+    public float getSocial_rank() {
+        return social_rank;
+    }
+
+    public String getPublisher_url() {
+        return publisher_url;
+    }
+
+    public String[] getIngredients() {
+        return ingredients;
+    }
+
+    public String getImage_url() {
+        return image_url;
     }
 }

@@ -15,11 +15,12 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+
     <androidx.recyclerview.widget.RecyclerView
+        android:paddingTop="10dp"
+        android:id="@+id/browse_meals_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/flags_rv"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/toolbar"/>
+        android:layout_below="@id/toolbar" />
 
 </RelativeLayout>

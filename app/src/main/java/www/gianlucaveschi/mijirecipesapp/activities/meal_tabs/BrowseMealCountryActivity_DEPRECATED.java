@@ -1,9 +1,8 @@
-package www.gianlucaveschi.mijirecipesapp.activities.details;
+package www.gianlucaveschi.mijirecipesapp.activities.meal_tabs;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.r0adkll.slidr.Slidr;
@@ -19,27 +18,25 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import www.gianlucaveschi.mijirecipesapp.adapters.MealAdapter;
+import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
+import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
+import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
 
-public class BrowseMealCountryActivity extends AppCompatActivity implements MealAdapter.OnItemClickListener {
+public class BrowseMealCountryActivity_DEPRECATED extends AppCompatActivity implements MealAdapter.OnItemClickListener {
 
     public static final String EXTRA_MEAL = "MealParcel";
 
     //Bind UI
-    @BindView(R.id.meals_type_name)             TextView countryMealsTextView;
+    //@BindView(R.id.meals_type_name)                 TextView countryMealsTextView;
     @BindView(R.id.browse_meals_recycler_view)      RecyclerView mealsRecyclerView;
 
     //Retrofit instance
     MealAPI mealAPI;
-
-    //Distinguish between the two TypeViews
-    private final static int HORIZONTAL_VIEW_TYPE = 1;
-    private final static int VERTICAL_VIEW_TYPE = 2;
 
     //Logger
     private static final String TAG = "BrowseMealCountryActivi";
@@ -47,7 +44,7 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements Meal
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse_meal);
+        setContentView(R.layout.activity_browse_country_meal);
         ButterKnife.bind(this);
 
         //Get Intent
@@ -56,8 +53,8 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements Meal
         String countryName  = intent.getStringExtra("country_name");
 
         //Set UI
-        String countryName_str = countryName + " Meals";
-        countryMealsTextView.setText(countryName_str);
+        //String countryName_str = countryName + " Meals";
+        //countryMealsTextView.setText(countryName_str);
         displayRecipesByCountryWithRetrofit(countryName);
 
         //Slide back to the Previous Activity
@@ -74,7 +71,7 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements Meal
                 MealContainer mealContainer = response.body();
 
                 //Set orientation for the rv
-                mealContainer.setOrientation(VERTICAL_VIEW_TYPE);
+                mealContainer.setOrientation(Constants.VERTICAL_VIEW_TYPE);
 
                 //Update UI
                 updateRecyclerView(mealContainer);
@@ -94,14 +91,11 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements Meal
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
 
         ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
-        MealAdapter mealAdapter = new MealAdapter(BrowseMealCountryActivity.this, mealsList);
+        MealAdapter mealAdapter = new MealAdapter(BrowseMealCountryActivity_DEPRECATED.this, mealsList);
         mealsRecyclerView.setAdapter(mealAdapter);
-        mealAdapter.setOnItemClickListener(BrowseMealCountryActivity.this);
+        mealAdapter.setOnItemClickListener(BrowseMealCountryActivity_DEPRECATED.this);
     }
 
-    /**
-     * OnItemClick
-     * */
     @Override
     public void onItemClick(int position, ArrayList<MealSimple> mealsList) {
         Intent detailIntent = new Intent(this, MealDetailsActivity.class);

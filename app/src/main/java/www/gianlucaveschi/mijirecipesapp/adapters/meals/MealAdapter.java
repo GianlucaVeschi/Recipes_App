@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.adapters;
+package www.gianlucaveschi.mijirecipesapp.adapters.meals;
 
 import android.content.Context;
 import android.util.Log;
@@ -154,7 +154,10 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
 
     @Override
     public int getItemCount() {
-        return mMealsList.size();
+        if(mMealsList != null){
+            return mMealsList.size();
+        }
+        return 0;
     }
 
     @Override

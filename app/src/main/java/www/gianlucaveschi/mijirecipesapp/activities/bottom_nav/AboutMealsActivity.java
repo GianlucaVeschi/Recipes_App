@@ -31,7 +31,7 @@ import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivity;
-import www.gianlucaveschi.mijirecipesapp.adapters.MealAdapter;
+import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;

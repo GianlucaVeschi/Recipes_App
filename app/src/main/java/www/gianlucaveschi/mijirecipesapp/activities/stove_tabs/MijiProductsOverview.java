@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.details;
+package www.gianlucaveschi.mijirecipesapp.activities.stove_tabs;
 
 
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 
+import www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.StoveAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.stoves.StoveProduct;
 

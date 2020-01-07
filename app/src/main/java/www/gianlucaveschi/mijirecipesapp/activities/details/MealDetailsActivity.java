@@ -47,6 +47,7 @@ public class MealDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         MealSimple mealSimple = intent.getParcelableExtra(EXTRA_MEAL);
+
         String imageURL = mealSimple.getImgUrl();
         String recipeName = mealSimple.getMealName();
         String idRecipe = mealSimple.getIdMeal();

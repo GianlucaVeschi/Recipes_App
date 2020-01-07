@@ -1,7 +1,6 @@
 package www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb;
 
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealMap;
 
 import org.json.JSONArray;
 
@@ -25,9 +24,6 @@ public interface MealAPI {
 
     @GET("filter.php")
     Call<MealContainer> getMealsByCategory(@Query("c") String category);
-
-    @GET("filter.php") //id will be replaced in mainActivity
-    Call<MealMap> getMealsByCountryAsMealSimple(@Query("a") String country);
 
     @GET("random.php")
     Call<MealContainer> getRandomMeal();

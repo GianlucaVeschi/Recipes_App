@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.MainBluetoothActivity;
-import www.gianlucaveschi.mijirecipesapp.activities.details.MijiProductsOverview;
+import www.gianlucaveschi.mijirecipesapp.activities.stove_tabs.MijiProductsOverview;
 import www.gianlucaveschi.mijirecipesapp.utils.BottomNavigationViewHelper;
 
 /**

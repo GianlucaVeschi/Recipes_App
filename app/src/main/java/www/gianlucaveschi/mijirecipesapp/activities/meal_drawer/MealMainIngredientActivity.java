@@ -8,12 +8,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.r0adkll.slidr.Slidr;
-import com.r0adkll.slidr.model.SlidrInterface;
 
 import java.util.ArrayList;
 
@@ -25,11 +23,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMainIngredientActivity;
-import www.gianlucaveschi.mijirecipesapp.activities.details.BrowseMealCountryActivity;
-import www.gianlucaveschi.mijirecipesapp.adapters.CountryAdapter;
+import www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMainIngredientActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.IngredientAdapter;
-import www.gianlucaveschi.mijirecipesapp.models.others.Country;
 import www.gianlucaveschi.mijirecipesapp.models.others.Ingredient;
 
 public class MealMainIngredientActivity extends AppCompatActivity {

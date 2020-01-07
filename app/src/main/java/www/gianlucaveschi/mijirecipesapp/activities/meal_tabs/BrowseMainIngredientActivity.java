@@ -1,9 +1,8 @@
-package www.gianlucaveschi.mijirecipesapp.activities.details;
+package www.gianlucaveschi.mijirecipesapp.activities.meal_tabs;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.r0adkll.slidr.Slidr;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -19,7 +19,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import www.gianlucaveschi.mijirecipesapp.adapters.MealAdapter;
+import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
+import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
@@ -31,7 +32,7 @@ public class BrowseMainIngredientActivity extends AppCompatActivity implements M
     public static final String EXTRA_MEAL = "MealParcel";
 
     //Bind UI
-    @BindView(R.id.meals_type_name)               TextView mainIngredientTextView;
+    @BindView(R.id.toolbar)                     Toolbar toolbar;
     @BindView(R.id.browse_meals_recycler_view)  RecyclerView mealsRecyclerView;
 
     //Retrofit instance
@@ -47,7 +48,7 @@ public class BrowseMainIngredientActivity extends AppCompatActivity implements M
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse_meal);
+        setContentView(R.layout.activity_browse_country_meal);
         ButterKnife.bind(this);
 
         //Get Intent
@@ -56,8 +57,9 @@ public class BrowseMainIngredientActivity extends AppCompatActivity implements M
         String ingredientName  = intent.getStringExtra("ingredient_name");
 
         //Set UI
-        String ingredientName_str = ingredientName + " Meals";
-        mainIngredientTextView.setText(ingredientName_str);
+        String toolbar_str = ingredientName + " Meals";
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(toolbar_str);
         displayRecipesByIngredientWithRetrofit(ingredientName);
 
         //Slide back to the Previous Activity

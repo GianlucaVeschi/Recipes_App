@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="www.gianlucaveschi.mijirecipesapp.activities.details.MijiProductsOverview">
+    tools:context="www.gianlucaveschi.mijirecipesapp.activities.stove_tabs.MijiProductsOverview">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/products_recycler_view"
