@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealCountryActivity;
-import www.gianlucaveschi.mijirecipesapp.adapters.CountryAdapter;
+import www.gianlucaveschi.mijirecipesapp.adapters.countries.CountryAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.others.Country;
 
 

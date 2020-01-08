@@ -8,7 +8,8 @@ import android.util.Log;
 import com.gianlucaveschi.load_json_images_picasso.R;
 
 import www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity;
-import www.gianlucaveschi.mijirecipesapp.adapters.StoveAdapter;
+import www.gianlucaveschi.mijirecipesapp.adapters.stoves.OnStoveClickListener;
+import www.gianlucaveschi.mijirecipesapp.adapters.stoves.StoveAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.stoves.StoveProduct;
 
 import com.r0adkll.slidr.Slidr;
@@ -77,10 +78,9 @@ public class MijiProductsOverview extends AppCompatActivity {
          * What actually happens when a ViewHolder is clicked
          * @param position
          */
-        mAdapter.setOnItemClickListener(new StoveAdapter.OnItemClickListener() {
+        mAdapter.setOnStoveClickListener(new OnStoveClickListener() {
             @Override
             public void onItemClick(int position) {
-
 
                 //Get StoveProduct Informations of the clicked stove
                 String stoveTitle = mProductsList.get(position).getTitle();

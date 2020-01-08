@@ -42,7 +42,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         String imageURL     = recipe.getImage_url();
         String recipeName   = recipe.getTitle();
         String idRecipe     = recipe.getRecipe_id();
-
+        //String description  = recipe.get
         textViewName.setText(recipeName);
         setImage(imageURL);
 
@@ -56,6 +56,5 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 .fit()
                 .centerInside()
                 .into(imageView);
-
     }
 }

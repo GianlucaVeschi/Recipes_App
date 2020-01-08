@@ -32,6 +32,7 @@ import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesAct
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
+import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
@@ -44,7 +45,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class AboutMealsActivity extends AppCompatActivity implements MealAdapter.OnItemClickListener , NavigationView.OnNavigationItemSelectedListener {
+public class AboutMealsActivity extends AppCompatActivity implements OnMealClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     public static final String EXTRA_MEAL = "MealParcel";
 
@@ -214,7 +215,7 @@ public class AboutMealsActivity extends AppCompatActivity implements MealAdapter
         ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
         mealAdapter = new MealAdapter(AboutMealsActivity.this, mealsList);
         recyclerView.setAdapter(mealAdapter);
-        mealAdapter.setOnItemClickListener(AboutMealsActivity.this);
+        mealAdapter.setOnMealClickListener(AboutMealsActivity.this);
     }
 
     /**

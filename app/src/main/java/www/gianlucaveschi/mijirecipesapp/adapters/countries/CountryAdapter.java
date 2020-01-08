@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.adapters;
+package www.gianlucaveschi.mijirecipesapp.adapters.countries;
 
 
 import android.content.Context;
@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.gianlucaveschi.load_json_images_picasso.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import www.gianlucaveschi.mijirecipesapp.models.others.Country;

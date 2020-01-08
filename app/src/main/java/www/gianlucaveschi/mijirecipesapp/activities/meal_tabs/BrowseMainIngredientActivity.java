@@ -21,13 +21,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
+import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 
 
-public class BrowseMainIngredientActivity extends AppCompatActivity implements MealAdapter.OnItemClickListener {
+public class BrowseMainIngredientActivity extends AppCompatActivity implements OnMealClickListener {
 
     public static final String EXTRA_MEAL = "MealParcel";
 
@@ -98,7 +99,7 @@ public class BrowseMainIngredientActivity extends AppCompatActivity implements M
         ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
         MealAdapter mealAdapter = new MealAdapter(BrowseMainIngredientActivity.this, mealsList);
         mealsRecyclerView.setAdapter(mealAdapter);
-        mealAdapter.setOnItemClickListener(BrowseMainIngredientActivity.this);
+        mealAdapter.setOnMealClickListener(BrowseMainIngredientActivity.this);
     }
 
     /**

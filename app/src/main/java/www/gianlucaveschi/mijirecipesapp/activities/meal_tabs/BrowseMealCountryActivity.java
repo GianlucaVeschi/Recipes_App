@@ -41,7 +41,7 @@ import www.gianlucaveschi.mijirecipesapp.viewmodels.BrowseMealCountriesViewModel
 
 public class BrowseMealCountryActivity extends AppCompatActivity implements OnRecipeListener {
 
-    private static final String TAG = "BrowseMealCountry_act_v";
+    private static final String TAG = "BrowseMealCountryAct";
 
     //Bind UI
     @BindView(R.id.toolbar)                         Toolbar toolbar;
