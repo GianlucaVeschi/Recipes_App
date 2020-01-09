@@ -100,8 +100,9 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
 
     private void initRecyclerView() {
         recipeAdapter = new RecipeAdapter(this);
+        mealsRecyclerView.setAdapter(recipeAdapter);
         mealsRecyclerView.setHasFixedSize(true);
-        mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void updateRecyclerView(List<Recipe> recipes) {
@@ -119,6 +120,24 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
             pageNumber = 1;
         }
         mBrowseMealCountriesViewModel.searchRecipesApi(query, pageNumber);
+    }
+
+    @Override
+    public void onRecipeClick(int position) {
+        Toast.makeText(this, "onRecipeClick", Toast.LENGTH_SHORT).show();
+        if(recipes != null){
+            Intent detailIntent = new Intent(this, RecipeDetailsActivity.class);
+            Recipe clickedItem = recipes.get(position);
+
+            //Send Parcel to the Details Activity
+            detailIntent.putExtra(Constants.EXTRA_RECIPE,clickedItem);
+            startActivity(detailIntent);
+        }
+    }
+
+    @Override
+    public void onCategoryClick(String category) {
+        Toast.makeText(this, "OnCategoryClick", Toast.LENGTH_SHORT).show();
     }
 
     private void testRetrofitRequestSimple() {
@@ -153,23 +172,5 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
                 Log.d(TAG, "onResponse: ERROR: " + t.getMessage());
             }
         });
-    }
-
-    @Override
-    public void onRecipeClick(int position) {
-        Toast.makeText(this, "onRecipeClick", Toast.LENGTH_SHORT).show();
-        if(recipes != null){
-            Intent detailIntent = new Intent(this, RecipeDetailsActivity.class);
-            Recipe clickedItem = recipes.get(position);
-
-            //Send Parcel to the Details Activity
-            detailIntent.putExtra(Constants.EXTRA_RECIPE,clickedItem);
-            startActivity(detailIntent);
-        }
-    }
-
-    @Override
-    public void onCategoryClick(String category) {
-        Toast.makeText(this, "OnCategoryClick", Toast.LENGTH_SHORT).show();
     }
 }

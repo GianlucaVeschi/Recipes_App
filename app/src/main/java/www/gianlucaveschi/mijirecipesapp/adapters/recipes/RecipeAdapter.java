@@ -50,10 +50,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        //if(mRecipes != null){
+        if(mRecipes != null){
             return mRecipes.size();
-        //}
-        // return 0;
+        }
+        return 0;
     }
 
     public void setRecipes(List<Recipe> recipes){

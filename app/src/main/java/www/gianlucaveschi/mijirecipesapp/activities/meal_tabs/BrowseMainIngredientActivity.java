@@ -26,6 +26,7 @@ import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
+import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
 
 public class BrowseMainIngredientActivity extends AppCompatActivity implements OnMealClickListener {
@@ -36,12 +37,9 @@ public class BrowseMainIngredientActivity extends AppCompatActivity implements O
     @BindView(R.id.toolbar)                     Toolbar toolbar;
     @BindView(R.id.browse_meals_recycler_view)  RecyclerView mealsRecyclerView;
 
-    //Retrofit instance
-    MealAPI mealAPI;
 
-    //Distinguish between the two TypeViews
-    private final static int HORIZONTAL_VIEW_TYPE = 1;
-    private final static int VERTICAL_VIEW_TYPE = 2;
+    MealAPI mealAPI;
+    MealAdapter mealAdapter;
 
     //Logger
     private static final String TAG = "BrowseMainIngredientAct";
@@ -58,6 +56,7 @@ public class BrowseMainIngredientActivity extends AppCompatActivity implements O
         String ingredientName  = intent.getStringExtra("ingredient_name");
 
         //Set UI
+        initRecyclerView();
         String toolbar_str = ingredientName + " Meals";
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(toolbar_str);
@@ -77,7 +76,7 @@ public class BrowseMainIngredientActivity extends AppCompatActivity implements O
                 MealContainer mealContainer = response.body();
 
                 //Set orientation for the rv
-                mealContainer.setOrientation(VERTICAL_VIEW_TYPE);
+                mealContainer.setOrientation(Constants.VERTICAL_VIEW_TYPE);
 
                 //Update UI
                 updateRecyclerView(mealContainer);
@@ -90,15 +89,17 @@ public class BrowseMainIngredientActivity extends AppCompatActivity implements O
         });
     }
 
-    private void updateRecyclerView(MealContainer mealContainer) {
-
-        //Init RV
+    private void initRecyclerView(){
         mealsRecyclerView.setHasFixedSize(true);
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        mealsRecyclerView.setAdapter(mealAdapter);//set empty adapter
+    }
 
+    private void updateRecyclerView(MealContainer mealContainer) {
         ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
-        MealAdapter mealAdapter = new MealAdapter(BrowseMainIngredientActivity.this, mealsList);
+        mealAdapter = new MealAdapter(BrowseMainIngredientActivity.this, mealsList);
         mealsRecyclerView.setAdapter(mealAdapter);
+        mealAdapter.notifyDataSetChanged();
         mealAdapter.setOnMealClickListener(BrowseMainIngredientActivity.this);
     }
 

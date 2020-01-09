@@ -50,7 +50,7 @@
 
             <TextView
                 android:id="@+id/ingredients_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Ingredients"
                 android:textSize="24sp"
@@ -58,72 +58,21 @@
                 android:textColor="@android:color/black"
                 android:layout_below="@id/name_recipe_detail">
             </TextView>
-            <View android:id="@+id/fakeView"
-                android:layout_below="@id/ingredients_title"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerInParent="true"/>
+
             <TextView
-                android:id="@+id/ingredient_list"
+                android:id="@+id/ingredients_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:text="ingredients list"
                 android:layout_marginStart="12dp"
-                android:layout_alignRight="@id/fakeView"
                 android:layout_alignParentLeft="true"
                 android:textColor="@android:color/black"
                 android:layout_below="@+id/ingredients_title"
                 android:paddingTop="5dp"
                 android:paddingBottom="20dp">
             </TextView>
-            <TextView
-                android:id="@+id/ingredient_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="ingredients quantity"
-                android:layout_marginStart="12dp"
-                android:layout_alignLeft="@id/fakeView"
-                android:layout_alignParentRight="true"
-                android:textColor="@android:color/black"
-                android:layout_below="@+id/ingredients_title"
-                android:paddingTop="5dp"
-                android:paddingBottom="20dp">
-            </TextView>
-
         </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/instruction_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/LightBlueGrey"
-            android:layout_below="@id/ingredients_wrapper">
-
-            <TextView
-                android:id="@+id/instructions_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Instructions"
-                android:textSize="20sp"
-                android:paddingTop="18dp"
-                android:textColor="@android:color/black"
-                android:layout_marginStart="12dp"/>
-            <TextView
-                android:id="@+id/instructions_recipe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginStart="12dp"
-                android:textColor="@android:color/black"
-                android:text="Instructions Recipe"
-                android:paddingTop="8dp"
-                android:layout_below="@+id/instructions_title"/>
-
-        </RelativeLayout>
-
     </RelativeLayout>
 
 

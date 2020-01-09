@@ -93,6 +93,7 @@ public class Recipe implements Parcelable {
     public String getPublisher() {
         return publisher;
     }
+
     public float getSocial_rank() {
         return social_rank;
     }

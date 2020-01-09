@@ -5,20 +5,21 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
-import www.gianlucaveschi.mijirecipesapp.repositories.BrowseMealCountryRepository;
+import www.gianlucaveschi.mijirecipesapp.repositories.RecipeRepository;
 
 public class BrowseMealCountriesViewModel extends ViewModel {
 
-    private BrowseMealCountryRepository mBrowseMealCountryRepository;
+    private RecipeRepository mRecipeRepository;
 
     public BrowseMealCountriesViewModel() {
-        mBrowseMealCountryRepository = BrowseMealCountryRepository.getInstance();
+        mRecipeRepository = RecipeRepository.getInstance();
     }
 
     public LiveData<List<Recipe>> getRecipes(){
-        return mBrowseMealCountryRepository.getRecipes();
+        return mRecipeRepository.getRecipes();
     }
+
     public void searchRecipesApi(String query, int pageNumber){
-        mBrowseMealCountryRepository.searchRecipesApi(query, pageNumber);
+        mRecipeRepository.searchRecipesApi(query, pageNumber);
     }
 }

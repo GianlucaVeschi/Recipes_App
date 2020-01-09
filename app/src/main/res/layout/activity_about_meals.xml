@@ -15,27 +15,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/lightRed"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <!-- TOP NAV
-        <include layout="@layout/top_navigation_bar"
-            android:id="@+id/top_nav_bar"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:layout_above="@id/main_content"/>
+            android:id="@+id/appBarLayout">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/lightRed"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!--
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appBarLayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        </androidx.viewpager.widget.ViewPager>
         -->
 
         <!-- MAIN CONTENT -->
@@ -43,7 +48,7 @@
             android:id="@+id/main_content"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_below="@+id/toolbar"
+            android:layout_below="@+id/appBarLayout"
             android:layout_above="@+id/bottom_nav"/>
 
         <!-- BOTTOM NAV -->
