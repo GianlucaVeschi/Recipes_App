@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth;
+package www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
@@ -15,6 +15,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants;
 
 public class BleScanner {
 

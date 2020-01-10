@@ -25,6 +25,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleScanner;
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.ScanResultsConsumer;
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants;
 import www.gianlucaveschi.mijirecipesapp.adapters.BleDeviceAdapter;
 
 public class MainBluetoothActivity extends AppCompatActivity implements ScanResultsConsumer {
@@ -74,10 +77,30 @@ public class MainBluetoothActivity extends AppCompatActivity implements ScanResu
                 }
                 BluetoothDevice device = ble_device_list_adapter.getDevice(position);
                 if (toast != null) { toast.cancel(); }
-                Intent intent = new Intent(MainBluetoothActivity.this, PeripheralControlActivity.class);
-                intent.putExtra(BleConstants.EXTRA_NAME, device.getName());
-                intent.putExtra(BleConstants.EXTRA_ID, device.getAddress());
-                startActivity(intent);
+
+                //Access Device According to its name
+                if(device.getName() != null){
+                    switch(device.getName()){
+                        case BleConstants.miji_DEVICE_NAME:
+                            Intent mijiThermometerIntent = new Intent(MainBluetoothActivity.this, MijiTemperatureControlActivity.class);
+                            mijiThermometerIntent.putExtra(BleConstants.EXTRA_NAME, device.getName());
+                            mijiThermometerIntent.putExtra(BleConstants.EXTRA_ID, device.getAddress());
+                            startActivity(mijiThermometerIntent);
+                            break;
+                        case BleConstants.BT_BOARD:
+                            Intent BtBoardIntent = new Intent(MainBluetoothActivity.this, BleBoardControlActivity.class);
+                            BtBoardIntent.putExtra(BleConstants.EXTRA_NAME, device.getName());
+                            BtBoardIntent.putExtra(BleConstants.EXTRA_ID, device.getAddress());
+                            startActivity(BtBoardIntent);
+                            break;
+                        default:
+                            Toast.makeText(MainBluetoothActivity.this, "UNKNOWN DEVICE", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(MainBluetoothActivity.this, "UNKNOWN DEVICE", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

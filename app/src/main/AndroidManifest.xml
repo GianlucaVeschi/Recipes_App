@@ -62,10 +62,10 @@
         <!-- BLUETOOTH -->
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.MainBluetoothActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.PeripheralControlActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.MijiTemperatureControlActivity" />
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.BleBoardControlActivity"/>
         <service
-            android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.BleAdapterService"
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleAdapterService"
             android:enabled="true" />
 
         <!-- BOTTOM NAV -->

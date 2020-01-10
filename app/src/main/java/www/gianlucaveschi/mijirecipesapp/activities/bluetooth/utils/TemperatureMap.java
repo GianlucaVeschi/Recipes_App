@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth;
+package www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils;
 
 import java.util.HashMap;
 import java.util.Map;

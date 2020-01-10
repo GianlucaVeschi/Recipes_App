@@ -26,9 +26,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.BleAdapterService.LocalBinder;
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleAdapterService;
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleAdapterService.LocalBinder;
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants;
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.DataHelper;
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.TemperatureMap;
 
-public class PeripheralControlActivity extends AppCompatActivity {
+public class MijiTemperatureControlActivity extends AppCompatActivity {
 
 
     private BleAdapterService bluetooth_le_adapter;
@@ -50,7 +54,7 @@ public class PeripheralControlActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_peripheral_control);
+        setContentView(R.layout.activity_miji_temperature_control);
         ButterKnife.bind(this);
 
         // read incoming intent data from the MainActivity
@@ -192,7 +196,7 @@ public class PeripheralControlActivity extends AppCompatActivity {
                     //takes into account that the user has pressed the back button and
                     // completes the process of exiting the current screen:
                     if (backBtnWasPressed) {
-                        PeripheralControlActivity.this.finish();
+                        MijiTemperatureControlActivity.this.finish();
                     }
                     break;
 
@@ -215,7 +219,7 @@ public class PeripheralControlActivity extends AppCompatActivity {
                         if (svc.getUuid().toString().equalsIgnoreCase(BleConstants.miji_DEVICE_INFORMATION)) {
                             miji_device_information = true;
                             List<BluetoothGattCharacteristic> characteristics_list = svc.getCharacteristics();
-                            //DataHelper.logCharacteristics(characteristics_list,"miji_DEVICE_INFORMATION");
+                            DataHelper.logCharacteristics(characteristics_list,"miji_DEVICE_INFORMATION");
                             continue;
                         }
 

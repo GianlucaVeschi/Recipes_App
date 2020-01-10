@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth;
+package www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -21,6 +21,8 @@ import android.util.Log;
 
 import java.util.List;
 import java.util.UUID;
+
+import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants;
 
 /**
  * Our new Activity needs to be able to use the BleAdapterService as a kind of Bluetooth API.
@@ -216,7 +218,7 @@ public class BleAdapterService extends Service {
 
         /**Invoked by the system when a notification or indication message is received over
          * the Bluetooth connection from the remote device.
-         * We’ll pass whatever we receive to our PeripheralControlActivity class via the Handler*/
+         * We’ll pass whatever we receive to our MijiTemperatureControlActivity class via the Handler*/
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
@@ -248,7 +250,7 @@ public class BleAdapterService extends Service {
 
     /**
      * SERVICE DISCOVERY
-     * The following public methods will be called by the PeripheralControlActivity
+     * The following public methods will be called by the MijiTemperatureControlActivity
      * to initiate the procedure of discovering the services offered by the connected device
      * When the procedure is complete, the BluetoothGattCallback will receive a callback and we'll
      * respond to it by passing a message to the Activity using the Handler class.
@@ -353,7 +355,7 @@ public class BleAdapterService extends Service {
     /**
      * We also need a callback method which will be invoked by the system when a notification
      * or indication message is received over the Bluetooth connection from the remote device.
-     * In that method, we’ll pass whatever we receive to our PeripheralControlActivity class
+     * In that method, we’ll pass whatever we receive to our MijiTemperatureControlActivity class
      * via the Handler.*/
 
     /**MONITORING SIGNAL STRENGTH*/
