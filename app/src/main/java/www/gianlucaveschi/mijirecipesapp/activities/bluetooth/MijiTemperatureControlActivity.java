@@ -263,7 +263,7 @@ public class MijiTemperatureControlActivity extends AppCompatActivity {
                     showMsg("NOTIFICATION_OR_INDICATION_RECEIVED");
                     temperatureValueTv.setTextSize(60);
 
-                    //Read temperature characteristic
+                    //Read temperature characteristicz
                     if (characteristic_uuid.equalsIgnoreCase((BleConstants.miji_TEMPERATURE_CHARACTERISTIC))) {
                         Log.d(BleConstants.BT_TAG, "Handling bundle temp_serv_char_1");
                         String temperatureKey = DataHelper.byteArrayAsHexString(b).trim().toLowerCase();
