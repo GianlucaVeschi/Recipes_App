@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
-import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesActivity;
+import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCountriesFlagsActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
@@ -237,7 +237,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case(R.id.nav_meal_countries):
-                Intent mealCountriesIntent = new Intent(this, MealCountriesActivity.class);
+                Intent mealCountriesIntent = new Intent(this, RecipeCountriesFlagsActivity.class);
                 startActivity(mealCountriesIntent);
                 break;
             case(R.id.nav_meal_random):

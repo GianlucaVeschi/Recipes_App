@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMainIngredientActivity;
+import www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealByIngredientActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.IngredientAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.others.Ingredient;
 
@@ -149,7 +149,7 @@ public class MealMainIngredientActivity extends AppCompatActivity {
                 String ingredientName = ingredientsList.get(position).getName();
 
                 //Pass it to the intent
-                Intent intent = new Intent(MealMainIngredientActivity.this, BrowseMainIngredientActivity.class);
+                Intent intent = new Intent(MealMainIngredientActivity.this, BrowseMealByIngredientActivity.class);
                 intent.putExtra("image_url",     imageUrl );
                 intent.putExtra("ingredient_name", ingredientName);
 

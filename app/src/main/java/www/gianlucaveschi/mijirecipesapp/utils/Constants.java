@@ -7,7 +7,10 @@ public class Constants {
     public static final String EXTRA_MEAL = "MealParcel";
     public static final String EXTRA_RECIPE = "RecipeParcel";
 
-    //Distinguish between the two TypeViews
+    public static final String LOADING = "LOADING...";
+
+    //Distinguish between the two TypeViews in the MealAdapter
     public final static int HORIZONTAL_VIEW_TYPE = 1;
     public final static int VERTICAL_VIEW_TYPE   = 2;
+
 }

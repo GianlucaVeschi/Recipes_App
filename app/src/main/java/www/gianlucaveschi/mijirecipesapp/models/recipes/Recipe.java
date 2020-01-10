@@ -80,6 +80,37 @@ public class Recipe implements Parcelable {
                 '}'                                                 + "\n";
     }
 
+    //SETTERS
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setPublisher_url(String publisher_url) {
+        this.publisher_url = publisher_url;
+    }
+
+    public void setIngredients(String[] ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public void setRecipe_id(String recipe_id) {
+        this.recipe_id = recipe_id;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public void setSocial_rank(float social_rank) {
+        this.social_rank = social_rank;
+    }
+
+
     //GETTERS
 
     public String getTitle() {

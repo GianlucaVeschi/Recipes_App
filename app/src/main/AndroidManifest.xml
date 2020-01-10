@@ -32,7 +32,7 @@
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCountriesFlagsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity"
@@ -47,13 +47,13 @@
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealCountryActivity_DEPRECATED"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealsByCountryActivity_DEPRECATED"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMainIngredientActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealByIngredientActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealCountryActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseRecipesByCountryActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity"

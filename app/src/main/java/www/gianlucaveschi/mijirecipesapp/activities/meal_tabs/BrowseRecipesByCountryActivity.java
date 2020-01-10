@@ -3,7 +3,6 @@ package www.gianlucaveschi.mijirecipesapp.activities.meal_tabs;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
@@ -15,6 +14,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -29,26 +29,25 @@ import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.OnRecipeListener;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
 import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.RecipeApi;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.ServiceGenerator;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeGetResponse;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 import www.gianlucaveschi.mijirecipesapp.utils.MyLogger;
-import www.gianlucaveschi.mijirecipesapp.viewmodels.BrowseMealCountriesViewModel;
+import www.gianlucaveschi.mijirecipesapp.viewmodels.BrowseRecipesByCountryViewModel;
 
 
-public class BrowseMealCountryActivity extends AppCompatActivity implements OnRecipeListener {
+public class BrowseRecipesByCountryActivity extends AppCompatActivity implements OnRecipeListener {
 
-    private static final String TAG = "BrowseMealCountryAct";
+    private static final String TAG = "BrowseRecByCountryAct";
 
     //Bind UI
     @BindView(R.id.toolbar)                         Toolbar toolbar;
     @BindView(R.id.browse_meals_recycler_view)      RecyclerView mealsRecyclerView;
 
     //View Model
-    private static BrowseMealCountriesViewModel mBrowseMealCountriesViewModel;
+    private static BrowseRecipesByCountryViewModel mBrowseRecipesByCountryViewModel;
 
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipes;
@@ -56,9 +55,9 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse_country_meal);
+        setContentView(R.layout.activity_browse_recipes_by_country);
         ButterKnife.bind(this);
-        mBrowseMealCountriesViewModel = ViewModelProviders.of(this).get(BrowseMealCountriesViewModel.class);
+        mBrowseRecipesByCountryViewModel = ViewModelProviders.of(this).get(BrowseRecipesByCountryViewModel.class);
 
         //Get Intent
         Intent intent = getIntent();
@@ -70,10 +69,11 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(toolbar_str);
         initRecyclerView();
+        initSearchView();
 
         //Observe the LiveData and Update the UI
         subscribeObservers();
-        displayRecipesByCountry(countryName);
+        displayRecipesByCountry(countryName);       //Fill the recycler view
 
         //Slide back to the Previous Activity
         Slidr.attach(this);
@@ -81,12 +81,12 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
 
     //Retrieve Live Data from the Repository
     public LiveData<List<Recipe>> getRecipes() {
-        return mBrowseMealCountriesViewModel.getRecipes();
+        return mBrowseRecipesByCountryViewModel.getRecipes();
     }
 
     //Observe Live Data
     private void subscribeObservers() {
-        mBrowseMealCountriesViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
+        mBrowseRecipesByCountryViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> receivedRecipes) {
                 if (receivedRecipes != null) {
@@ -103,6 +103,7 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
         mealsRecyclerView.setAdapter(recipeAdapter);
         mealsRecyclerView.setHasFixedSize(true);
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recipeAdapter.displayLoading();
     }
 
     private void updateRecyclerView(List<Recipe> recipes) {
@@ -119,7 +120,25 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
         if (pageNumber == 0) {
             pageNumber = 1;
         }
-        mBrowseMealCountriesViewModel.searchRecipesApi(query, pageNumber);
+        mBrowseRecipesByCountryViewModel.searchRecipesApi(query, pageNumber);
+    }
+
+    private void initSearchView(){
+        final SearchView searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                recipeAdapter.displayLoading();
+                mBrowseRecipesByCountryViewModel.searchRecipesApi(query, 1);
+                searchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -140,6 +159,7 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
         Toast.makeText(this, "OnCategoryClick", Toast.LENGTH_SHORT).show();
     }
 
+    /*
     private void testRetrofitRequestSimple() {
         RecipeApi recipeApi = ServiceGenerator.getRecipeApi();
         // do get using retrofit
@@ -173,4 +193,5 @@ public class BrowseMealCountryActivity extends AppCompatActivity implements OnRe
             }
         });
     }
+     */
 }

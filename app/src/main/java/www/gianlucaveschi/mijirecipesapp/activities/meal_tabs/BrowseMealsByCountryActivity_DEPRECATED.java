@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -29,47 +28,44 @@ import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitN
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
 
-public class BrowseMainIngredientActivity extends AppCompatActivity implements OnMealClickListener {
+public class BrowseMealsByCountryActivity_DEPRECATED extends AppCompatActivity implements OnMealClickListener {
 
     public static final String EXTRA_MEAL = "MealParcel";
 
     //Bind UI
-    @BindView(R.id.toolbar)                     Toolbar toolbar;
-    @BindView(R.id.browse_meals_recycler_view)  RecyclerView mealsRecyclerView;
+    //@BindView(R.id.meals_type_name)                 TextView countryMealsTextView;
+    @BindView(R.id.browse_meals_recycler_view)      RecyclerView mealsRecyclerView;
 
-
+    //Retrofit instance
     MealAPI mealAPI;
-    MealAdapter mealAdapter;
 
     //Logger
-    private static final String TAG = "BrowseMainIngredientAct";
+    private static final String TAG = "BrowseMealCountryActivi";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_browse_country_meal);
+        setContentView(R.layout.activity_browse_recipes_by_country);
         ButterKnife.bind(this);
 
         //Get Intent
         Intent intent = getIntent();
-        String imgUrl   = intent.getStringExtra("image_url");
-        String ingredientName  = intent.getStringExtra("ingredient_name");
+        String flagImgUrl   = intent.getStringExtra("flag_url");
+        String countryName  = intent.getStringExtra("country_name");
 
         //Set UI
-        initRecyclerView();
-        String toolbar_str = ingredientName + " Meals";
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(toolbar_str);
-        displayRecipesByIngredientWithRetrofit(ingredientName);
+        //String countryName_str = countryName + " Meals";
+        //countryMealsTextView.setText(countryName_str);
+        displayRecipesByCountryWithRetrofit(countryName);
 
         //Slide back to the Previous Activity
         Slidr.attach(this);
 
     }
 
-    private void displayRecipesByIngredientWithRetrofit(String ingredient){
+    private void displayRecipesByCountryWithRetrofit(String country){
         mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
-        mealAPI.getMealsByIngredient(ingredient).enqueue(new Callback<MealContainer>() {
+        mealAPI.getMealsByCountry(country).enqueue(new Callback<MealContainer>() {
             @Override
             public void onResponse(Call<MealContainer> call, Response<MealContainer> response) {
                 //Get Retrofit Response
@@ -89,23 +85,18 @@ public class BrowseMainIngredientActivity extends AppCompatActivity implements O
         });
     }
 
-    private void initRecyclerView(){
+    private void updateRecyclerView(MealContainer mealContainer) {
+
+        //Init RV
         mealsRecyclerView.setHasFixedSize(true);
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-        mealsRecyclerView.setAdapter(mealAdapter);//set empty adapter
-    }
 
-    private void updateRecyclerView(MealContainer mealContainer) {
         ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
-        mealAdapter = new MealAdapter(BrowseMainIngredientActivity.this, mealsList);
+        MealAdapter mealAdapter = new MealAdapter(BrowseMealsByCountryActivity_DEPRECATED.this, mealsList);
         mealsRecyclerView.setAdapter(mealAdapter);
-        mealAdapter.notifyDataSetChanged();
-        mealAdapter.setOnMealClickListener(BrowseMainIngredientActivity.this);
+        mealAdapter.setOnMealClickListener(BrowseMealsByCountryActivity_DEPRECATED.this);
     }
 
-    /**
-     * OnItemClick
-     * */
     @Override
     public void onItemClick(int position, ArrayList<MealSimple> mealsList) {
         Intent detailIntent = new Intent(this, MealDetailsActivity.class);

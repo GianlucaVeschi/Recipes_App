@@ -23,14 +23,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealCountryActivity;
+import www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseRecipesByCountryActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.countries.CountryAdapter;
+import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.others.Country;
+import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 
 
-public class MealCountriesActivity extends AppCompatActivity {
+public class RecipeCountriesFlagsActivity extends AppCompatActivity {
 
-    private static final String TAG = "MealCountriesActivity";
+    private static final String TAG = "RecipeCountriesFlagsAct";
 
     @BindView(R.id.toolbar)                 Toolbar toolbar;
     @BindView(R.id.flags_rv)                RecyclerView flagsRecView;
@@ -41,7 +43,7 @@ public class MealCountriesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meal_countries);
+        setContentView(R.layout.activity_recipes_countries_flags);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -96,7 +98,7 @@ public class MealCountriesActivity extends AppCompatActivity {
         countriesList.add(new Country("Portuguese",     "PT"));
         countriesList.add(new Country("Russian",        "RU"));
         countriesList.add(new Country("Thai",           "TH"));
-        countriesList.add(new Country("Argentinian",    "AR"));
+        //countriesList.add(new Country("Argentinian",    "AR"));
     }
 
     private void buildRecyclerView() {
@@ -114,7 +116,7 @@ public class MealCountriesActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 Log.d(TAG, "onItemClick: clicked " + position);
 
-                Toast toast = Toast.makeText(MealCountriesActivity.this,
+                Toast toast = Toast.makeText(RecipeCountriesFlagsActivity.this,
                         "You touched on " + countriesList.get(position).getName(),
                         Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER,0,0);
@@ -126,7 +128,7 @@ public class MealCountriesActivity extends AppCompatActivity {
                 String countryName = countriesList.get(position).getName();
 
                 //Pass it to the intent
-                Intent intent = new Intent(MealCountriesActivity.this, BrowseMealCountryActivity.class);
+                Intent intent = new Intent(RecipeCountriesFlagsActivity.this, BrowseRecipesByCountryActivity.class);
                 intent.putExtra("flag_url",     flagUrl );
                 intent.putExtra("country_name", countryName);
 
