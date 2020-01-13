@@ -45,6 +45,7 @@ public class BrowseRecipesByCountryActivity extends AppCompatActivity implements
     //Bind UI
     @BindView(R.id.toolbar)                         Toolbar toolbar;
     @BindView(R.id.browse_meals_recycler_view)      RecyclerView mealsRecyclerView;
+    @BindView(R.id.search_view)                     SearchView searchView;
 
     //View Model
     private static BrowseRecipesByCountryViewModel mBrowseRecipesByCountryViewModel;
@@ -92,6 +93,7 @@ public class BrowseRecipesByCountryActivity extends AppCompatActivity implements
                 if (receivedRecipes != null) {
                     MyLogger.logRecipes("onChanged", receivedRecipes);
                     recipes = new ArrayList<>(receivedRecipes);
+                    mBrowseRecipesByCountryViewModel.setIsPerformingQuery(false); // The query is complete
                     updateRecyclerView(receivedRecipes);
                 }
             }
@@ -124,13 +126,12 @@ public class BrowseRecipesByCountryActivity extends AppCompatActivity implements
     }
 
     private void initSearchView(){
-        final SearchView searchView = findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 recipeAdapter.displayLoading();
                 mBrowseRecipesByCountryViewModel.searchRecipesApi(query, 1);
-                searchView.clearFocus();
+                searchView.clearFocus(); //The focus has to be cleared in order to properly cancel a Retrofit request
                 return false;
             }
 
@@ -139,6 +140,13 @@ public class BrowseRecipesByCountryActivity extends AppCompatActivity implements
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mBrowseRecipesByCountryViewModel.onBackPressed()){
+            super.onBackPressed();
+        }
     }
 
     @Override

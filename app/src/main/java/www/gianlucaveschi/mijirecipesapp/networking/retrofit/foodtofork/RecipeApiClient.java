@@ -1,25 +1,19 @@
 package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork;
 
 import android.util.Log;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import retrofit2.Call;
 import www.gianlucaveschi.mijirecipesapp.executors.AppExecutors;
 import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.NETWORK_TIMEOUT;
 
-import retrofit2.Response;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeSearchResponse;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.runnables.GetRecipeRunnable;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.runnables.RetrieveRecipesRunnable;
-import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
 public class RecipeApiClient {
 

@@ -293,7 +293,7 @@ public class BleAdapterService extends Service {
     }
 
     public boolean writeCharacteristic(String serviceUuid, String characteristicUuid, byte[] value) {
-        Log.d(BleConstants.BT_TAG,"writeCharacteristic:"+characteristicUuid+" of service " +serviceUuid);
+        Log.d(BleConstants.BT_TAG,"writeCharacteristic: "+characteristicUuid+" of service " +serviceUuid);
         if (bluetooth_adapter == null || bluetooth_gatt == null) {
             sendConsoleMessage("writeCharacteristic: bluetooth_adapter|bluetooth_gatt null");
             return false;

@@ -25,8 +25,8 @@ public class DataHelper {
         return hex.toString();
     }
 
+    //LOG SERVICES
     public static void logServices(String TAG, List<BluetoothGattService> services_list){
-        //LOG SERVICES
         Log.d(TAG, "--------------------- LOG SERVICES ---------------------");
         for (BluetoothGattService svc : services_list) {
             Log.d(TAG,
@@ -34,38 +34,38 @@ public class DataHelper {
                          "INSTANCE = " + svc.getInstanceId()); //Returns the instance ID for this service if a remote device offers
         }
         Log.d(TAG, "-------------------- END LOG SERVICES -------------------\n");
-    }
-    //LOG CHARACTERISTICS
-    public static void logCharacteristics(List<BluetoothGattCharacteristic> characteristics, String service_name){
-        Log.d(BT_TAG, "logCharacteristics of: " + service_name + "\n");
-        for(BluetoothGattCharacteristic characteristic: characteristics){
-            Log.d(BT_TAG, "--->  " + characteristic.toString());
-            Log.d(BT_TAG, "temp char uuid: " + characteristic.getUuid());
-            try{
-                Log.d(BT_TAG, "--->  " + DataHelper.byteArrayAsHexString(characteristic.getValue()));
-            }
-            catch (Exception e){
-                Log.d(BT_TAG, "--->  " + "nullPointerException caught");
-            }
-            List<BluetoothGattDescriptor> descriptors = characteristic.getDescriptors();
-            DataHelper.logDescriptors(descriptors,characteristic.toString());
+
+        //LOG CHARACTERISTICS OF THE SERVICE
+        for(BluetoothGattService svc : services_list){
+                //DataHelper.logCharacteristics(TAG,svc.getCharacteristics());
         }
     }
 
-    public static void logDescriptors(List<BluetoothGattDescriptor> descriptors, String characteristics_name){
-        Log.d(BT_TAG, "logDescriptors of: " + characteristics_name + "\n");
+    //LOG CHARACTERISTICS
+    private static void logCharacteristics( String TAG,List<BluetoothGattCharacteristic> characteristics){
+        Log.d(TAG, "--------------------- LOG CHARACTERISTICS ---------------------");
+        for(BluetoothGattCharacteristic characteristic: characteristics){
+            Log.d(BT_TAG, "--->  " + characteristic.toString());
+            Log.d(BT_TAG, "char uuid: " + characteristic.getUuid());
+
+            //LOG DESCRIPTORS OF THE CHARACTERISTIC
+            List<BluetoothGattDescriptor> descriptors = characteristic.getDescriptors();
+            DataHelper.logDescriptors(descriptors,characteristic.toString());
+        }
+        Log.d(TAG, "-------------------- END LOG CHARACTERISTICS -------------------\n");
+    }
+
+    //LOG DESCRIPTORS
+    private static void logDescriptors(List<BluetoothGattDescriptor> descriptors, String characteristics_name){
+        Log.d(BT_TAG, "--------------------- LOG DESCRIPTORS OF " + characteristics_name + " ---------------------");
         if(!descriptors.isEmpty()){
             for(BluetoothGattDescriptor descriptor : descriptors){
-                try{
                     Log.d(BT_TAG, "--->  " + DataHelper.byteArrayAsHexString(descriptor.getValue()));
-                }
-                catch (Exception e){
-                    Log.d(BT_TAG, "--->  " + "nullPointerException caught");
-                }
             }
+            Log.d(BT_TAG, "-------------------- END LOG DESCRIPTORS -------------------\n");
         }
         else{
-            //Log.d(TAG, "NO DESCRIPTORS FOUND :" + descriptors.size());
+            Log.d(BT_TAG, "NO DESCRIPTORS FOUND :" + descriptors.size());
         }
     }
 }

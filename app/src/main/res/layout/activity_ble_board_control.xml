@@ -21,21 +21,21 @@
         app:layout_constraintVertical_bias="0.073" />
 
     <Button
-        android:id="@+id/readChar"
+        android:id="@+id/readCharButton"
         android:layout_width="108dp"
         android:layout_height="59dp"
         android:layout_below="@+id/nameTextView"
         android:layout_marginBottom="436dp"
         android:text="Read Char"
         app:layout_constraintBottom_toTopOf="@+id/msgTextView"
-        app:layout_constraintEnd_toStartOf="@+id/writeChar"
+        app:layout_constraintEnd_toStartOf="@+id/writeCharButton"
         app:layout_constraintHorizontal_bias="0.246"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/writeChar"
+        android:id="@+id/writeCharButton"
         android:layout_width="113dp"
         android:layout_height="56dp"
         android:layout_below="@+id/nameTextView"

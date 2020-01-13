@@ -164,7 +164,7 @@ public class MijiTemperatureControlActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             Bundle bundle;
             String characteristic_uuid;
-            byte[] b;
+            byte[] raw_byte_data;
 
             // message handling logic
             switch (msg.what) {
@@ -219,7 +219,7 @@ public class MijiTemperatureControlActivity extends AppCompatActivity {
                         if (svc.getUuid().toString().equalsIgnoreCase(BleConstants.miji_DEVICE_INFORMATION)) {
                             miji_device_information = true;
                             List<BluetoothGattCharacteristic> characteristics_list = svc.getCharacteristics();
-                            DataHelper.logCharacteristics(characteristics_list,"miji_DEVICE_INFORMATION");
+                            //DataHelper.logCharacteristics(characteristics_list,"miji_DEVICE_INFORMATION");
                             continue;
                         }
 
@@ -232,13 +232,13 @@ public class MijiTemperatureControlActivity extends AppCompatActivity {
                         if (svc.getUuid().toString().equalsIgnoreCase(BleConstants.miji_GENERIC_ATTRIBUTE)) {
                             miji_generic_attribute = true;
                             List<BluetoothGattCharacteristic> characteristics_list = svc.getCharacteristics();
-                            //DataHelper.logCharacteristics(characteristics_list,"miji_GENERIC_ATTRIBUTE");
+                            //DataHelper.logCharacteristics(characteristics_list);
                             continue;
                         }
                         if (svc.getUuid().toString().equalsIgnoreCase(BleConstants.miji_TEMPERATURE_SERVICE)) {
                             miji_service_uuid = true;
                             List<BluetoothGattCharacteristic> characteristics_list = svc.getCharacteristics();
-                            DataHelper.logCharacteristics(characteristics_list,"miji_TEMPERATURE_SERVICE");
+                            //DataHelper.logCharacteristics(TAG,characteristics_list);
                             continue;
                         }
                     }
@@ -259,26 +259,25 @@ public class MijiTemperatureControlActivity extends AppCompatActivity {
 
                     bundle = msg.getData();
                     characteristic_uuid = bundle.getString(BleAdapterService.PARCEL_CHARACTERISTIC_UUID);
-                    b = bundle.getByteArray(BleAdapterService.PARCEL_VALUE);
+                    raw_byte_data = bundle.getByteArray(BleAdapterService.PARCEL_VALUE);
                     showMsg("NOTIFICATION_OR_INDICATION_RECEIVED");
                     temperatureValueTv.setTextSize(60);
 
                     //Read temperature characteristicz
                     if (characteristic_uuid.equalsIgnoreCase((BleConstants.miji_TEMPERATURE_CHARACTERISTIC))) {
-                        Log.d(BleConstants.BT_TAG, "Handling bundle temp_serv_char_1");
-                        String temperatureKey = DataHelper.byteArrayAsHexString(b).trim().toLowerCase();
+                        Log.d(BleConstants.BT_TAG, "Handling miji_TEMPERATURE_CHARACTERISTIC");
+                        String temperatureKey = DataHelper.byteArrayAsHexString(raw_byte_data).trim().toLowerCase();
                         String temperatureValue = temperatureMapper.getValues().get(temperatureKey);
                         Log.d(BleConstants.BT_TAG, "temperature key: " + temperatureKey + " is " + temperatureValue);
                         showTemperature(temperatureValue);
-
                     }
 
                     //what is this characteristic?
                     if (characteristic_uuid.equalsIgnoreCase((BleConstants.miji_TEMPERATURE_SERVICE_CHAR_2))) {
                         Log.d(BleConstants.BT_TAG, "Handling bundle temp_serv_char_2");
-                        Log.d(BleConstants.BT_TAG,"bundle as byte array " + b);
-                        Log.d(BleConstants.BT_TAG, "bundle as String " + DataHelper.byteArrayAsHexString(b));
-                        Log.d(BleConstants.BT_TAG, "bundle length:" + b.length);
+                        Log.d(BleConstants.BT_TAG,"bundle as byte array " + raw_byte_data);
+                        Log.d(BleConstants.BT_TAG, "bundle as String " + DataHelper.byteArrayAsHexString(raw_byte_data));
+                        Log.d(BleConstants.BT_TAG, "bundle length:" + raw_byte_data.length);
                     }
                     break;
             }
@@ -335,6 +334,5 @@ public class MijiTemperatureControlActivity extends AppCompatActivity {
             }
         });
     }
-
 
 }
