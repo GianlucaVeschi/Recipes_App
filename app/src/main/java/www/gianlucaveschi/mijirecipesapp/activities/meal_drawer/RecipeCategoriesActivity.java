@@ -25,6 +25,7 @@ import www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivit
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.OnRecipeListener;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
+import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 import www.gianlucaveschi.mijirecipesapp.utils.MyLogger;
 import www.gianlucaveschi.mijirecipesapp.utils.VerticalSpacingItemDecorator;
 import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModel;
@@ -60,6 +61,17 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
     }
 
+    @Override
+    public void onBackPressed() {
+        if(mRecipesCategoriesViewModel.onBackPressed()){
+            super.onBackPressed();
+        }
+        else{
+            //Go to back to Search all categories if you are actually inside a category
+            displaySearchCategories();
+        }
+    }
+
     private void subscribeObservers(){
         mRecipesCategoriesViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
@@ -68,6 +80,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
                     if(mRecipesCategoriesViewModel.isViewingRecipes()){
                         MyLogger.logRecipes(TAG,recipes);
                         mRecipesCategoriesViewModel.setIsPerformingQuery(false);
+                        mAdapter.hideLoading();
                         mAdapter.setRecipes(recipes);
                     }
                 }
@@ -88,7 +101,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
     @Override
     public void onRecipeClick(int position) {
         Intent intent = new Intent(this, RecipeDetailsActivity.class);
-        intent.putExtra("recipe", mAdapter.getSelectedRecipe(position));
+        intent.putExtra(Constants.EXTRA_RECIPE, mAdapter.getSelectedRecipe(position));
         startActivity(intent);
     }
 
@@ -127,9 +140,11 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+
                 mAdapter.displayLoading();
                 mRecipesCategoriesViewModel.searchRecipesApi(s, 1);
                 mSearchView.clearFocus();
+
                 return false;
             }
 

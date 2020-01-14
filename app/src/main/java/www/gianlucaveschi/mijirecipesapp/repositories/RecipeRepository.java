@@ -19,7 +19,6 @@ public class RecipeRepository {
     private MutableLiveData<Boolean> mIsQueryExhausted = new MutableLiveData<>();
     private MediatorLiveData<List<Recipe>> mRecipes = new MediatorLiveData<>();
 
-    //Singleton Constructor
     public static RecipeRepository getInstance(){
         if(instance == null){
             instance = new RecipeRepository();
@@ -27,44 +26,9 @@ public class RecipeRepository {
         return instance;
     }
 
-    private RecipeRepository() {
+    private RecipeRepository(){
         mRecipeApiClient = RecipeApiClient.getInstance();
         initMediators();
-    }
-
-    public LiveData<List<Recipe>> getRecipes(){
-        return mRecipeApiClient.getRecipes();
-    }
-
-    public LiveData<Recipe> getRecipe(){
-        return mRecipeApiClient.getRecipe();
-    }
-
-    public void searchRecipeById(String recipeId){
-        mRecipeApiClient.searchRecipeById(recipeId);
-    }
-
-    //Retrieves the recipes on the web server by requesting them to the RecipeApiClient
-    public void searchRecipesApi(String query, int pageNumber){
-        if(pageNumber == 0){
-            pageNumber = 1;
-        }
-        mQuery = query;
-        mPageNumber = pageNumber;
-        mIsQueryExhausted.setValue(false);
-        mRecipeApiClient.searchRecipesApi(query, pageNumber);
-    }
-
-    public void searchNextPage(){
-        searchRecipesApi(mQuery, mPageNumber + 1);
-    }
-
-    public void cancelRequest(){
-        mRecipeApiClient.cancelRequest();
-    }
-
-    public LiveData<Boolean> isQueryExhausted(){
-        return mIsQueryExhausted;
     }
 
     private void initMediators(){
@@ -94,5 +58,44 @@ public class RecipeRepository {
         else{
             mIsQueryExhausted.setValue(true);
         }
+    }
+
+    public LiveData<Boolean> isQueryExhausted(){
+        return mIsQueryExhausted;
+    }
+
+    public LiveData<List<Recipe>> getRecipes(){
+        return mRecipes;
+    }
+
+    public LiveData<Recipe> getRecipe(){
+        return mRecipeApiClient.getRecipe();
+    }
+
+    public void searchRecipeById(String recipeId){
+        mRecipeApiClient.searchRecipeById(recipeId);
+    }
+
+
+    public void searchRecipesApi(String query, int pageNumber){
+        if(pageNumber == 0){
+            pageNumber = 1;
+        }
+        mQuery = query;
+        mPageNumber = pageNumber;
+        mIsQueryExhausted.setValue(false);
+        mRecipeApiClient.searchRecipesApi(query, pageNumber);
+    }
+
+    public void searchNextPage(){
+        searchRecipesApi(mQuery, mPageNumber + 1);
+    }
+
+    public void cancelRequest(){
+        mRecipeApiClient.cancelRequest();
+    }
+
+    public LiveData<Boolean> isRecipeRequestTimedOut(){
+        return mRecipeApiClient.isRecipeRequestTimedOut();
     }
 }

@@ -3,13 +3,14 @@ package www.gianlucaveschi.mijirecipesapp.utils;
 import android.util.Log;
 
 import java.util.List;
+import java.util.TimerTask;
 
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 
 import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 
-public class MyLogger {
+public class MyLogger extends TimerTask {
 
     public static String logMealContainerResponse(Response<MealContainer> response){
         String result = "Response \n\t" + response + "\n"
@@ -23,5 +24,8 @@ public class MyLogger {
         }
     }
 
-
+    @Override
+    public void run() {
+        Log.d("MyLogger", "Animation is running");
+    }
 }

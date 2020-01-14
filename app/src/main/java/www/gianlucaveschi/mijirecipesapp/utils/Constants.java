@@ -1,7 +1,7 @@
 package www.gianlucaveschi.mijirecipesapp.utils;
 
 public class Constants {
-    public static final int NETWORK_TIMEOUT = 3000;
+    public static final int NETWORK_TIMEOUT = 10000;
     public static final String RECIPES_BASE_URL = "https://recipesapi.herokuapp.com/";
     public static final String API_KEY = "";
     public static final String EXTRA_MEAL = "MealParcel";

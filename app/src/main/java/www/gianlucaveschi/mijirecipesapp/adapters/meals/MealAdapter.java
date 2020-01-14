@@ -70,7 +70,6 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             VerticalViewHolder verticalViewHolder = (VerticalViewHolder) holder;
             verticalViewHolder.initVertLayout(verticalViewHolder,position,mMealsList);
         }
-
     }
 
     @Override

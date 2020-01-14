@@ -85,8 +85,6 @@ public class HorizontalDottedProgress extends View {
         width = calculatedWidth;
         height = (mBounceDotRadius*2);
 
-
-
         //MUST CALL THIS
         setMeasuredDimension(width, height);
     }
@@ -99,12 +97,12 @@ public class HorizontalDottedProgress extends View {
         bounceAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
+                Log.d("INFOMETHOD","----On Animation Start----");
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                Log.d("INFOMETHOD","----On Animation End----");
             }
 
             @Override
@@ -114,7 +112,7 @@ public class HorizontalDottedProgress extends View {
                 if (mDotPosition == mDotAmount) {
                     mDotPosition = 0;
                 }
-                Log.d("INFOMETHOD","----On Animation Repeat----");
+                //Log.d("INFOMETHOD","----On Animation Repeat----");
 
             }
         });
