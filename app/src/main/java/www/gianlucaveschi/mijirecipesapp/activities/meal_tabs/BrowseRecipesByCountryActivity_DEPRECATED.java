@@ -2,13 +2,11 @@ package www.gianlucaveschi.mijirecipesapp.activities.meal_tabs;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.r0adkll.slidr.Slidr;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,22 +21,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.OnRecipeListener;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.RecipeApi;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.ServiceGenerator;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeGetResponse;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 import www.gianlucaveschi.mijirecipesapp.utils.MyLogger;
-import www.gianlucaveschi.mijirecipesapp.viewmodels.BrowseRecipesByCountryViewModel;
+import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModel;
 
 
-public class BrowseRecipesByCountryActivity extends AppCompatActivity implements OnRecipeListener {
+public class BrowseRecipesByCountryActivity_DEPRECATED extends AppCompatActivity implements OnRecipeListener {
 
     private static final String TAG = "BrowseRecByCountryAct";
 
@@ -48,7 +40,7 @@ public class BrowseRecipesByCountryActivity extends AppCompatActivity implements
     @BindView(R.id.search_view)                     SearchView searchView;
 
     //View Model
-    private static BrowseRecipesByCountryViewModel mBrowseRecipesByCountryViewModel;
+    private static RecipesCategoriesViewModel mBrowseRecipesByCountryViewModel;
 
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipes;
@@ -58,7 +50,7 @@ public class BrowseRecipesByCountryActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_recipes_by_country);
         ButterKnife.bind(this);
-        mBrowseRecipesByCountryViewModel = ViewModelProviders.of(this).get(BrowseRecipesByCountryViewModel.class);
+        mBrowseRecipesByCountryViewModel = ViewModelProviders.of(this).get(RecipesCategoriesViewModel.class);
 
         //Get Intent
         Intent intent = getIntent();

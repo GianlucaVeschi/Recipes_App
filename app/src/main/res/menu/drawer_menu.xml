@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_fire"
             android:title="Main Ingredient"/>
 
+        <item android:id="@+id/nav_recipes_categories"
+            android:icon="@drawable/ic_fire"
+            android:title="Recipes Categories"/>
+
     </group>
 
     <item android:title="Communicate">

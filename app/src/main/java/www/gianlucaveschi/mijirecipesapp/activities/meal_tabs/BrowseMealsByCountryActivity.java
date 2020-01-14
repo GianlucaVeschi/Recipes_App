@@ -28,7 +28,7 @@ import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitN
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
 
-public class BrowseMealsByCountryActivity_DEPRECATED extends AppCompatActivity implements OnMealClickListener {
+public class BrowseMealsByCountryActivity extends AppCompatActivity implements OnMealClickListener {
 
     public static final String EXTRA_MEAL = "MealParcel";
 
@@ -92,9 +92,9 @@ public class BrowseMealsByCountryActivity_DEPRECATED extends AppCompatActivity i
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
 
         ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
-        MealAdapter mealAdapter = new MealAdapter(BrowseMealsByCountryActivity_DEPRECATED.this, mealsList);
+        MealAdapter mealAdapter = new MealAdapter(BrowseMealsByCountryActivity.this, mealsList);
         mealsRecyclerView.setAdapter(mealAdapter);
-        mealAdapter.setOnMealClickListener(BrowseMealsByCountryActivity_DEPRECATED.this);
+        mealAdapter.setOnMealClickListener(BrowseMealsByCountryActivity.this);
     }
 
     @Override

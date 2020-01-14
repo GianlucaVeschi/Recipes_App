@@ -29,10 +29,11 @@
             </intent-filter>
         </activity>
 
+        <!-- MEAL ACTIVITIES-->
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCountriesFlagsActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesFlagsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity"
@@ -47,13 +48,17 @@
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealsByCountryActivity_DEPRECATED"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealsByCountryActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealByIngredientActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseRecipesByCountryActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseRecipesByCountryActivity_DEPRECATED"
+            android:theme="@style/AppTheme.SlidrActivityTheme"/>
+
+        <!-- RECIPE ACTIVITIES -->
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCategoriesActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity"

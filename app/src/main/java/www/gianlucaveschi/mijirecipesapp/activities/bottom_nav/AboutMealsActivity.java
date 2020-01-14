@@ -28,9 +28,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
-import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCountriesFlagsActivity;
+import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesFlagsActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivity;
+import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCategoriesActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
@@ -237,7 +238,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case(R.id.nav_meal_countries):
-                Intent mealCountriesIntent = new Intent(this, RecipeCountriesFlagsActivity.class);
+                Intent mealCountriesIntent = new Intent(this, MealCountriesFlagsActivity.class);
                 startActivity(mealCountriesIntent);
                 break;
             case(R.id.nav_meal_random):
@@ -247,6 +248,10 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
             case(R.id.nav_meal_main_ingredient):
                 Intent mealMainIngredientIntent = new Intent(this, MealMainIngredientActivity.class);
                 startActivity(mealMainIngredientIntent);
+                break;
+            case(R.id.nav_recipes_categories):
+                Intent recipeCategoriesIntent = new Intent(this, RecipeCategoriesActivity.class);
+                startActivity(recipeCategoriesIntent);
                 break;
             case R.id.nav_share:
                 Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();

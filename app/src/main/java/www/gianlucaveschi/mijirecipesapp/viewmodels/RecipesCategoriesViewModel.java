@@ -7,13 +7,13 @@ import androidx.lifecycle.ViewModel;
 import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 import www.gianlucaveschi.mijirecipesapp.repositories.RecipeRepository;
 
-public class BrowseRecipesByCountryViewModel extends ViewModel {
+public class RecipesCategoriesViewModel extends ViewModel {
 
     private RecipeRepository mRecipeRepository;
-    private Boolean mIsViewingRecipes;
-    private Boolean mIsPerformingQuery; //Used to cancel a RETROFIT request
+    private boolean mIsViewingRecipes;
+    private boolean mIsPerformingQuery;
 
-    public BrowseRecipesByCountryViewModel() {
+    public RecipesCategoriesViewModel() {
         mRecipeRepository = RecipeRepository.getInstance();
         mIsPerformingQuery = false;
     }
@@ -22,18 +22,38 @@ public class BrowseRecipesByCountryViewModel extends ViewModel {
         return mRecipeRepository.getRecipes();
     }
 
+    public LiveData<Boolean> isQueryExhausted(){
+        return mRecipeRepository.isQueryExhausted();
+    }
+
     public void searchRecipesApi(String query, int pageNumber){
-        mRecipeRepository.searchRecipesApi(query, pageNumber);
+        mIsViewingRecipes = true;
         mIsPerformingQuery = true;
+        mRecipeRepository.searchRecipesApi(query, pageNumber);
     }
 
+    public void searchNextPage(){
+        if(!mIsPerformingQuery
+                && mIsViewingRecipes
+                && !isQueryExhausted().getValue()){
+            mRecipeRepository.searchNextPage();
+        }
+    }
 
-    public Boolean isPerformingQuery() {
+    public boolean isViewingRecipes(){
+        return mIsViewingRecipes;
+    }
+
+    public void setIsViewingRecipes(boolean isViewingRecipes){
+        mIsViewingRecipes = isViewingRecipes;
+    }
+
+    public void setIsPerformingQuery(Boolean isPerformingQuery){
+        mIsPerformingQuery = isPerformingQuery;
+    }
+
+    public boolean isPerformingQuery(){
         return mIsPerformingQuery;
-    }
-
-    public void setIsPerformingQuery(Boolean mIsPerformingQuery) {
-        this.mIsPerformingQuery = mIsPerformingQuery;
     }
 
     public boolean onBackPressed(){

@@ -23,14 +23,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseRecipesByCountryActivity;
+import www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealsByCountryActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.countries.CountryAdapter;
-import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.others.Country;
-import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 
 
-public class RecipeCountriesFlagsActivity extends AppCompatActivity {
+public class MealCountriesFlagsActivity extends AppCompatActivity {
 
     private static final String TAG = "RecipeCountriesFlagsAct";
 
@@ -43,7 +41,7 @@ public class RecipeCountriesFlagsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipes_countries_flags);
+        setContentView(R.layout.activity_meal_countries_flags);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -116,7 +114,7 @@ public class RecipeCountriesFlagsActivity extends AppCompatActivity {
             public void onItemClick(int position) {
                 Log.d(TAG, "onItemClick: clicked " + position);
 
-                Toast toast = Toast.makeText(RecipeCountriesFlagsActivity.this,
+                Toast toast = Toast.makeText(MealCountriesFlagsActivity.this,
                         "You touched on " + countriesList.get(position).getName(),
                         Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER,0,0);
@@ -128,7 +126,7 @@ public class RecipeCountriesFlagsActivity extends AppCompatActivity {
                 String countryName = countriesList.get(position).getName();
 
                 //Pass it to the intent
-                Intent intent = new Intent(RecipeCountriesFlagsActivity.this, BrowseRecipesByCountryActivity.class);
+                Intent intent = new Intent(MealCountriesFlagsActivity.this, BrowseMealsByCountryActivity.class);
                 intent.putExtra("flag_url",     flagUrl );
                 intent.putExtra("country_name", countryName);
 
