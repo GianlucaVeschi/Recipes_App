@@ -4,8 +4,6 @@ package www.gianlucaveschi.mijirecipesapp.adapters.stoves;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 
 import com.gianlucaveschi.load_json_images_picasso.R;
@@ -36,7 +34,7 @@ public class StoveAdapter extends RecyclerView.Adapter<StoveViewHolder> {
 
     @Override
     public StoveViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.stove_cardview, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_stove, parent, false);
         StoveViewHolder evh = new StoveViewHolder(v, mListener);
         return evh;
     }

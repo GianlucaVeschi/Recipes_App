@@ -39,27 +39,27 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         switch (i){
 
             case RECIPE_TYPE:{
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recipe_list_item, viewGroup, false);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_recipe, viewGroup, false);
                 return new RecipeViewHolder(view, mOnRecipeListener);
             }
 
             case LOADING_TYPE:{
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_loading_list_item, viewGroup, false);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_loading_view, viewGroup, false);
                 return new LoadingViewHolder(view);
             }
 
             case EXHAUSTED_TYPE:{
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.search_exhausted_list_item, viewGroup, false);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_search_exhausted, viewGroup, false);
                 return new SearchExhaustedViewHolder(view);
             }
 
             case CATEGORY_TYPE:{
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recipe_category_list_item, viewGroup, false);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_recipe_category, viewGroup, false);
                 return new RecipeCategoryViewHolder(view, mOnRecipeListener);
             }
 
             default:{
-                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recipe_list_item, viewGroup, false);
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_recipe, viewGroup, false);
                 return new RecipeViewHolder(view, mOnRecipeListener);
             }
         }

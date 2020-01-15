@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.MainBluetoothActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.stove_tabs.MijiProductsOverview;
-import www.gianlucaveschi.mijirecipesapp.utils.BottomNavigationViewHelper;
+import www.gianlucaveschi.mijirecipesapp.utils.UI.BottomNavigationViewHelper;
 
 /**
  * Created by sheck on 26/09/2019.

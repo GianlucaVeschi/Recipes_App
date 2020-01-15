@@ -32,21 +32,25 @@ import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesFla
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivity;
 import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCategoriesActivity;
+import www.gianlucaveschi.mijirecipesapp.adapters.FoodCategoryAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
-import www.gianlucaveschi.mijirecipesapp.utils.BottomNavigationViewHelper;
+import www.gianlucaveschi.mijirecipesapp.utils.UI.BottomNavigationViewHelper;
+import www.gianlucaveschi.mijirecipesapp.utils.Constants;
+import www.gianlucaveschi.mijirecipesapp.utils.UI.HorizontalSpacingItemDecorator;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class AboutMealsActivity extends AppCompatActivity implements OnMealClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class AboutMealsActivity extends AppCompatActivity implements OnMealClickListener, FoodCategoryAdapter.OnFoodCategoryClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     public static final String EXTRA_MEAL = "MealParcel";
 
@@ -65,6 +69,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     @BindView(R.id.nav_view)        NavigationView navigationView;
     @BindView(R.id.toolbar)         Toolbar toolbar;
     @BindView(R.id.bottom_nav_view) BottomNavigationView bottomNavigationView;
+    @BindView(R.id.categories_rec_view)   RecyclerView mFoodCategoriesRecView;
     @BindView(R.id.recycler_view)   RecyclerView mRecyclerView;
     @BindView(R.id.recycler_view_2) RecyclerView mRecyclerView_2;
     @BindView(R.id.recycler_view_4) RecyclerView mRecyclerView_4;
@@ -97,16 +102,30 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         menuItem.setChecked(true);
 
         //Init RecyclerViews
-        initRecyclerViews();
+        initFoodCategoriesRecView();
+        initMealRecyclerViews();
 
         //Populate RecyclerView with recipes from the MealDatabase
         displayRecipesByCountryWithRetrofit("Italian", mRecyclerView,HORIZONTAL_VIEW_TYPE);
         displayRecipesByCountryWithRetrofit("Chinese", mRecyclerView_2,HORIZONTAL_VIEW_TYPE);
-        //displayRecipesByCountryWithRetrofit("American",mRecyclerView_3,VERTICAL_VIEW_TYPE);
         displayRecipesByCategoryWithRetrofit("Seafood",mRecyclerView_4,HORIZONTAL_VIEW_TYPE);
 
         //Try to Retrieve the data as Map<String,MealSimple>
         //displayRecipesByCountryWithRetrofitAsMealSimple("Japanese");
+
+    }
+
+    private void initFoodCategoriesRecView() {
+        HorizontalSpacingItemDecorator itemDecorator = new HorizontalSpacingItemDecorator(5);
+        ArrayList<String> foodCategories = new ArrayList<>(Arrays. asList(Constants.DEFAULT_SEARCH_CATEGORIES));
+
+        FoodCategoryAdapter foodCategoryAdapter = new FoodCategoryAdapter(foodCategories);
+        foodCategoryAdapter.setOnFoodCategoryClickListener(AboutMealsActivity.this);
+
+        mFoodCategoriesRecView.addItemDecoration(itemDecorator);
+        mFoodCategoriesRecView.setHasFixedSize(true);
+        mFoodCategoriesRecView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+        mFoodCategoriesRecView.setAdapter(foodCategoryAdapter);
 
     }
 
@@ -136,19 +155,21 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     }
 
 
-    private void initRecyclerViews() {
+    private void initMealRecyclerViews() {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+        mRecyclerView.setAdapter(mealAdapter);
 
         //Second RecyclerView containing Chinese Recipes
         mRecyclerView_2.setHasFixedSize(true);
         mRecyclerView_2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+        mRecyclerView.setAdapter(mealAdapter);
 
         //Fourth RecyclerView containing Seafood Recipes
         mRecyclerView_4.setHasFixedSize(true);
         mRecyclerView_4.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-
+        mRecyclerView.setAdapter(mealAdapter);
     }
 
     //If the user presses the Back button while the drawer is open
@@ -232,6 +253,12 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         startActivity(detailIntent);
     }
 
+    @Override
+    public void onFoodCategoryClick(int position, ArrayList<String> foodCategoriesList) {
+        String category = foodCategoriesList.get(position);
+        Toast.makeText(this, category, Toast.LENGTH_SHORT).show();
+    }
+
     /**
      * Navigation View Item Listener*/
     @Override
@@ -270,12 +297,9 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         if(id == R.id.contact_miji_button){
             Toast.makeText(this,"Soon you will be able to send me an email",Toast.LENGTH_SHORT)
                     .show();
-
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
     /**
      * Bottom Navigation View
@@ -299,7 +323,6 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
                     startActivity(intentAboutMiji);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     break;
-
             }
             return false;
         }

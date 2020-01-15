@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import www.gianlucaveschi.mijirecipesapp.utils.BottomNavigationViewHelper;
+import www.gianlucaveschi.mijirecipesapp.utils.UI.BottomNavigationViewHelper;
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

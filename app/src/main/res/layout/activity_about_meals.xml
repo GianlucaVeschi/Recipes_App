@@ -33,22 +33,20 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!--
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/view_pager"
+        <!-- TOP CATEGORIES -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categories_rec_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/appBarLayout"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        </androidx.viewpager.widget.ViewPager>
-        -->
+            android:background="@color/White"/>
 
         <!-- MAIN CONTENT -->
         <include layout="@layout/main_content"
             android:id="@+id/main_content"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_below="@+id/appBarLayout"
+            android:layout_below="@+id/categories_rec_view"
             android:layout_above="@+id/bottom_nav"/>
 
         <!-- BOTTOM NAV -->

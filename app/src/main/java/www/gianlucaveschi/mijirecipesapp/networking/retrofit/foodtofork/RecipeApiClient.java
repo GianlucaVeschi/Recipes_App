@@ -1,13 +1,12 @@
 package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork;
 
-import android.util.Log;
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import www.gianlucaveschi.mijirecipesapp.executors.AppExecutors;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.executors.AppExecutors;
 import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.NETWORK_TIMEOUT;

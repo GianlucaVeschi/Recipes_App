@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.utils;
+package www.gianlucaveschi.mijirecipesapp.utils.UI;
 
 
 import android.annotation.SuppressLint;

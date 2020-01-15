@@ -2,13 +2,10 @@ package www.gianlucaveschi.mijirecipesapp.activities.meal_drawer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.SearchView;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.r0adkll.slidr.Slidr;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,11 +21,10 @@ import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.OnRecipeListener;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
-import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
-import www.gianlucaveschi.mijirecipesapp.utils.MyLogger;
-import www.gianlucaveschi.mijirecipesapp.utils.VerticalSpacingItemDecorator;
+import www.gianlucaveschi.mijirecipesapp.utils.UI.VerticalSpacingItemDecorator;
 import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModel;
+import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModelNEW;
 
 public class RecipeCategoriesActivity extends AppCompatActivity implements OnRecipeListener {
 
@@ -38,6 +34,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
     @BindView(R.id.search_view) SearchView mSearchView;
 
     private RecipesCategoriesViewModel mRecipesCategoriesViewModel;
+    private RecipesCategoriesViewModelNEW mRecipesCategoriesViewModelNEW;
     private RecipeAdapter mAdapter;
    
 
@@ -50,6 +47,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
 
         //set View Model
         mRecipesCategoriesViewModel = ViewModelProviders.of(this).get(RecipesCategoriesViewModel.class);
+        mRecipesCategoriesViewModelNEW = ViewModelProviders.of(this).get(RecipesCategoriesViewModelNEW.class);
 
         initRecyclerView();
         subscribeObservers();
@@ -73,6 +71,27 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
     }
 
     private void subscribeObservers(){
+        mRecipesCategoriesViewModelNEW.getViewState().observe(this, new Observer<RecipesCategoriesViewModelNEW.ViewState>() {
+            @Override
+            public void onChanged(@Nullable RecipesCategoriesViewModelNEW.ViewState viewState) {
+                if(viewState != null){
+                    switch (viewState){
+
+                        case RECIPES:{
+                            // recipes will show automatically from other observer
+                            break;
+                        }
+
+                        case CATEGORIES:{
+                            displaySearchCategories();
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+    }
+    /*private void subscribeObservers(){
         mRecipesCategoriesViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
@@ -80,7 +99,6 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
                     if(mRecipesCategoriesViewModel.isViewingRecipes()){
                         MyLogger.logRecipes(TAG,recipes);
                         mRecipesCategoriesViewModel.setIsPerformingQuery(false);
-                        mAdapter.hideLoading();
                         mAdapter.setRecipes(recipes);
                     }
                 }
@@ -96,7 +114,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
                 }
             }
         });
-    }
+    }*/
 
     @Override
     public void onRecipeClick(int position) {

@@ -2,7 +2,6 @@ package www.gianlucaveschi.mijirecipesapp.adapters;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.gianlucaveschi.load_json_images_picasso.R;
 import java.util.ArrayList;
 
 import androidx.recyclerview.widget.RecyclerView;
-import www.gianlucaveschi.mijirecipesapp.models.others.Country;
 import www.gianlucaveschi.mijirecipesapp.models.others.Ingredient;
 
 /**
@@ -76,7 +74,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     @Override
     public IngredientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_cardview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_ingredient, parent, false);
         IngredientViewHolder cvh = new IngredientViewHolder(view, mListener);
         return cvh;
     }

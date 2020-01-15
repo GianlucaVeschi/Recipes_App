@@ -20,8 +20,8 @@ public class BleDeviceAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        public TextView deviceName;
-        public TextView deviceAddress;
+        private TextView deviceName;
+        private TextView deviceAddress;
     }
 
     public void addDevice(BluetoothDevice device) {
@@ -29,9 +29,7 @@ public class BleDeviceAdapter extends BaseAdapter {
             ble_devices.add(device);
         }
     }
-    public boolean contains(BluetoothDevice device) {
-        return ble_devices.contains(device);
-    }
+
     public BluetoothDevice getDevice(int position) {
         return ble_devices.get(position);
     }
@@ -58,7 +56,7 @@ public class BleDeviceAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         ViewHolder viewHolder;
         if (view == null) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.device_row, null);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_device, null);
             viewHolder = new ViewHolder();
             viewHolder.deviceName = view.findViewById(R.id.device_name);
             viewHolder.deviceAddress = view.findViewById(R.id.device_mac);

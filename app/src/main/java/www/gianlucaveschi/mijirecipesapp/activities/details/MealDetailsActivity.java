@@ -39,7 +39,7 @@ public class MealDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.meal_details);
+        setContentView(R.layout.activity_meal_details);
         ButterKnife.bind(this);
 
         textViewIngredients.setText("");

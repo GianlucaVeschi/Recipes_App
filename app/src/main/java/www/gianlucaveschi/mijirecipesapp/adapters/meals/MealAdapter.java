@@ -7,18 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+
 import com.gianlucaveschi.load_json_images_picasso.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
-import www.gianlucaveschi.mijirecipesapp.models.others.Country;
 
 public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
@@ -49,10 +45,10 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         View view;
         switch(viewType){
             case HORIZONTAL_VIEW_TYPE :
-               view = LayoutInflater.from(mContext).inflate(R.layout.meal_horizontal_item, parent, false);
+               view = LayoutInflater.from(mContext).inflate(R.layout.list_item_meal_horizontal, parent, false);
                 return new HorizontalViewHolder(view,mListener,mMealsList);
             case VERTICAL_VIEW_TYPE :
-                view = LayoutInflater.from(mContext).inflate(R.layout.meal_vertical_item, parent, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.list_item_meal_vertical, parent, false);
                 return new VerticalViewHolder(view,mListener,mMealsList);
             default:
                 throw new RuntimeException("The type has to be VERTICAL or HORIZONTAL");
