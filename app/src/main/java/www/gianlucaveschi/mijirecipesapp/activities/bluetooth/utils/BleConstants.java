@@ -28,6 +28,9 @@ public class BleConstants {
     public static final String miji_DEVICE_NAME = "Miji_Bluetooth01";
     public static final String BT_BOARD = "nRF52832";
 
-    public static final String bt_board_NOT_GENERIC_CHARACTERISTIC = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E";
+
+    public static final String NORDIC_UART_SERVICE = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E";
+
+
 
 }

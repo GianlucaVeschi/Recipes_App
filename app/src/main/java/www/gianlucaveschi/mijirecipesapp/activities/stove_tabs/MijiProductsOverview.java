@@ -86,7 +86,6 @@ public class MijiProductsOverview extends AppCompatActivity {
                 String stoveTitle = mProductsList.get(position).getTitle();
                 int stoveImgResource = mProductsList.get(position).getImageResource();
 
-                //todo Add parcelable
                 //Pass it to the intent
                 Intent intent = new Intent(MijiProductsOverview.this, StoveDetailsActivity.class);
                 intent.putExtra("stove_image_resource", stoveImgResource);

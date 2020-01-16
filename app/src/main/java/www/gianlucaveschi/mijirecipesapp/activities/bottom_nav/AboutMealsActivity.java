@@ -109,10 +109,6 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         displayRecipesByCountryWithRetrofit("Italian", mRecyclerView,HORIZONTAL_VIEW_TYPE);
         displayRecipesByCountryWithRetrofit("Chinese", mRecyclerView_2,HORIZONTAL_VIEW_TYPE);
         displayRecipesByCategoryWithRetrofit("Seafood",mRecyclerView_4,HORIZONTAL_VIEW_TYPE);
-
-        //Try to Retrieve the data as Map<String,MealSimple>
-        //displayRecipesByCountryWithRetrofitAsMealSimple("Japanese");
-
     }
 
     private void initFoodCategoriesRecView() {
@@ -181,7 +177,6 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
             super.onBackPressed();
         }
     }
-
 
     /**
      * Retrofit Calls
@@ -255,8 +250,10 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
 
     @Override
     public void onFoodCategoryClick(int position, ArrayList<String> foodCategoriesList) {
-        String category = foodCategoriesList.get(position);
-        Toast.makeText(this, category, Toast.LENGTH_SHORT).show();
+        String categoryName = foodCategoriesList.get(position);
+        Intent displayFoodCategory = new Intent(AboutMealsActivity.this,RecipeCategoriesActivity.class);
+        displayFoodCategory.putExtra(Constants.EXTRA_RECIPE_CAT,categoryName);
+        startActivity(displayFoodCategory);
     }
 
     /**

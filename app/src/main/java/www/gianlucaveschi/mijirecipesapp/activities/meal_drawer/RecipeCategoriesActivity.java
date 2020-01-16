@@ -2,10 +2,13 @@ package www.gianlucaveschi.mijirecipesapp.activities.meal_drawer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.SearchView;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.r0adkll.slidr.Slidr;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +24,9 @@ import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.OnRecipeListener;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
+import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
+import www.gianlucaveschi.mijirecipesapp.utils.MyLogger;
 import www.gianlucaveschi.mijirecipesapp.utils.UI.VerticalSpacingItemDecorator;
 import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModel;
 import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModelNEW;
@@ -36,7 +41,6 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
     private RecipesCategoriesViewModel mRecipesCategoriesViewModel;
     private RecipesCategoriesViewModelNEW mRecipesCategoriesViewModelNEW;
     private RecipeAdapter mAdapter;
-   
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,16 +51,20 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
 
         //set View Model
         mRecipesCategoriesViewModel = ViewModelProviders.of(this).get(RecipesCategoriesViewModel.class);
-        mRecipesCategoriesViewModelNEW = ViewModelProviders.of(this).get(RecipesCategoriesViewModelNEW.class);
+        //mRecipesCategoriesViewModelNEW = ViewModelProviders.of(this).get(RecipesCategoriesViewModelNEW.class);
 
         initRecyclerView();
         subscribeObservers();
         initSearchView();
-        if(!mRecipesCategoriesViewModel.isViewingRecipes()){
-            // display search categories
-            displaySearchCategories();
-        }
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
+
+        if(getIntent().hasExtra(Constants.EXTRA_RECIPE_CAT)){
+            getIncomingIntent();
+        }
+        else if(!mRecipesCategoriesViewModel.isViewingRecipes()){
+                // display search categories
+                displaySearchCategories();
+        }
     }
 
     @Override
@@ -70,28 +78,30 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
         }
     }
 
+    //WORK IN PROGRESS
+//    private void subscribeObservers(){
+//        mRecipesCategoriesViewModelNEW.getViewState().observe(this, new Observer<RecipesCategoriesViewModelNEW.ViewState>() {
+//            @Override
+//            public void onChanged(@Nullable RecipesCategoriesViewModelNEW.ViewState viewState) {
+//                if(viewState != null){
+//                    switch (viewState){
+//
+//                        case RECIPES:{
+//                            // recipes will show automatically from other observer
+//                            break;
+//                        }
+//
+//                        case CATEGORIES:{
+//                            displaySearchCategories();
+//                            break;
+//                        }
+//                    }
+//                }
+//            }
+//        });
+//    }
+
     private void subscribeObservers(){
-        mRecipesCategoriesViewModelNEW.getViewState().observe(this, new Observer<RecipesCategoriesViewModelNEW.ViewState>() {
-            @Override
-            public void onChanged(@Nullable RecipesCategoriesViewModelNEW.ViewState viewState) {
-                if(viewState != null){
-                    switch (viewState){
-
-                        case RECIPES:{
-                            // recipes will show automatically from other observer
-                            break;
-                        }
-
-                        case CATEGORIES:{
-                            displaySearchCategories();
-                            break;
-                        }
-                    }
-                }
-            }
-        });
-    }
-    /*private void subscribeObservers(){
         mRecipesCategoriesViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {
@@ -114,7 +124,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
                 }
             }
         });
-    }*/
+    }
 
     @Override
     public void onRecipeClick(int position) {
@@ -171,5 +181,11 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
                 return false;
             }
         });
+    }
+
+    private void getIncomingIntent(){
+        String categoryName = getIntent().getStringExtra(Constants.EXTRA_RECIPE_CAT);
+        Log.d(TAG, "getIncomingIntent: " + categoryName);
+        onCategoryClick(categoryName);
     }
 }

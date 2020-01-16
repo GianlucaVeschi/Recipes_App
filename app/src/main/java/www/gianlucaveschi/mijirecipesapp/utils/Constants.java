@@ -6,6 +6,7 @@ public class Constants {
     public static final String API_KEY = "";
     public static final String EXTRA_MEAL = "MealParcel";
     public static final String EXTRA_RECIPE = "RecipeParcel";
+    public static final String EXTRA_RECIPE_CAT = "RecipeCatParcel";
 
     public static final String LOADING = "LOADING...";
 

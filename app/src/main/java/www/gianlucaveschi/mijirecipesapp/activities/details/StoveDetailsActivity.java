@@ -36,15 +36,11 @@ public class StoveDetailsActivity extends AppCompatActivity {
     }
 
     private void getIncomingIntent(){
-        Log.d(TAG, "getIncomingIntent: checking for incoming intents.");
         //check if the intent actually has an extra otherwise the app will crash
         if(getIntent().hasExtra("stove_image_resource") && getIntent().hasExtra("stove_title")){
-            Log.d(TAG, "getIncomingIntent: getIncomingIntent() -> Extras have been found");
 
             int stoveImgResource = getIntent().getIntExtra("stove_image_resource",0);
             String stoveTitle = getIntent().getStringExtra("stove_title");
-
-            Log.d(TAG, "receive imageResource : " +  stoveImgResource);
 
             setStoveDetails(stoveImgResource,stoveTitle);
         }
