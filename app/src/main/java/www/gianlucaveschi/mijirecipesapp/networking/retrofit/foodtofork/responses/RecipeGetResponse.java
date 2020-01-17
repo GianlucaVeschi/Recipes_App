@@ -3,7 +3,7 @@ package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.respons
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
+import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 
 public class RecipeGetResponse {
 

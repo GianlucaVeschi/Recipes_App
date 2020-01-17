@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.models.meals;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,28 +6,29 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import www.gianlucaveschi.mijirecipesapp.models.Meal;
 
-public class MealContainer {
+public class MealResponse {
 
     private int id;
 
     @SerializedName("meals")
     @Expose
-    private ArrayList<MealSimple> mealSimples;
+    private ArrayList<Meal> meals;
 
     /**
      * Constructor
      * */
-    public MealContainer(ArrayList<MealSimple> mealSimples) {
-        this.mealSimples = mealSimples;
+    public MealResponse(ArrayList<Meal> meals) {
+        this.meals = meals;
     }
 
-    public MealSimple getContainedMeal(){
-        return mealSimples.get(0);
+    public Meal getContainedMeal(){
+        return meals.get(0);
     }
 
-    public ArrayList<MealSimple> getMealSimples() {
-        return mealSimples;
+    public ArrayList<Meal> getMeals() {
+        return meals;
     }
 
     public int getId() {
@@ -40,7 +41,7 @@ public class MealContainer {
     }
 
     public void setOrientation(int orientation){
-        for(MealSimple mealSimples: mealSimples){
+        for(Meal mealSimples: meals){
             mealSimples.setOrientationType(orientation);
         }
     }
@@ -48,8 +49,8 @@ public class MealContainer {
     @Override
     public String toString() {
         String result = "\n";
-        for (MealSimple mealSimple : mealSimples){
-            result += mealSimple.toString() + "\n";
+        for (Meal meal : meals){
+            result += meal.toString() + "\n";
         }
         return result;
     }

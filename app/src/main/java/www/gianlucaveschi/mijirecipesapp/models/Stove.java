@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.models.stoves;
+package www.gianlucaveschi.mijirecipesapp.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,12 +7,12 @@ import android.os.Parcelable;
  * Created by sheck on 25/09/2019.
  */
 
-public class StoveProduct implements Parcelable {
+public class Stove implements Parcelable {
     private int imageResource; //int because R.layout.image is internally saved as an int
     private String title;
     private String description;
 
-    public StoveProduct(int imageResource, String title, String description) {
+    public Stove(int imageResource, String title, String description) {
         this.imageResource = imageResource;
         this.title = title;
         this.description = description;
@@ -45,21 +45,21 @@ public class StoveProduct implements Parcelable {
     /**
      * Parcelable methods
      * */
-    protected StoveProduct(Parcel in) {
+    protected Stove(Parcel in) {
         imageResource = in.readInt();
         title = in.readString();
         description = in.readString();
     }
 
-    public static final Creator<StoveProduct> CREATOR = new Creator<StoveProduct>() {
+    public static final Creator<Stove> CREATOR = new Creator<Stove>() {
         @Override
-        public StoveProduct createFromParcel(Parcel in) {
-            return new StoveProduct(in);
+        public Stove createFromParcel(Parcel in) {
+            return new Stove(in);
         }
 
         @Override
-        public StoveProduct[] newArray(int size) {
-            return new StoveProduct[size];
+        public Stove[] newArray(int size) {
+            return new Stove[size];
         }
     };
 

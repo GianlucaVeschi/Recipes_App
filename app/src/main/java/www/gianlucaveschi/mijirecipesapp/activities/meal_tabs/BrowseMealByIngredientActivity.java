@@ -22,8 +22,8 @@ import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
+import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
@@ -69,21 +69,21 @@ public class BrowseMealByIngredientActivity extends AppCompatActivity implements
 
     private void displayRecipesByIngredientWithRetrofit(String ingredient){
         mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
-        mealAPI.getMealsByIngredient(ingredient).enqueue(new Callback<MealContainer>() {
+        mealAPI.getMealsByIngredient(ingredient).enqueue(new Callback<MealResponse>() {
             @Override
-            public void onResponse(Call<MealContainer> call, Response<MealContainer> response) {
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
                 //Get Retrofit Response
-                MealContainer mealContainer = response.body();
+                MealResponse mealResponse = response.body();
 
                 //Set orientation for the rv
-                mealContainer.setOrientation(Constants.VERTICAL_VIEW_TYPE);
+                mealResponse.setOrientation(Constants.VERTICAL_VIEW_TYPE);
 
                 //Update UI
-                updateRecyclerView(mealContainer);
+                updateRecyclerView(mealResponse);
             }
 
             @Override
-            public void onFailure(Call<MealContainer> call, Throwable t) {
+            public void onFailure(Call<MealResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
             }
         });
@@ -95,8 +95,8 @@ public class BrowseMealByIngredientActivity extends AppCompatActivity implements
         mealsRecyclerView.setAdapter(mealAdapter);//set empty adapter
     }
 
-    private void updateRecyclerView(MealContainer mealContainer) {
-        ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
+    private void updateRecyclerView(MealResponse mealResponse) {
+        ArrayList<Meal> mealsList = mealResponse.getMeals();
         mealAdapter = new MealAdapter(BrowseMealByIngredientActivity.this, mealsList);
         mealsRecyclerView.setAdapter(mealAdapter);
         mealAdapter.notifyDataSetChanged();
@@ -107,9 +107,9 @@ public class BrowseMealByIngredientActivity extends AppCompatActivity implements
      * OnItemClick
      * */
     @Override
-    public void onItemClick(int position, ArrayList<MealSimple> mealsList) {
+    public void onItemClick(int position, ArrayList<Meal> mealsList) {
         Intent detailIntent = new Intent(this, MealDetailsActivity.class);
-        MealSimple clickedItem = mealsList.get(position);
+        Meal clickedItem = mealsList.get(position);
         //Send Parcel to the Details Activity
         detailIntent.putExtra(EXTRA_MEAL,clickedItem);
         startActivity(detailIntent);

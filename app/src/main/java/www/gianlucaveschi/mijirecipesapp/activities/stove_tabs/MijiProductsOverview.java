@@ -10,7 +10,7 @@ import com.gianlucaveschi.load_json_images_picasso.R;
 import www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.stoves.OnStoveClickListener;
 import www.gianlucaveschi.mijirecipesapp.adapters.stoves.StoveAdapter;
-import www.gianlucaveschi.mijirecipesapp.models.stoves.StoveProduct;
+import www.gianlucaveschi.mijirecipesapp.models.Stove;
 
 import com.r0adkll.slidr.Slidr;
 
@@ -31,7 +31,7 @@ public class MijiProductsOverview extends AppCompatActivity {
     private static final String TAG = "ProductsOverviewAct";
 
     //Stoves Array
-    ArrayList<StoveProduct> mProductsList = new ArrayList<>();
+    ArrayList<Stove> mProductsList = new ArrayList<>();
 
 
     @Override
@@ -51,16 +51,16 @@ public class MijiProductsOverview extends AppCompatActivity {
     private void createProductList() {
         Log.d(TAG, "createProductList: Adding products to the list");
 
-        mProductsList.add(new StoveProduct(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
-        mProductsList.add(new StoveProduct(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
-        mProductsList.add(new StoveProduct(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
-        mProductsList.add(new StoveProduct(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
-        mProductsList.add(new StoveProduct(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
-        mProductsList.add(new StoveProduct(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
-        mProductsList.add(new StoveProduct(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
-        mProductsList.add(new StoveProduct(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
-        mProductsList.add(new StoveProduct(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
-        mProductsList.add(new StoveProduct(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_gala_1,"Miji GALA", getString(R.string.Gala_El_1600W_desc)));
+        mProductsList.add(new Stove(R.drawable.miji_neo_1,"Miji NEO",getString(R.string.Neo_El_1600W_desc)));
     }
 
     private void buildRecyclerView() {
@@ -82,7 +82,7 @@ public class MijiProductsOverview extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
 
-                //Get StoveProduct Informations of the clicked stove
+                //Get Stove Informations of the clicked stove
                 String stoveTitle = mProductsList.get(position).getTitle();
                 int stoveImgResource = mProductsList.get(position).getImageResource();
 

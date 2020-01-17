@@ -1,7 +1,6 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth;
+package www.gianlucaveschi.mijirecipesapp.bluetooth;
 
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -13,32 +12,27 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 
 import java.util.List;
-import java.util.UUID;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.internal.Utils;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleAdapterService;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleAdapterService.LocalBinder;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.DataHelper;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.services.BleAdapterService;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.services.BleAdapterService.LocalBinder;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.utils.BleConstants;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.utils.DataHelper;
 
 public class BleBoardControlActivity extends AppCompatActivity {
 
     private static final String TAG = "BleBoardControlActivity";
     
-    private BleAdapterService mBluetoothAdapter;
+    private BleAdapterService mBluetoothAdapterService;
 
     //BindView
     @BindView(R.id.nameTextView)           TextView deviceNameTv;
@@ -77,23 +71,22 @@ public class BleBoardControlActivity extends AppCompatActivity {
         Intent gattServiceIntent = new Intent(this, BleAdapterService.class);
         bindService(gattServiceIntent, service_connection, BIND_AUTO_CREATE);
         showMsg("READY");
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unbindService(service_connection);
-        mBluetoothAdapter = null;
+        mBluetoothAdapterService = null;
     }
 
     @Override
     public void onBackPressed() {
         Log.d(TAG, "onBackPressed");
         backBtnWasPressed = true;
-        if (mBluetoothAdapter.isConnected()) {
+        if (mBluetoothAdapterService.isConnected()) {
             try {
-                mBluetoothAdapter.disconnect();
+                mBluetoothAdapterService.disconnect();
             } catch (Exception e) {
                 Log.d(TAG, "onBackPressed: " + e.getMessage());
             }
@@ -110,10 +103,11 @@ public class BleBoardControlActivity extends AppCompatActivity {
                     onConnect(v);
                     break;
                 case R.id.readCharButton :
-                    Toast.makeText(mBluetoothAdapter, "readChar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mBluetoothAdapterService, "readChar", Toast.LENGTH_SHORT).show();
+                    onClickWrite(v);
                     break;
                 case R.id.writeCharButton :
-                    Toast.makeText(mBluetoothAdapter, "writeChar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mBluetoothAdapterService, "writeChar", Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -122,26 +116,26 @@ public class BleBoardControlActivity extends AppCompatActivity {
     private final ServiceConnection service_connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            mBluetoothAdapter = ((LocalBinder) service).getService();
-            mBluetoothAdapter.setActivityHandler(message_handler);
+            mBluetoothAdapterService = ((LocalBinder) service).getService();
+            mBluetoothAdapterService.setActivityHandler(message_handler);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            mBluetoothAdapter = null;
+            mBluetoothAdapterService = null;
         }
     };
 
     private void onConnect(View v) {
         showMsg("onConnect");
-        if (mBluetoothAdapter != null) {
-            if (mBluetoothAdapter.connect(device_address)) {
+        if (mBluetoothAdapterService != null) {
+            if (mBluetoothAdapterService.connect(device_address)) {
                 connectButton.setEnabled(false);
             } else {
                 showMsg("onConnect: failed to connect");
             }
         } else {
-            showMsg("onConnect: mBluetoothAdapter=null");
+            showMsg("onConnect: mBluetoothAdapterService=null");
         }
     }
 
@@ -154,6 +148,23 @@ public class BleBoardControlActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onClickWrite(View v){
+        Log.d(TAG, "onClickWrite: test write");
+        if(mBluetoothAdapterService != null) {
+            String serviceUUID = BleConstants.NORDIC_UART_SERVICE;
+            String writeCharUUID = BleConstants.NORDIC_WRITE_CHAR;
+            byte[] value = { 02, 11, 96 };
+            mBluetoothAdapterService.writeCharacteristic(serviceUUID,writeCharUUID,value);
+        }
+    }
+
+    public void onClickRead(View v){
+        if(mBluetoothAdapterService != null) {
+            //mBluetoothAdapterService.readCustomCharacteristic();
+        }
+    }
+
 
     @SuppressLint("HandlerLeak")
     private Handler message_handler = new Handler() {
@@ -174,7 +185,7 @@ public class BleBoardControlActivity extends AppCompatActivity {
                     showMsg("CONNECTED");
 
                     //Discover Services
-                    mBluetoothAdapter.discoverServices();
+                    mBluetoothAdapterService.discoverServices();
 
                     break;
 
@@ -192,7 +203,7 @@ public class BleBoardControlActivity extends AppCompatActivity {
 
                 case BleAdapterService.GATT_SERVICES_DISCOVERED:
                     //Validate services and if ok...
-                    List<BluetoothGattService> services_list = mBluetoothAdapter.getSupportedGattServices();
+                    List<BluetoothGattService> services_list = mBluetoothAdapterService.getSupportedGattServices();
                     //LOG SERVICES
                     DataHelper.logServices(TAG,services_list);
 

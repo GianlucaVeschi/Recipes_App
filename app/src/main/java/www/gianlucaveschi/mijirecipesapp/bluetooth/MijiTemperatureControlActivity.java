@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth;
+package www.gianlucaveschi.mijirecipesapp.bluetooth;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -26,11 +26,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleAdapterService;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleAdapterService.LocalBinder;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.DataHelper;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.TemperatureMap;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.services.BleAdapterService;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.services.BleAdapterService.LocalBinder;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.utils.BleConstants;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.utils.DataHelper;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.utils.TemperatureMap;
 
 public class MijiTemperatureControlActivity extends AppCompatActivity {
 

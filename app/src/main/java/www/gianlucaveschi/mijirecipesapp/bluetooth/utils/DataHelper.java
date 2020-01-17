@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils;
+package www.gianlucaveschi.mijirecipesapp.bluetooth.utils;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
@@ -7,7 +7,7 @@ import android.util.Log;
 
 import java.util.List;
 
-import static www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants.BT_TAG;
+import static www.gianlucaveschi.mijirecipesapp.bluetooth.utils.BleConstants.BT_TAG;
 
 public class DataHelper {
 

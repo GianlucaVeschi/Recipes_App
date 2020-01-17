@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,10 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
-
 import retrofit2.Call;
-
-
 import retrofit2.Callback;
 import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
@@ -35,8 +30,8 @@ import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCategories
 import www.gianlucaveschi.mijirecipesapp.adapters.FoodCategoryAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
+import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.utils.UI.BottomNavigationViewHelper;
@@ -70,9 +65,9 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     @BindView(R.id.toolbar)         Toolbar toolbar;
     @BindView(R.id.bottom_nav_view) BottomNavigationView bottomNavigationView;
     @BindView(R.id.categories_rec_view)   RecyclerView mFoodCategoriesRecView;
-    @BindView(R.id.recycler_view)   RecyclerView mRecyclerView;
-    @BindView(R.id.recycler_view_2) RecyclerView mRecyclerView_2;
-    @BindView(R.id.recycler_view_4) RecyclerView mRecyclerView_4;
+    @BindView(R.id.top_recycler_view)   RecyclerView topRecView;
+    @BindView(R.id.central_recycler_view) RecyclerView centralMealsRecView;
+    @BindView(R.id.bottom_recycler_view) RecyclerView bottomRecView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,14 +101,14 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         initMealRecyclerViews();
 
         //Populate RecyclerView with recipes from the MealDatabase
-        displayRecipesByCountryWithRetrofit("Italian", mRecyclerView,HORIZONTAL_VIEW_TYPE);
-        displayRecipesByCountryWithRetrofit("Chinese", mRecyclerView_2,HORIZONTAL_VIEW_TYPE);
-        displayRecipesByCategoryWithRetrofit("Seafood",mRecyclerView_4,HORIZONTAL_VIEW_TYPE);
+            displayRecipesByCountryWithRetrofit("Italian", topRecView,VERTICAL_VIEW_TYPE);
+        displayRecipesByCountryWithRetrofit("Chinese", centralMealsRecView,HORIZONTAL_VIEW_TYPE);
+        displayRecipesByCategoryWithRetrofit("Seafood",bottomRecView,HORIZONTAL_VIEW_TYPE);
     }
 
     private void initFoodCategoriesRecView() {
         HorizontalSpacingItemDecorator itemDecorator = new HorizontalSpacingItemDecorator(5);
-        ArrayList<String> foodCategories = new ArrayList<>(Arrays. asList(Constants.DEFAULT_SEARCH_CATEGORIES));
+        ArrayList<String> foodCategories = new ArrayList<>(Arrays.asList(Constants.DEFAULT_SEARCH_CATEGORIES));
 
         FoodCategoryAdapter foodCategoryAdapter = new FoodCategoryAdapter(foodCategories);
         foodCategoryAdapter.setOnFoodCategoryClickListener(AboutMealsActivity.this);
@@ -122,7 +117,6 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         mFoodCategoriesRecView.setHasFixedSize(true);
         mFoodCategoriesRecView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         mFoodCategoriesRecView.setAdapter(foodCategoryAdapter);
-
     }
 
     //Inflate the Menu of the Drawer Layout
@@ -142,7 +136,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                mealAdapter.getFilter().filter(newText);
+                mealAdapter.getFilter().filter(newText); // TODO: 17/01/2020 not working, maybe change this with a recipe search
                 Log.d(TAG, "onQueryTextChange:" );
                 return false;
             }
@@ -153,19 +147,19 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
 
     private void initMealRecyclerViews() {
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-        mRecyclerView.setAdapter(mealAdapter);
+        topRecView.setHasFixedSize(true);
+        topRecView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+        topRecView.setAdapter(mealAdapter);
 
         //Second RecyclerView containing Chinese Recipes
-        mRecyclerView_2.setHasFixedSize(true);
-        mRecyclerView_2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-        mRecyclerView.setAdapter(mealAdapter);
+        centralMealsRecView.setHasFixedSize(true);
+        centralMealsRecView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+        topRecView.setAdapter(mealAdapter);
 
         //Fourth RecyclerView containing Seafood Recipes
-        mRecyclerView_4.setHasFixedSize(true);
-        mRecyclerView_4.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
-        mRecyclerView.setAdapter(mealAdapter);
+        bottomRecView.setHasFixedSize(true);
+        bottomRecView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
+        topRecView.setAdapter(mealAdapter);
     }
 
     //If the user presses the Back button while the drawer is open
@@ -183,22 +177,22 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
      * */
     private void displayRecipesByCountryWithRetrofit(String country, final RecyclerView recyclerView, final int orientation){
         mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
-        mealAPI.getMealsByCountry(country).enqueue(new Callback<MealContainer>() {
+        mealAPI.getMealsByCountry(country).enqueue(new Callback<MealResponse>() {
             @Override
-            public void onResponse(Call<MealContainer> call, Response<MealContainer> response) {
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
 
                 //Get Retrofit Response
-                MealContainer mealContainer = response.body();
+                MealResponse mealResponse = response.body();
 
                 //Set orientation for the rv
-                mealContainer.setOrientation(orientation);
+                mealResponse.setOrientation(orientation);
 
                 //Update UI
-                updateUserInterface(mealContainer,recyclerView);
+                updateUserInterface(mealResponse,recyclerView);
             }
 
             @Override
-            public void onFailure(Call<MealContainer> call, Throwable t) {
+            public void onFailure(Call<MealResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
             }
         });
@@ -206,20 +200,20 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
 
     private void displayRecipesByCategoryWithRetrofit(String category, final RecyclerView recyclerView, final int orientation){
         mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
-        mealAPI.getMealsByCategory(category).enqueue(new Callback<MealContainer>() {
+        mealAPI.getMealsByCategory(category).enqueue(new Callback<MealResponse>() {
             @Override
-            public void onResponse(Call<MealContainer> call, Response<MealContainer> response) {
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
                 //Get Retrofit Response
-                MealContainer mealContainer = response.body();
+                MealResponse mealResponse = response.body();
 
                 //Set orientation for the rv
-                mealContainer.setOrientation(orientation);
+                mealResponse.setOrientation(orientation);
 
                 //Update UI
-                updateUserInterface(mealContainer,recyclerView);
+                updateUserInterface(mealResponse,recyclerView);
             }
             @Override
-            public void onFailure(Call<MealContainer> call, Throwable t) {
+            public void onFailure(Call<MealResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
             }
         });
@@ -228,8 +222,8 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     /**
      * Update User Interface
      * */
-    private void updateUserInterface(MealContainer mealContainer, RecyclerView recyclerView){
-        ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
+    private void updateUserInterface(MealResponse mealResponse, RecyclerView recyclerView){
+        ArrayList<Meal> mealsList = mealResponse.getMeals();
         mealAdapter = new MealAdapter(AboutMealsActivity.this, mealsList);
         recyclerView.setAdapter(mealAdapter);
         mealAdapter.setOnMealClickListener(AboutMealsActivity.this);
@@ -239,9 +233,9 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
      * OnItemClick
      * */
     @Override
-    public void onItemClick(int position, ArrayList<MealSimple> mealsList) {
+    public void onItemClick(int position, ArrayList<Meal> mealsList) {
         Intent detailIntent = new Intent(this, MealDetailsActivity.class);
-        MealSimple clickedItem = mealsList.get(position);
+        Meal clickedItem = mealsList.get(position);
 
         //Send Parcel to the Details Activity
         detailIntent.putExtra(EXTRA_MEAL,clickedItem);

@@ -1,6 +1,6 @@
 package www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb;
 
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
 
 import org.json.JSONArray;
 
@@ -13,21 +13,21 @@ public interface MealAPI {
     /*---------------------GET---------------------*/
 
     @GET("filter.php") //id will be replaced in mainActivity
-    Call<MealContainer> getMealsByCountry(@Query("a") String country);
+    Call<MealResponse> getMealsByCountry(@Query("a") String country);
 
     @GET("lookup.php")
-    Call<MealContainer> getMealDetailsAsMealContainer(@Query("i") String mealId);
+    Call<MealResponse> getMealDetailsAsMealContainer(@Query("i") String mealId);
 
     //Work In Progress
     @GET("lookup.php")
     Call<JSONArray> getMealDetailsAsJSONArray(@Query("i") String mealId);
 
     @GET("filter.php")
-    Call<MealContainer> getMealsByCategory(@Query("c") String category);
+    Call<MealResponse> getMealsByCategory(@Query("c") String category);
 
     @GET("random.php")
-    Call<MealContainer> getRandomMeal();
+    Call<MealResponse> getRandomMeal();
 
     @GET("filter.php")
-    Call<MealContainer> getMealsByIngredient(@Query("i") String ingredient);
+    Call<MealResponse> getMealsByIngredient(@Query("i") String ingredient);
 }

@@ -17,22 +17,23 @@
             android:background="@android:color/background_light">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
+                android:id="@+id/top_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/recycler_view_4"
+                android:background="@color/cardview_dark_background"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/central_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/top_recycler_view"
                 android:background="@android:color/darker_gray" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_2"
+                android:id="@+id/bottom_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/recycler_view"
+                android:layout_below="@+id/central_recycler_view"
                 android:background="@android:color/holo_blue_light" />
             <!--
             <androidx.recyclerview.widget.RecyclerView

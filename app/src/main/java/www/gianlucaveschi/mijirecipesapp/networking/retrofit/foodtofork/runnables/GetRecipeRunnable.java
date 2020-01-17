@@ -2,16 +2,12 @@ package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.runnabl
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Response;
-import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
+import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.ServiceGenerator;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeGetResponse;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeSearchResponse;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
 public class GetRecipeRunnable implements Runnable{

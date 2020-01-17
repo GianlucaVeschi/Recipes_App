@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.OnRecipeListener;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
-import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
+import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 import www.gianlucaveschi.mijirecipesapp.utils.MyLogger;
 import www.gianlucaveschi.mijirecipesapp.utils.UI.VerticalSpacingItemDecorator;
@@ -58,8 +58,9 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
         initSearchView();
         setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
 
+        //When the activity is accessed through an Intent directly display a list of recipes
         if(getIntent().hasExtra(Constants.EXTRA_RECIPE_CAT)){
-            getIncomingIntent();
+            displayIntentRecipeList();
         }
         else if(!mRecipesCategoriesViewModel.isViewingRecipes()){
                 // display search categories
@@ -183,7 +184,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
         });
     }
 
-    private void getIncomingIntent(){
+    private void displayIntentRecipeList(){
         String categoryName = getIntent().getStringExtra(Constants.EXTRA_RECIPE_CAT);
         Log.d(TAG, "getIncomingIntent: " + categoryName);
         onCategoryClick(categoryName);

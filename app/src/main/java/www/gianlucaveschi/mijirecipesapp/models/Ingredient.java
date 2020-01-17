@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.models.others;
+package www.gianlucaveschi.mijirecipesapp.models;
 
 public class Ingredient {
     private String name;

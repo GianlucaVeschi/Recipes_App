@@ -5,14 +5,14 @@ import android.util.Log;
 import java.util.List;
 import java.util.TimerTask;
 
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
 
 import retrofit2.Response;
-import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
+import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 
 public class MyLogger extends TimerTask {
 
-    public static String logMealContainerResponse(Response<MealContainer> response){
+    public static String logMealContainerResponse(Response<MealResponse> response){
         String result = "Response \n\t" + response + "\n"
                 + "Response Body \n\t" + response.body() + "\n";
         return result;

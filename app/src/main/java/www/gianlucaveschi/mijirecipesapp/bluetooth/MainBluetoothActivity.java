@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth;
+package www.gianlucaveschi.mijirecipesapp.bluetooth;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -25,9 +25,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleScanner;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.ScanResultsConsumer;
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.services.BleScanner;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.services.ScanResultsConsumer;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.utils.BleConstants;
 import www.gianlucaveschi.mijirecipesapp.adapters.BleDeviceAdapter;
 
 public class MainBluetoothActivity extends AppCompatActivity implements ScanResultsConsumer {

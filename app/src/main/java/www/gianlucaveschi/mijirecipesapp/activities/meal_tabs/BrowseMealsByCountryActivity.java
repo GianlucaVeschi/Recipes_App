@@ -21,8 +21,8 @@ import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealContainer;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
+import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
@@ -65,42 +65,42 @@ public class BrowseMealsByCountryActivity extends AppCompatActivity implements O
 
     private void displayRecipesByCountryWithRetrofit(String country){
         mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
-        mealAPI.getMealsByCountry(country).enqueue(new Callback<MealContainer>() {
+        mealAPI.getMealsByCountry(country).enqueue(new Callback<MealResponse>() {
             @Override
-            public void onResponse(Call<MealContainer> call, Response<MealContainer> response) {
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
                 //Get Retrofit Response
-                MealContainer mealContainer = response.body();
+                MealResponse mealResponse = response.body();
 
                 //Set orientation for the rv
-                mealContainer.setOrientation(Constants.VERTICAL_VIEW_TYPE);
+                mealResponse.setOrientation(Constants.VERTICAL_VIEW_TYPE);
 
                 //Update UI
-                updateRecyclerView(mealContainer);
+                updateRecyclerView(mealResponse);
             }
 
             @Override
-            public void onFailure(Call<MealContainer> call, Throwable t) {
+            public void onFailure(Call<MealResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
             }
         });
     }
 
-    private void updateRecyclerView(MealContainer mealContainer) {
+    private void updateRecyclerView(MealResponse mealResponse) {
 
         //Init RV
         mealsRecyclerView.setHasFixedSize(true);
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
 
-        ArrayList<MealSimple> mealsList = mealContainer.getMealSimples();
+        ArrayList<Meal> mealsList = mealResponse.getMeals();
         MealAdapter mealAdapter = new MealAdapter(BrowseMealsByCountryActivity.this, mealsList);
         mealsRecyclerView.setAdapter(mealAdapter);
         mealAdapter.setOnMealClickListener(BrowseMealsByCountryActivity.this);
     }
 
     @Override
-    public void onItemClick(int position, ArrayList<MealSimple> mealsList) {
+    public void onItemClick(int position, ArrayList<Meal> mealsList) {
         Intent detailIntent = new Intent(this, MealDetailsActivity.class);
-        MealSimple clickedItem = mealsList.get(position);
+        Meal clickedItem = mealsList.get(position);
 
         //Send Parcel to the Details Activity
         detailIntent.putExtra(EXTRA_MEAL,clickedItem);

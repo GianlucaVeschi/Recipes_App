@@ -14,23 +14,25 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
+import www.gianlucaveschi.mijirecipesapp.models.Meal;
 
 public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private Context mContext;
-    private ArrayList<MealSimple> mMealsList;
-    private ArrayList<MealSimple> mealsListFull;
+    private ArrayList<Meal> mMealsList;
+    private ArrayList<Meal> mealsListFull;
     private OnMealClickListener mListener;
 
     //Distinguish between the two TypeViews
     private final static int HORIZONTAL_VIEW_TYPE = 1;
     private final static int VERTICAL_VIEW_TYPE = 2;
 
+    private final static int LIMIT_LIST_ITEMS = 10;
+
     /**
      * ADAPTER CONSTRUCTOR
      * */
-    public MealAdapter(Context context, ArrayList<MealSimple> mealsList) {
+    public MealAdapter(Context context, ArrayList<Meal> mealsList) {
         mContext = context;
         mMealsList = mealsList;
         mealsListFull = new ArrayList<>(mMealsList);
@@ -71,7 +73,12 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     @Override
     public int getItemCount() {
         if(mMealsList != null){
-            return mMealsList.size();
+            if(mMealsList.size() > LIMIT_LIST_ITEMS){
+                return LIMIT_LIST_ITEMS;
+            }
+            else{
+                return mMealsList.size();
+            }
         }
         return 0;
     }
@@ -102,14 +109,14 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         @Override
         protected FilterResults performFiltering(CharSequence searchedText) {
             Log.d("mealAdapter", "PerformFiltering: ");
-            ArrayList<MealSimple> filteredMealsList = new ArrayList<>();
+            ArrayList<Meal> filteredMealsList = new ArrayList<>();
             if (searchedText == null || searchedText.length() == 0) {
                 filteredMealsList.addAll(mealsListFull);
             } else {
 
                 //Get what the User wants to search
                 String filterPattern = searchedText.toString().toLowerCase().trim();
-                for (MealSimple item : mealsListFull) {
+                for (Meal item : mealsListFull) {
                     if (item.getMealName().toLowerCase().contains(filterPattern)) {
                         Log.d("CountryAdapter", "performFiltering: " + item.getMealName());
                         filteredMealsList.add(item);

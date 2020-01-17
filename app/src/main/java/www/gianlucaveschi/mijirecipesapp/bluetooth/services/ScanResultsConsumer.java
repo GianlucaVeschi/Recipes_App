@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services;
+package www.gianlucaveschi.mijirecipesapp.bluetooth.services;
 
 import android.bluetooth.BluetoothDevice;
 

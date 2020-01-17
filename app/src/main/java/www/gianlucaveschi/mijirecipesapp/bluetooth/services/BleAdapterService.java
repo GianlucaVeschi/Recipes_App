@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services;
+package www.gianlucaveschi.mijirecipesapp.bluetooth.services;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -22,7 +22,7 @@ import android.util.Log;
 import java.util.List;
 import java.util.UUID;
 
-import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants;
+import www.gianlucaveschi.mijirecipesapp.bluetooth.utils.BleConstants;
 
 /**
  * Our new Activity needs to be able to use the BleAdapterService as a kind of Bluetooth API.
@@ -30,8 +30,9 @@ import www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils.BleConstants
  * obtain an an instance of the BleAdapterService for subsequent use.
  *
  * A Service is an application component that can perform long-running operations in the background,
- * and it doesn't provide a user interface. Additionally, a component can bind to a service
- * to interact with it and even perform interprocess communication (IPC).*/
+ * and it doesn't provide a user interface.
+ * Additionally, a component can bind to a service to interact with it and
+ * even perform interprocess communication (IPC).*/
 
 public class BleAdapterService extends Service {
 
@@ -52,7 +53,6 @@ public class BleAdapterService extends Service {
     public static final int GATT_REMOTE_RSSI = 6;
     public static final int MESSAGE = 7;
     public static final int NOTIFICATION_OR_INDICATION_RECEIVED = 8;
-
 
     // message parms
     public static final String PARCEL_DESCRIPTOR_UUID = "DESCRIPTOR_UUID";
@@ -156,7 +156,7 @@ public class BleAdapterService extends Service {
         // is established or broken.
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            Log.d(BleConstants.BT_TAG, "onConnectionStateChange: status=" + status);
+            Log.d(BleConstants.BT_TAG, "onConnectionStateChange: status= " + status);
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 Log.d(BleConstants.BT_TAG, "onConnectionStateChange: CONNECTED");
                 connected = true;
@@ -369,6 +369,5 @@ public class BleAdapterService extends Service {
         //will call the callback onReadRemoteRssi
         bluetooth_gatt.readRemoteRssi();
     }
-
 
 }

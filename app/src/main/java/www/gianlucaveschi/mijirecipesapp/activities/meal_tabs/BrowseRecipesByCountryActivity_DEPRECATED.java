@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.OnRecipeListener;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
-import www.gianlucaveschi.mijirecipesapp.models.recipes.Recipe;
+import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 import www.gianlucaveschi.mijirecipesapp.utils.MyLogger;
 import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModel;

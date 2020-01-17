@@ -9,7 +9,7 @@ import com.gianlucaveschi.load_json_images_picasso.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
+import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyRequestListener;
 
@@ -46,11 +46,11 @@ public class MealDetailsActivity extends AppCompatActivity {
         textViewQuantity.setText("");
 
         Intent intent = getIntent();
-        MealSimple mealSimple = intent.getParcelableExtra(EXTRA_MEAL);
+        Meal meal = intent.getParcelableExtra(EXTRA_MEAL);
 
-        String imageURL = mealSimple.getImgUrl();
-        String recipeName = mealSimple.getMealName();
-        String idRecipe = mealSimple.getIdMeal();
+        String imageURL = meal.getImgUrl();
+        String recipeName = meal.getMealName();
+        String idRecipe = meal.getIdMeal();
 
 
         textViewName.setText(recipeName);

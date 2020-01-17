@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
+import www.gianlucaveschi.mijirecipesapp.models.Meal;
 
 /**
  * INNER HORIZONTAL VIEW HOLDER
@@ -24,7 +24,7 @@ public class HorizontalViewHolder extends RecyclerView.ViewHolder{
     private TextView m_tv_RecipeID;
     private ProgressBar progressBar;
 
-    public HorizontalViewHolder(@NonNull View itemView, final OnMealClickListener listener, final ArrayList<MealSimple> mealsList) {
+    public HorizontalViewHolder(@NonNull View itemView, final OnMealClickListener listener, final ArrayList<Meal> mealsList) {
         super(itemView);
         mImageView = itemView.findViewById(R.id.image_view);
         m_tv_RecipeName = itemView.findViewById(R.id.recipe_name);
@@ -45,8 +45,8 @@ public class HorizontalViewHolder extends RecyclerView.ViewHolder{
         });
     }
 
-    public void initHorizLayout(HorizontalViewHolder horizontalViewHolder, int position, ArrayList<MealSimple> mealsList) {
-        MealSimple currentItem = mealsList.get(position);
+    public void initHorizLayout(HorizontalViewHolder horizontalViewHolder, int position, ArrayList<Meal> mealsList) {
+        Meal currentItem = mealsList.get(position);
 
         String imageUrl = currentItem.getImgUrl();
         String mealName = currentItem.getMealName();

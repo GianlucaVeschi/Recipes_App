@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
-import www.gianlucaveschi.mijirecipesapp.models.meals.MealSimple;
 
 
 public class FoodCategoryAdapter extends RecyclerView.Adapter<FoodCategoryAdapter.FoodCategoryViewHolder> {

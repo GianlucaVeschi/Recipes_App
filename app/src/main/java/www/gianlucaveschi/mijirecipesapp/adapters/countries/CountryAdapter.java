@@ -17,7 +17,7 @@ import com.gianlucaveschi.load_json_images_picasso.R;
 import java.util.ArrayList;
 
 import androidx.recyclerview.widget.RecyclerView;
-import www.gianlucaveschi.mijirecipesapp.models.others.Country;
+import www.gianlucaveschi.mijirecipesapp.models.Country;
 
 /**
  * Created by sheck on 25/09/2019.

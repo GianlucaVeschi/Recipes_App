@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.activities.bluetooth.utils;
+package www.gianlucaveschi.mijirecipesapp.bluetooth.utils;
 
 public class BleConstants {
     public static final String BT_TAG = "BLUETOOTH_TAG";
@@ -29,8 +29,8 @@ public class BleConstants {
     public static final String BT_BOARD = "nRF52832";
 
 
-    public static final String NORDIC_UART_SERVICE = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E";
-
-
+    public static final String NORDIC_UART_SERVICE  = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E";
+    public static final String NORDIC_WRITE_CHAR    = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E";
+    public static final String NORDIC_READ_CHAR     = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E";
 
 }

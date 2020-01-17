@@ -7,10 +7,11 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:name="www.gianlucaveschi.mijirecipesapp.MyApplication"
@@ -65,12 +66,12 @@
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
         <!-- BLUETOOTH -->
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.MainBluetoothActivity"
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.MainBluetoothActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.MijiTemperatureControlActivity" />
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.BleBoardControlActivity"/>
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.MijiTemperatureControlActivity" />
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.BleBoardControlActivity"/>
         <service
-            android:name="www.gianlucaveschi.mijirecipesapp.activities.bluetooth.services.BleAdapterService"
+            android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.services.BleAdapterService"
             android:enabled="true" />
 
         <!-- BOTTOM NAV -->

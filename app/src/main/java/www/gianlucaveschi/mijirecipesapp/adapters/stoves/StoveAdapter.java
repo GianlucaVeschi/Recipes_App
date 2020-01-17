@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 
-import www.gianlucaveschi.mijirecipesapp.models.stoves.StoveProduct;
+import www.gianlucaveschi.mijirecipesapp.models.Stove;
 
 import java.util.ArrayList;
 
@@ -20,11 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class StoveAdapter extends RecyclerView.Adapter<StoveViewHolder> {
 
-    private ArrayList<StoveProduct> mExampleList;
+    private ArrayList<Stove> mExampleList;
     private OnStoveClickListener mListener;
 
     //CONSTRUCTOR
-    public StoveAdapter(ArrayList<StoveProduct> exampleList) {
+    public StoveAdapter(ArrayList<Stove> exampleList) {
         mExampleList = exampleList;
     }
 
@@ -41,7 +41,7 @@ public class StoveAdapter extends RecyclerView.Adapter<StoveViewHolder> {
 
     @Override
     public void onBindViewHolder(StoveViewHolder holder, int position) {
-        StoveProduct currentItem = mExampleList.get(position);
+        Stove currentItem = mExampleList.get(position);
 
         holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView1.setText(currentItem.getTitle());

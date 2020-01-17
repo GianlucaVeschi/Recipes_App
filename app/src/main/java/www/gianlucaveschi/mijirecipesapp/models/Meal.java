@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.models.meals;
+package www.gianlucaveschi.mijirecipesapp.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -9,7 +9,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 
-public class MealSimple implements Parcelable {
+public class Meal implements Parcelable {
 
 
 
@@ -24,12 +24,14 @@ public class MealSimple implements Parcelable {
 
     private String strInstructions;
 
+    private String displayedInActivity = "";
+
     //private identifier
     private int orientationType ;
 
     private Map<String,String> ingredients;
 
-    public MealSimple(String mealName, String imgUrl, String idMeal , int orientationType) {
+    public Meal(String mealName, String imgUrl, String idMeal , int orientationType) {
         this.mealName = mealName;
         this.imgUrl = imgUrl;
         this.idMeal = idMeal;
@@ -68,6 +70,14 @@ public class MealSimple implements Parcelable {
         this.strInstructions = strInstructions;
     }
 
+    public String getDisplayedInActivity() {
+        return displayedInActivity;
+    }
+
+    public void setDisplayedInActivity(String displayedInActivity) {
+        this.displayedInActivity = displayedInActivity;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -84,22 +94,22 @@ public class MealSimple implements Parcelable {
      * ReadString() and WriteString() have to be in the same order.
      * */
 
-    protected MealSimple(Parcel in) {
+    protected Meal(Parcel in) {
         mealName = in.readString();
         imgUrl = in.readString();
         idMeal = in.readString();
         orientationType = in.readInt();
     }
 
-    public static final Creator<MealSimple> CREATOR = new Creator<MealSimple>() {
+    public static final Creator<Meal> CREATOR = new Creator<Meal>() {
         @Override
-        public MealSimple createFromParcel(Parcel in) {
-            return new MealSimple(in);
+        public Meal createFromParcel(Parcel in) {
+            return new Meal(in);
         }
 
         @Override
-        public MealSimple[] newArray(int size) {
-            return new MealSimple[size];
+        public Meal[] newArray(int size) {
+            return new Meal[size];
         }
     };
 
