@@ -36,7 +36,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
     private static final String TAG = "RecipeCategoriesActivit";
 
     @BindView(R.id.recipes_categories_list) RecyclerView categoriesRecView;
-    @BindView(R.id.search_view) SearchView mSearchView;
+    @BindView(R.id.search_view)             SearchView mSearchView;
 
     private RecipesCategoriesViewModel mRecipesCategoriesViewModel;
     private RecipesCategoriesViewModelNEW mRecipesCategoriesViewModelNEW;
@@ -103,6 +103,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
 //    }
 
     private void subscribeObservers(){
+
         mRecipesCategoriesViewModel.getRecipes().observe(this, new Observer<List<Recipe>>() {
             @Override
             public void onChanged(@Nullable List<Recipe> recipes) {

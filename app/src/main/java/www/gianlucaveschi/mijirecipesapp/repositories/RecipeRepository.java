@@ -8,7 +8,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.RecipeApiClient;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.old.RecipeApiClient;
 
 public class RecipeRepository {
 

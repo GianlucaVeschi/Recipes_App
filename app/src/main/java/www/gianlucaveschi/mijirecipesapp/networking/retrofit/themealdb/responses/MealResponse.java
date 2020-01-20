@@ -23,10 +23,6 @@ public class MealResponse {
         this.meals = meals;
     }
 
-    public Meal getContainedMeal(){
-        return meals.get(0);
-    }
-
     public ArrayList<Meal> getMeals() {
         return meals;
     }

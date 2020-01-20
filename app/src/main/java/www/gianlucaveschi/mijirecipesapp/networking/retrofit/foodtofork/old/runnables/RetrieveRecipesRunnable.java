@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.runnables;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.old.runnables;
 
 import android.util.Log;
 
@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import retrofit2.Call;
 import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.ServiceGenerator;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.old.ServiceGenerator;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeSearchResponse;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 

@@ -27,7 +27,7 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     private final static int HORIZONTAL_VIEW_TYPE = 1;
     private final static int VERTICAL_VIEW_TYPE = 2;
 
-    private final static int LIMIT_LIST_ITEMS = 10;
+    private int LIMIT_LIST_ITEMS = 100;
 
     /**
      * ADAPTER CONSTRUCTOR
@@ -93,7 +93,9 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         }
     }
 
-
+    public void setLIMIT_LIST_ITEMS(int LIMIT_LIST_ITEMS) {
+        this.LIMIT_LIST_ITEMS = LIMIT_LIST_ITEMS;
+    }
 
     /**ON CLICK LISTENER utils*/
     public void setOnMealClickListener(OnMealClickListener listener){
@@ -135,6 +137,4 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
             notifyDataSetChanged();
         }
     };
-
-
 }

@@ -27,7 +27,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     //UI Components
     @BindView(R.id.image_view_recipe_detail)     ImageView imageView;
-    @BindView(R.id.name_recipe_detail)           TextView textViewName;
+    @BindView(R.id.name_recipe_detail)           TextView textViewRecipeTitle;
     @BindView(R.id.ingredients_title )           TextView textViewInstructionsTitle;
     @BindView(R.id.ingredients_list)             TextView textViewIngredients;
 
@@ -55,6 +55,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             public void onChanged(@Nullable Recipe recipe) {
                 if(recipe != null){
                     if(recipe.getRecipe_id().equals(mRecipeDetailsViewModel.getRecipeId())){
+                        Log.d(TAG, "onChanged: " + recipe.toString());
                         setRecipeProperties(recipe);
                     }
                 }
@@ -63,8 +64,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 
     private void setRecipeProperties(Recipe recipe) {
+        Log.d(TAG, "setRecipeProperties: " + recipe.toString());
         setImage(recipe.getImage_url());
-        textViewName.setText(recipe.getTitle());
+        textViewRecipeTitle.setText(recipe.getTitle());
         textViewIngredients.setText("");
         for(String ingredient: recipe.getIngredients()){
             textViewIngredients.append(ingredient + "\n");
@@ -75,6 +77,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         if(getIntent().hasExtra(Constants.EXTRA_RECIPE)){
             Recipe recipe = getIntent().getParcelableExtra(Constants.EXTRA_RECIPE);
             Log.d(TAG, "getIncomingIntent: " + recipe.getTitle());
+            Log.d(TAG, "getIncomingIntent: " + recipe.toString());
             mRecipeDetailsViewModel.searchRecipeById(recipe.getRecipe_id());
         }
     }

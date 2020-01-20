@@ -19,10 +19,10 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.On
         super(itemView);
         this.onRecipeListener = onRecipeListener;
 
-        title = itemView.findViewById(R.id.recipe_title);
-        publisher = itemView.findViewById(R.id.recipe_publisher);
+        title       = itemView.findViewById(R.id.recipe_title);
+        publisher   = itemView.findViewById(R.id.recipe_publisher);
         socialScore = itemView.findViewById(R.id.recipe_social_score);
-        image = itemView.findViewById(R.id.recipe_image);
+        image       = itemView.findViewById(R.id.recipe_image);
 
         itemView.setOnClickListener(this);
     }

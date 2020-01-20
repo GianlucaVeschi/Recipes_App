@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.utils;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
 
 import android.util.Log;
 
@@ -10,7 +10,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.executors.AppExecutors;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.ApiResponse;
 
 // CacheObject: Type for the Resource data. (database cache)
 // RequestObject: Type for the API response. (network request)

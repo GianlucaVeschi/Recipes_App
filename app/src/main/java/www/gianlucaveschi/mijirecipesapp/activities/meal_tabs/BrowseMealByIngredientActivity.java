@@ -37,7 +37,6 @@ public class BrowseMealByIngredientActivity extends AppCompatActivity implements
     @BindView(R.id.toolbar)                     Toolbar toolbar;
     @BindView(R.id.browse_meals_recycler_view)  RecyclerView mealsRecyclerView;
 
-
     MealAPI mealAPI;
     MealAdapter mealAdapter;
 
@@ -64,7 +63,6 @@ public class BrowseMealByIngredientActivity extends AppCompatActivity implements
 
         //Slide back to the Previous Activity
         Slidr.attach(this);
-
     }
 
     private void displayRecipesByIngredientWithRetrofit(String ingredient){

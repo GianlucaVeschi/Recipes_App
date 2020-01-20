@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.utils;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.old;
 
 import java.util.List;
 import java.util.concurrent.Future;
@@ -11,8 +11,8 @@ import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.NETWORK_TIMEOUT;
 
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.runnables.GetRecipeRunnable;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.runnables.RetrieveRecipesRunnable;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.old.runnables.GetRecipeRunnable;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.old.runnables.RetrieveRecipesRunnable;
 
 public class RecipeApiClient {
 
@@ -55,10 +55,10 @@ public class RecipeApiClient {
             mRetrieveRecipesRunnable = null;
         }
         mRetrieveRecipesRunnable = new RetrieveRecipesRunnable(query, pageNumber, mRecipes);
-        final Future handler = AppExecutors.get().networkIO().submit(mRetrieveRecipesRunnable);
+        final Future handler = AppExecutors.getInstance().networkIO().submit(mRetrieveRecipesRunnable);
 
         // Set a timeout for the data refresh
-        AppExecutors.get().networkIO().schedule(new Runnable() {
+        AppExecutors.getInstance().networkIO().schedule(new Runnable() {
             @Override
             public void run() {
                 // let the user know it timed out
@@ -74,10 +74,10 @@ public class RecipeApiClient {
 
         mGetRecipeRunnable = new GetRecipeRunnable(recipeId,mRecipe);
 
-        final Future handler = AppExecutors.get().networkIO().submit(mGetRecipeRunnable);
+        final Future handler = AppExecutors.getInstance().networkIO().submit(mGetRecipeRunnable);
 
         mRecipeRequestTimeout.setValue(false);
-        AppExecutors.get().networkIO().schedule(new Runnable() {
+        AppExecutors.getInstance().networkIO().schedule(new Runnable() {
             @Override
             public void run() {
                 // let the user know it timed out

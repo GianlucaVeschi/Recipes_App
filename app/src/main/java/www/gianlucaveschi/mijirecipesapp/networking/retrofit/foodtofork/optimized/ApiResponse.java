@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
 
 import java.io.IOException;
 

@@ -13,15 +13,16 @@ public class AppExecutors {
     private static AppExecutors instance;
 
     //Singleton Constructor
-    public static AppExecutors get(){
+    public static AppExecutors getInstance(){
         if(instance == null){
             instance = new AppExecutors();
         }
         return instance;
     }
 
-    //No need for these two anymore
+    //Old Implementation
     private final ScheduledExecutorService mNetworkIO = Executors.newScheduledThreadPool(3);
+
     public ScheduledExecutorService networkIO() {
         return mNetworkIO;
     }

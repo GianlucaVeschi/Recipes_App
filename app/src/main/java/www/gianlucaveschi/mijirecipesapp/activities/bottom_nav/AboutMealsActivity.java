@@ -147,16 +147,17 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
 
     private void initMealRecyclerViews() {
 
+        //First Recycler View
         topRecView.setHasFixedSize(true);
         topRecView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         topRecView.setAdapter(mealAdapter);
 
-        //Second RecyclerView containing Chinese Recipes
+        //Second Recycler View
         centralMealsRecView.setHasFixedSize(true);
         centralMealsRecView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         topRecView.setAdapter(mealAdapter);
 
-        //Fourth RecyclerView containing Seafood Recipes
+        //Third Recycler View
         bottomRecView.setHasFixedSize(true);
         bottomRecView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         topRecView.setAdapter(mealAdapter);
@@ -225,6 +226,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     private void updateUserInterface(MealResponse mealResponse, RecyclerView recyclerView){
         ArrayList<Meal> mealsList = mealResponse.getMeals();
         mealAdapter = new MealAdapter(AboutMealsActivity.this, mealsList);
+        mealAdapter.setLIMIT_LIST_ITEMS(10);
         recyclerView.setAdapter(mealAdapter);
         mealAdapter.setOnMealClickListener(AboutMealsActivity.this);
     }
