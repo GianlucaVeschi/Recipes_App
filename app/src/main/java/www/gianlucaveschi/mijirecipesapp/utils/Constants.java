@@ -9,6 +9,7 @@ public class Constants {
     public static final String EXTRA_RECIPE_CAT = "RecipeCatParcel";
 
     public static final String LOADING = "LOADING...";
+    public static final String QUERY_EXHAUSTED = "Query is exhausted.";
 
     //Distinguish between the two TypeViews in the MealAdapter
     public final static int HORIZONTAL_VIEW_TYPE = 1;

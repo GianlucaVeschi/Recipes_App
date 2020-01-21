@@ -24,10 +24,13 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
     //Needed to run methods on the background thread
     private AppExecutors appExecutors;
 
+    //Constructor
     public NetworkBoundResource(AppExecutors appExecutors) {
         this.appExecutors = appExecutors;
+        init();
     }
 
+    //Initialization
     private void init(){
         //and assign a LOADING Status while we are retrieving data.
         results.setValue((Resource<CacheObject>) Resource.loading(null));

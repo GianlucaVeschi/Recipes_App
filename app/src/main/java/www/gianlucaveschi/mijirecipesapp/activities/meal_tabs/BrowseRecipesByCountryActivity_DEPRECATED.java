@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.r0adkll.slidr.Slidr;
 
@@ -93,7 +96,7 @@ public class BrowseRecipesByCountryActivity_DEPRECATED extends AppCompatActivity
     }
 
     private void initRecyclerView() {
-        recipeAdapter = new RecipeAdapter(this);
+        recipeAdapter = new RecipeAdapter(this,initGlide());
         mealsRecyclerView.setAdapter(recipeAdapter);
         mealsRecyclerView.setHasFixedSize(true);
         mealsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -194,4 +197,11 @@ public class BrowseRecipesByCountryActivity_DEPRECATED extends AppCompatActivity
         });
     }
      */
+
+    private RequestManager initGlide(){
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.white_image);
+
+        return Glide.with(this).setDefaultRequestOptions(options);
+    }
 }

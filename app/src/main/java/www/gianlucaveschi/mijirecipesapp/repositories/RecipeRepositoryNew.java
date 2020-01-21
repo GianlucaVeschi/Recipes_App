@@ -1,6 +1,7 @@
 package www.gianlucaveschi.mijirecipesapp.repositories;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.List;
 
@@ -24,6 +25,8 @@ import www.gianlucaveschi.mijirecipesapp.utils.Constants;
  * come from without over layers of the architecture having to know about it.
  * */
 public class RecipeRepositoryNew {
+
+    private static final String TAG = "RecipeRepositoryNew";
 
     private static RecipeRepositoryNew instance;
     private RecipeDAO recipeDAO;
@@ -51,8 +54,9 @@ public class RecipeRepositoryNew {
      * 4)   More scalable and concise.
      */
     public LiveData<Resource<List<Recipe>>> searchRecipesApi(final String query, final int pageNumber){
-        return new NetworkBoundResource<List<Recipe>, RecipeSearchResponse>(AppExecutors.getInstance()){
+        Log.d(TAG, "searchRecipesApi: OK");
 
+        return new NetworkBoundResource<List<Recipe>, RecipeSearchResponse>(AppExecutors.getInstance()){
             //Save response from RETROFIT into the CACHE
             @Override
             protected void saveCallResult(@NonNull RecipeSearchResponse searchResponse) {
@@ -61,10 +65,13 @@ public class RecipeRepositoryNew {
                     //Empty array which will store the items contained in the
                     //response because the DAO makes use of varargs...
                     Recipe[] recipes = new Recipe[searchResponse.getRecipes().size()];
+                    Recipe[] recipesInTheDB = searchResponse.getRecipes().toArray(recipes);
 
                     int index = 0;
-                    for(long rowId: recipeDAO.insertRecipes((Recipe[])(searchResponse.getRecipes().toArray(recipes)))){
-                        if(rowId == -1){ // conflict detected (DB Insert method returns -1 when one Item is not inserted.
+                    for(long rowId: recipeDAO.insertRecipes(recipesInTheDB)){ //Array containing the results of the INSERT operation.
+                        if(rowId == -1){ // conflict detected is saved by the INSERT operation as -1
+                            Log.d(TAG, "saveCallResult: CONFLICT... This recipe is already in cache.");
+                            // if already exists, I don't want to set the ingredients or timestamp b/c they will be erased
                             recipeDAO.updateRecipe(
                                     recipes[index].getRecipe_id(),
                                     recipes[index].getTitle(),
@@ -73,7 +80,10 @@ public class RecipeRepositoryNew {
                                     recipes[index].getSocial_rank()
                             );
                         }
+                        index++;
                     }
+                } else{
+                    Log.d(TAG, "saveCallResult: searchResponse.getRecipes() is NULL");
                 }
             }
 
@@ -84,18 +94,21 @@ public class RecipeRepositoryNew {
                 //search for anything so writing the logic for updating
                 //it according to the request of a list would require looking up any item in
                 //the list and this is quite expensive.
+                Log.d(TAG, "shouldFetch: OK");
                 return true;
             }
 
             @NonNull
             @Override
             protected LiveData<List<Recipe>> loadFromDb() {
+                Log.d(TAG, "loadFromDb: OK");
                 return recipeDAO.searchRecipes(query, pageNumber);
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<RecipeSearchResponse>> createCall() {
+                Log.d(TAG, "createCall: OK");
                 return ServiceGenerator.getRecipeApi().searchRecipeAsLiveData(
                         Constants.API_KEY,
                         query,
