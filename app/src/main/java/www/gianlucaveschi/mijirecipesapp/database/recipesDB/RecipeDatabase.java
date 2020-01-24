@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.database;
+package www.gianlucaveschi.mijirecipesapp.database.recipesDB;
 
 import android.content.Context;
 
@@ -6,6 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+import www.gianlucaveschi.mijirecipesapp.database.ArrayConverter;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 
 @Database(entities = {Recipe.class}, version = 1)

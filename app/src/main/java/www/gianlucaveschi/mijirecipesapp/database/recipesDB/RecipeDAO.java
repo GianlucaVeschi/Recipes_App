@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.database;
+package www.gianlucaveschi.mijirecipesapp.database.recipesDB;
 
 import java.util.List;
 
@@ -21,8 +21,12 @@ public interface RecipeDAO {
     void insertRecipe(Recipe recipe);
 
     // Custom update statement so ingredients and timestamp don't get removed
-    @Query("UPDATE recipes SET title = :title, publisher = :publisher, image_url = :image_url, " +
-            "social_rank = :social_rank WHERE recipe_id = :recipe_id")
+    @Query("UPDATE recipes "                +
+            "SET title = :title, "          +
+            "publisher = :publisher, "      +
+            "image_url = :image_url, "      +
+            "social_rank = :social_rank "   +
+            "WHERE recipe_id = :recipe_id")
     void updateRecipe(String recipe_id, String title, String publisher, String image_url, float social_rank);
 
     // NOTE: The SQL query sometimes won't return EXACTLY what the api does since the API might use a different query
@@ -33,6 +37,5 @@ public interface RecipeDAO {
 
     @Query("SELECT * FROM recipes WHERE recipe_id = :recipeId")
     LiveData<Recipe> getRecipe(String recipeId);
-
 
 }

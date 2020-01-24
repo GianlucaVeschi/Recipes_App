@@ -33,10 +33,7 @@ public class Recipe implements Parcelable {
     @ColumnInfo(name = "ingredients")
     private String[] ingredients;
 
-    /**
-     * Saves current timestamp in **SECONDS**
-     */
-    @ColumnInfo(name = "timestamp")
+    @ColumnInfo(name = "timestamp") //Saves current timestamp in **SECONDS**
     private int timestamp;
 
 
@@ -65,7 +62,6 @@ public class Recipe implements Parcelable {
         this.social_rank = recipe.social_rank;
         this.timestamp = recipe.timestamp;
     }
-
 
     protected Recipe(Parcel in) {
         recipe_id = in.readString();

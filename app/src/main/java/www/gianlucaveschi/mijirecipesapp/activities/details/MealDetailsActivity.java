@@ -99,19 +99,6 @@ public class MealDetailsActivity extends AppCompatActivity {
                 .centerInside()
                 .into(imageView);
 
-        /*
-        //ToDo: Find a faster way to load and display images from a remote source
-        //Glide Approach is also slow
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round);
-
-        Glide.with(this)
-                .load(imgUrl)
-                .apply(options)
-                .into(imageView);
-        */
     }
 
 }
