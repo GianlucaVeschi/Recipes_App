@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.old;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
 
 import androidx.lifecycle.LiveData;
 import retrofit2.Call;
@@ -8,22 +8,7 @@ import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimize
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeGetResponse;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeSearchResponse;
 
-public interface RecipeApi {
-
-    // SEARCH
-    @GET("api/search")
-    Call<RecipeSearchResponse> searchRecipe(
-            @Query("key") String key,
-            @Query("q") String query,
-            @Query("page") String page
-    );
-
-    // GET SPECIFIC RECIPE
-    @GET("api/get")
-    Call<RecipeGetResponse> getRecipe(
-            @Query("key") String key,
-            @Query("rId") String recipe_id
-    );
+public interface RecipeApiLiveData {
 
     // The following two calls are exactly like the ones above but the responses are Wrapped
     // into ApiResponse wrapped into LiveData so that they can be observed.

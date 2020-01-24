@@ -1,31 +1,30 @@
 package www.gianlucaveschi.mijirecipesapp.viewmodels;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.Resource;
 import www.gianlucaveschi.mijirecipesapp.repositories.RecipeRepository;
 
-public class RecipeDetailsViewModel extends ViewModel {
+public class RecipeDetailsViewModel extends AndroidViewModel {
 
+    /*--------------------------------- INNER VARIABLES ------------------------------------------*/
     private RecipeRepository mRecipeRepository;
-    private String mRecipeId;
 
-    public RecipeDetailsViewModel() {
-        mRecipeRepository = RecipeRepository.getInstance();
+    /*--------------------------------- CONSTRUCTOR ----------------------------------------------*/
+
+    public RecipeDetailsViewModel(@NonNull Application application) {
+        super(application);
+        this.mRecipeRepository = mRecipeRepository.getInstance(application);
     }
 
-    public LiveData<Recipe> getRecipe(){
-        return mRecipeRepository.getRecipe();
+    /*--------------------------------- EXECUTION ------------------------------------------------*/
+    public LiveData<Resource<Recipe>> getRecipe(String recipeID){
+        return mRecipeRepository.getRecipeApi(recipeID);
     }
 
-    //Are these two methods used to make sure that the Recipe received in the Intent
-    // and the one retrieved through the IdSearch are the same?
-    public void searchRecipeById(String recipeId){
-        mRecipeId = recipeId;
-        mRecipeRepository.searchRecipeById(recipeId);
-    }
 
-    public String getRecipeId() {
-        return mRecipeId;
-    }
 }

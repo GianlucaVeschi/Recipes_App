@@ -1,25 +1,31 @@
 package www.gianlucaveschi.mijirecipesapp.adapters.recipes;
 
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.ListPreloader;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.util.ViewPreloadSizeProvider;
 import com.gianlucaveschi.load_json_images_picasso.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ListPreloader.PreloadModelProvider<String> {
 
     //ViewHolders
     private static final int RECIPE_TYPE    = 1;
@@ -30,10 +36,12 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private List<Recipe>        mRecipes;
     private OnRecipeListener    mOnRecipeListener;
     private RequestManager      mRequestManager;
+    private ViewPreloadSizeProvider<String> mPreloadSizeProvider;
 
-    public RecipeAdapter(OnRecipeListener onRecipeListener, RequestManager requestManager) {
+    public RecipeAdapter(OnRecipeListener onRecipeListener, RequestManager requestManager,ViewPreloadSizeProvider<String> viewPreloadSizeProvider) {
         this.mOnRecipeListener  = onRecipeListener;
         this.mRequestManager    = requestManager;
+        this.mPreloadSizeProvider = viewPreloadSizeProvider;
     }
 
     @NonNull
@@ -45,7 +53,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             case RECIPE_TYPE:{
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_recipe, viewGroup, false);
-                return new RecipeViewHolder(view, mOnRecipeListener, mRequestManager);
+                return new RecipeViewHolder(view, mOnRecipeListener, mRequestManager,mPreloadSizeProvider);
             }
 
             case LOADING_TYPE:{
@@ -65,7 +73,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             default:{
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_recipe, viewGroup, false);
-                return new RecipeViewHolder(view, mOnRecipeListener, mRequestManager);
+                return new RecipeViewHolder(view, mOnRecipeListener, mRequestManager,mPreloadSizeProvider);
             }
         }
     }
@@ -165,10 +173,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public void displaySearchCategories(){
         List<Recipe> categories = new ArrayList<>();
-        for(int i = 0; i< Constants.DEFAULT_SEARCH_CATEGORIES.length; i++){
+        for(int i = 0; i< Constants.DEFAULT_SEARCH_CATEGORY_RECIPE.length; i++){
             Recipe recipe = new Recipe();
-            recipe.setTitle(Constants.DEFAULT_SEARCH_CATEGORIES[i]);
-            recipe.setImage_url(Constants.DEFAULT_SEARCH_CATEGORY_IMAGES[i]);
+            String str = Constants.DEFAULT_SEARCH_CATEGORY_RECIPE[i];
+            recipe.setTitle(str.substring(0, 1).toUpperCase() + str.substring(1));
+            recipe.setImage_url(Constants.DEFAULT_SEARCH_CATEGORY_RECIPE[i]);
             recipe.setSocial_rank(-1);
             categories.add(recipe);
         }
@@ -198,5 +207,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return null;
     }
 
+    /*---------------------------------  CACHE GLIDE IMAGES ------------------------------------*/
+    @NonNull
+    @Override
+    public List<String> getPreloadItems(int position) {
+        String url = mRecipes.get(position).getImage_url();
+        if (TextUtils.isEmpty(url)) {
+            return Collections.emptyList();
+        }
+        return Collections.singletonList(url);
+    }
+
+    @Nullable
+    @Override
+    public RequestBuilder<?> getPreloadRequestBuilder(@NonNull String item) {
+        return mRequestManager.load(item);
+    }
 }
 

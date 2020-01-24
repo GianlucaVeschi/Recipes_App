@@ -25,7 +25,7 @@
             android:textColor="#000"
             android:text="Barbeque"
             android:layout_marginStart="20dp"
-            android:textSize="20sp"
+            android:textSize="40sp"
             android:id="@+id/category_title"/>
 
     </LinearLayout>

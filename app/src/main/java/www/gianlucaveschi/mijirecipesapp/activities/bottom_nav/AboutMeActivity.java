@@ -88,7 +88,6 @@ public class AboutMeActivity extends BaseActivity {
                     startActivity(intentAboutMeals);
                     overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                     break;
-
             }
             return false;
         }

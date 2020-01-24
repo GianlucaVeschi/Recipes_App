@@ -66,19 +66,6 @@ public class AboutMijiActivity extends AppCompatActivity {
 
     }
 
-    private void sendEmailToMiji() {
-        Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"gianluca.veschi00@gmail.com"});
-        i.putExtra(Intent.EXTRA_SUBJECT, "SENT FROM ANDROID");
-        i.putExtra(Intent.EXTRA_TEXT   , "body of email");
-        try {
-            startActivity(Intent.createChooser(i, "Send mail..."));
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(AboutMijiActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     /**
      * Bottom Navigation View
      * */

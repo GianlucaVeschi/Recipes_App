@@ -30,6 +30,7 @@ import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCategories
 import www.gianlucaveschi.mijirecipesapp.adapters.FoodCategoryAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
+import www.gianlucaveschi.mijirecipesapp.models.Country;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
 import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
@@ -44,14 +45,14 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
+
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.DEFAULT_SEARCH_COUNTRIES;
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.EXTRA_MEAL;
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.HORIZONTAL_VIEW_TYPE;
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.VERTICAL_VIEW_TYPE;
 
 public class AboutMealsActivity extends AppCompatActivity implements OnMealClickListener, FoodCategoryAdapter.OnFoodCategoryClickListener, NavigationView.OnNavigationItemSelectedListener {
-
-    public static final String EXTRA_MEAL = "MealParcel";
-
-    //Distinguish between the two TypeViews
-    private final static int HORIZONTAL_VIEW_TYPE = 1;
-    private final static int VERTICAL_VIEW_TYPE = 2;
 
     private static final String TAG = "AboutMealsActivity";
 
@@ -60,14 +61,15 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     MealAdapter mealAdapter;
 
     //UI components
-    @BindView(R.id.drawer_layout)   DrawerLayout drawer;
-    @BindView(R.id.nav_view)        NavigationView navigationView;
-    @BindView(R.id.toolbar)         Toolbar toolbar;
-    @BindView(R.id.bottom_nav_view) BottomNavigationView bottomNavigationView;
-    @BindView(R.id.categories_rec_view)   RecyclerView mFoodCategoriesRecView;
-    @BindView(R.id.top_recycler_view)   RecyclerView topRecView;
-    @BindView(R.id.central_recycler_view) RecyclerView centralMealsRecView;
-    @BindView(R.id.bottom_recycler_view) RecyclerView bottomRecView;
+    @BindView(R.id.drawer_layout)       DrawerLayout drawer;
+    @BindView(R.id.nav_view)            NavigationView navigationView;
+    @BindView(R.id.bottom_nav_view)     BottomNavigationView bottomNavigationView;
+    @BindView(R.id.toolbar)             Toolbar toolbar;
+
+    @BindView(R.id.categories_rec_view)     RecyclerView mFoodCategoriesRecView;
+    @BindView(R.id.top_recycler_view)       RecyclerView topRecView;
+    @BindView(R.id.central_recycler_view)   RecyclerView centralMealsRecView;
+    @BindView(R.id.bottom_recycler_view)    RecyclerView bottomRecView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +93,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
-        //Highlight the touched button
+        //Highlight the touched button on the bottom navigation bar
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
@@ -101,14 +103,14 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         initMealRecyclerViews();
 
         //Populate RecyclerView with recipes from the MealDatabase
-            displayRecipesByCountryWithRetrofit("Italian", topRecView,VERTICAL_VIEW_TYPE);
-        displayRecipesByCountryWithRetrofit("Chinese", centralMealsRecView,HORIZONTAL_VIEW_TYPE);
+        displayRecipesByCountryWithRetrofit(Country.getRandomCountry(), topRecView,VERTICAL_VIEW_TYPE);
+        displayRecipesByCountryWithRetrofit(Country.getRandomCountry(), centralMealsRecView,HORIZONTAL_VIEW_TYPE);
         displayRecipesByCategoryWithRetrofit("Seafood",bottomRecView,HORIZONTAL_VIEW_TYPE);
     }
 
     private void initFoodCategoriesRecView() {
         HorizontalSpacingItemDecorator itemDecorator = new HorizontalSpacingItemDecorator(5);
-        ArrayList<String> foodCategories = new ArrayList<>(Arrays.asList(Constants.DEFAULT_SEARCH_CATEGORIES));
+        ArrayList<String> foodCategories = new ArrayList<>(Arrays.asList(Constants.DEFAULT_SEARCH_CATEGORY_RECIPE));
 
         FoodCategoryAdapter foodCategoryAdapter = new FoodCategoryAdapter(foodCategories);
         foodCategoryAdapter.setOnFoodCategoryClickListener(AboutMealsActivity.this);
@@ -136,7 +138,8 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                mealAdapter.getFilter().filter(newText); // TODO: 17/01/2020 not working, maybe change this with a recipe search
+                // TODO: 17/01/2020 not working, maybe change this with a recipe search
+                mealAdapter.getFilter().filter(newText);
                 Log.d(TAG, "onQueryTextChange:" );
                 return false;
             }
@@ -144,8 +147,10 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         return true;
     }
 
-
+    // TODO: 23/01/2020 : Understand why a "No adapter attached" error is thrown.
     private void initMealRecyclerViews() {
+
+        mealAdapter = new MealAdapter(this); //set empty adapter
 
         //First Recycler View
         topRecView.setHasFixedSize(true);
@@ -163,6 +168,14 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         topRecView.setAdapter(mealAdapter);
     }
 
+    private void updateUserInterface(MealResponse mealResponse, RecyclerView recyclerView){
+        ArrayList<Meal> mealsList = mealResponse.getMeals();
+        mealAdapter = new MealAdapter(AboutMealsActivity.this, mealsList);
+        mealAdapter.setLIMIT_LIST_ITEMS(10);
+        recyclerView.setAdapter(mealAdapter);
+        mealAdapter.setOnMealClickListener(AboutMealsActivity.this);
+    }
+
     //If the user presses the Back button while the drawer is open
     @Override
     public void onBackPressed() {
@@ -173,9 +186,6 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         }
     }
 
-    /**
-     * Retrofit Calls
-     * */
     private void displayRecipesByCountryWithRetrofit(String country, final RecyclerView recyclerView, final int orientation){
         mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
         mealAPI.getMealsByCountry(country).enqueue(new Callback<MealResponse>() {
@@ -220,20 +230,8 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         });
     }
 
-    /**
-     * Update User Interface
-     * */
-    private void updateUserInterface(MealResponse mealResponse, RecyclerView recyclerView){
-        ArrayList<Meal> mealsList = mealResponse.getMeals();
-        mealAdapter = new MealAdapter(AboutMealsActivity.this, mealsList);
-        mealAdapter.setLIMIT_LIST_ITEMS(10);
-        recyclerView.setAdapter(mealAdapter);
-        mealAdapter.setOnMealClickListener(AboutMealsActivity.this);
-    }
 
-    /**
-     * OnItemClick
-     * */
+
     @Override
     public void onItemClick(int position, ArrayList<Meal> mealsList) {
         Intent detailIntent = new Intent(this, MealDetailsActivity.class);
@@ -252,8 +250,6 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         startActivity(displayFoodCategory);
     }
 
-    /**
-     * Navigation View Item Listener*/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -278,32 +274,33 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
                 break;
             case R.id.nav_send:
                 Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
+                sendEmailToMiji();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if(id == R.id.contact_miji_button){
-            Toast.makeText(this,"Soon you will be able to send me an email",Toast.LENGTH_SHORT)
-                    .show();
+    private void sendEmailToMiji() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"gianluca.veschi00@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "SENT FROM ANDROID");
+        i.putExtra(Intent.EXTRA_TEXT   , "body of email");
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(AboutMealsActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Bottom Navigation View
-     * */
+
     //Handles the logic of the Bottom Navigation View
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
             switch(item.getItemId()){
                 case R.id.navigation_about_me:
                     Intent intentAboutMe = new Intent(AboutMealsActivity.this, AboutMeActivity.class);

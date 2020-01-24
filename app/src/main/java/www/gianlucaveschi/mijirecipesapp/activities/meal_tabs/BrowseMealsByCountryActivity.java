@@ -27,10 +27,10 @@ import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.EXTRA_MEAL;
+
 
 public class BrowseMealsByCountryActivity extends AppCompatActivity implements OnMealClickListener {
-
-    public static final String EXTRA_MEAL = "MealParcel";
 
     //Bind UI
     //@BindView(R.id.meals_type_name)                 TextView countryMealsTextView;

@@ -29,9 +29,15 @@
                 android:layout_height="match_parent"
                 android:src="@mipmap/ic_launcher" />
 
+            <!--   Fix THIS    -->
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:id="@+id/progress_bar"
+                android:visibility="gone"/>
+
         </androidx.cardview.widget.CardView>
-
-
 
         <RelativeLayout
             android:id="@+id/ingredients_wrapper"
@@ -74,6 +80,4 @@
             </TextView>
         </RelativeLayout>
     </RelativeLayout>
-
-
 </androidx.core.widget.NestedScrollView>

@@ -55,9 +55,6 @@
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealByIngredientActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>
 
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseRecipesByCountryActivity_DEPRECATED"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
         <!-- RECIPE ACTIVITIES -->
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCategoriesActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme"/>

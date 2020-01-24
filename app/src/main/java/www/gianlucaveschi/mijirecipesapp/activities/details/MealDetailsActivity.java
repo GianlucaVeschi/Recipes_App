@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import static www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMealsActivity.EXTRA_MEAL;
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.EXTRA_MEAL;
 
 public class MealDetailsActivity extends AppCompatActivity {
 

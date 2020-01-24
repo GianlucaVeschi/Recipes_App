@@ -11,7 +11,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.executors.AppExecutors;
 
-// CacheObject: Type for the Resource data. (database cache)
+// CacheObject: Type for the Resource data.  (database cache)
 // RequestObject: Type for the API response. (network request)
 public abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
@@ -49,7 +49,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                 results.removeSource(dbSource);
 
                 //Decide WEATHER OR NOT to refresh the data using a network request.
-                if(shouldFetch(cacheObject)){
+                if(shouldFetchDataFromNetwork(cacheObject)){
                     // get data from the network
                     fetchFromNetwork(dbSource);
                 }
@@ -110,7 +110,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                         public void run() {
 
                             // save the response to the local db
-                            saveCallResult((RequestObject) processResponse((ApiResponse.ApiSuccessResponse)requestObjectApiResponse));
+                            saveCallResponsteIntoDB((RequestObject) processResponse((ApiResponse.ApiSuccessResponse)requestObjectApiResponse));
 
                             appExecutors.mainThread().execute(new Runnable() {
                                 @Override
@@ -175,12 +175,12 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
     // Called to save the result of the API response into the database.
     @WorkerThread
-    protected abstract void saveCallResult(@NonNull RequestObject item);
+    protected abstract void saveCallResponsteIntoDB(@NonNull RequestObject item);
 
     // Called with the data in the database to decide whether to fetch
     // potentially updated data from the network.
     @MainThread
-    protected abstract boolean shouldFetch(@Nullable CacheObject data);
+    protected abstract boolean shouldFetchDataFromNetwork(@Nullable CacheObject data);
 
     // Called to get the cached data from the database.
     @NonNull @MainThread

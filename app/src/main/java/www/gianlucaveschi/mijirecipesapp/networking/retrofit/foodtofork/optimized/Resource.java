@@ -10,7 +10,7 @@ public class Resource<T> {
     public final Status status;
 
     @Nullable
-    public final T data;
+    public final T data;        //body of the response
 
     @Nullable
     public final String message;

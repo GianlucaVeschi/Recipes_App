@@ -8,7 +8,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.util.ViewPreloadSizeProvider;
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.r0adkll.slidr.Slidr;
 
@@ -31,10 +33,8 @@ import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.Resource;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
-import www.gianlucaveschi.mijirecipesapp.utils.MyLogger;
 import www.gianlucaveschi.mijirecipesapp.utils.UI.VerticalSpacingItemDecorator;
 import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModel;
-import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModelNEW;
 
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.QUERY_EXHAUSTED;
 
@@ -46,7 +46,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
     @BindView(R.id.search_view)             SearchView mSearchView;
 
     //private RecipesCategoriesViewModel mRecipesCategoriesViewModel;
-    private RecipesCategoriesViewModelNEW mRecipesCategoriesViewModelNEW;
+    private RecipesCategoriesViewModel mRecipesCategoriesViewModel;
     private RecipeAdapter mAdapter;
 
     @Override
@@ -59,7 +59,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
 
         //set View Model
         //mRecipesCategoriesViewModel = ViewModelProviders.of(this).get(RecipesCategoriesViewModel.class);
-        mRecipesCategoriesViewModelNEW = ViewModelProviders.of(this).get(RecipesCategoriesViewModelNEW.class);
+        mRecipesCategoriesViewModel = ViewModelProviders.of(this).get(RecipesCategoriesViewModel.class);
 
         initRecyclerView();
         subscribeObservers();
@@ -69,28 +69,23 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
         if(getIntent().hasExtra(Constants.EXTRA_RECIPE_CAT)){
             displayIntentRecipeList();
         }
-//        else if(!mRecipesCategoriesViewModel.isViewingRecipes()){
-//                // display search categories
-//                displaySearchCategories();
-//        }
     }
 
     @Override
     public void onBackPressed() {
-        if(mRecipesCategoriesViewModelNEW.onBackPressed()){
+        if(mRecipesCategoriesViewModel.getViewState().getValue() == RecipesCategoriesViewModel.ViewState.CATEGORIES){
             super.onBackPressed();
         }
         else{
             //Go to back to Search all categories if you are actually inside a category
-            displaySearchCategories();
+            mRecipesCategoriesViewModel.cancelSearchRequest();
+            mRecipesCategoriesViewModel.setViewCategories();//Will trigger the observer
         }
     }
 
 
-    //WORK IN PROGRESS
     private void subscribeObservers(){
-
-        mRecipesCategoriesViewModelNEW.getRecipes().observe(this, new Observer<Resource<List<Recipe>>>() {
+        mRecipesCategoriesViewModel.getRecipes().observe(this, new Observer<Resource<List<Recipe>>>() {
             @Override
             public void onChanged(@Nullable Resource<List<Recipe>> listResource) {
                 if(listResource != null){
@@ -98,7 +93,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
                     if(listResource.data != null){
                         switch (listResource.status) {
                             case LOADING: {
-                                if(mRecipesCategoriesViewModelNEW.getPageNumber() > 1){
+                                if(mRecipesCategoriesViewModel.getPageNumber() > 1){
                                     //Display loading to simulate pagination
                                     mAdapter.displayLoading();
                                 }
@@ -136,9 +131,9 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
             }
         });
 
-        mRecipesCategoriesViewModelNEW.getViewState().observe(this, new Observer<RecipesCategoriesViewModelNEW.ViewState>() {
+        mRecipesCategoriesViewModel.getViewState().observe(this, new Observer<RecipesCategoriesViewModel.ViewState>() {
             @Override
-            public void onChanged(@Nullable RecipesCategoriesViewModelNEW.ViewState viewState) {
+            public void onChanged(@Nullable RecipesCategoriesViewModel.ViewState viewState) {
                 if(viewState != null){
                     switch (viewState){
 
@@ -166,10 +161,8 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
 
     @Override
     public void onCategoryClick(String category) {
-        //mAdapter.displayLoading();
-        //mRecipesCategoriesViewModel.searchRecipesApi(category, 1);
         Log.d(TAG, "onCategoryClick: OK");
-        mRecipesCategoriesViewModelNEW.searchRecipesApi(category,1);
+        mRecipesCategoriesViewModel.searchRecipesApi(category,1);
         mSearchView.clearFocus();
     }
 
@@ -179,22 +172,27 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
     }
 
     private void initRecyclerView(){
-        mAdapter = new RecipeAdapter(this, initGlide());
+        ViewPreloadSizeProvider<String> viewPreloader = new ViewPreloadSizeProvider<>();
+        mAdapter = new RecipeAdapter(this, initGlide(), viewPreloader);
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(30);
         categoriesRecView.addItemDecoration(itemDecorator);
         categoriesRecView.setAdapter(mAdapter);
         categoriesRecView.setLayoutManager(new LinearLayoutManager(this));
 
-//        categoriesRecView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//
-//                if(!categoriesRecView.canScrollVertically(1)){
-//                    // search the next page
-//                    mRecipesCategoriesViewModel.searchNextPage();
-//                }
-//            }
-//        });
+        RecyclerViewPreloader<String> preloader = new RecyclerViewPreloader<String>(Glide.with(this), mAdapter, viewPreloader, 30);
+        categoriesRecView.addOnScrollListener(preloader);
+
+        categoriesRecView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+
+                if(!categoriesRecView.canScrollVertically(1)
+                        && mRecipesCategoriesViewModel.getViewState().getValue() == RecipesCategoriesViewModel.ViewState.RECIPES){
+                    // search the next page
+                    mRecipesCategoriesViewModel.searchNextPage();
+                }
+            }
+        });
     }
 
     private void initSearchView(){
@@ -205,7 +203,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
                 //mAdapter.displayLoading();
                 //mRecipesCategoriesViewModel.searchRecipesApi(s, 1);
                 Log.d(TAG, "onQueryTextSubmit: OK");
-                mRecipesCategoriesViewModelNEW.searchRecipesApi(s, 1);
+                mRecipesCategoriesViewModel.searchRecipesApi(s, 1);
                 mSearchView.clearFocus();
 
                 return false;
@@ -227,7 +225,6 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
     private RequestManager initGlide(){
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.white_image);
-
         return Glide.with(this).setDefaultRequestOptions(options);
     }
 }
