@@ -6,7 +6,8 @@ import java.util.Map;
 public class Constants {
     public static final int NETWORK_TIMEOUT = 10000;
     public static final String RECIPES_BASE_URL = "https://recipesapi.herokuapp.com/";
-    public static final String API_KEY = "";
+    public static final String RECIPES_API_KEY  = "";
+    public static final String MEALS_BASE_URL   = "https://www.themealdb.com/api/json/v1/1/";
     public static final String EXTRA_MEAL = "MealParcel";
     public static final String EXTRA_RECIPE = "RecipeParcel";
     public static final String EXTRA_RECIPE_CAT = "RecipeCatParcel";

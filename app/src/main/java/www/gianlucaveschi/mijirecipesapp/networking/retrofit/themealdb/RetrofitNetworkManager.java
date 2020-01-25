@@ -20,10 +20,10 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.MEALS_BASE_URL;
+
 public class RetrofitNetworkManager{
 
-    private static final String MITCH_BASE_URL = "https://recipesapi.herokuapp.com/";
-    private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     private static final String TAG = "RetrofitNetworkManager";
     private static Gson gson = new GsonBuilder().create();
 
@@ -42,7 +42,7 @@ public class RetrofitNetworkManager{
     public static synchronized Retrofit getClient(Context context){
         if(retrofit == null){
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(MEALS_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(okHttpClient())
                     .build();

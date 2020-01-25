@@ -117,7 +117,7 @@ public class RecipeRepository {
             protected LiveData<ApiResponse<RecipeSearchResponse>> createCall() {
                 Log.d(TAG, "createCall: OK");
                 return ServiceGenerator.getRecipeApiLiveData().searchRecipeAsLiveData(
-                        Constants.API_KEY,
+                        Constants.RECIPES_API_KEY,
                         query,
                         String.valueOf(pageNumber)
                 );
@@ -128,7 +128,6 @@ public class RecipeRepository {
     /*--------------------------------- GET SINGLE RECIPE ----------------------------------------*/
     public LiveData<Resource<Recipe>> getRecipeApi(final String recipeID){
         return new NetworkBoundResource<Recipe, RecipeGetResponse>(AppExecutors.getInstance()){
-
 
             @Override
             protected void saveCallResponsteIntoDB(@NonNull RecipeGetResponse item) {
@@ -169,7 +168,7 @@ public class RecipeRepository {
             @Override
             protected LiveData<ApiResponse<RecipeGetResponse>> createCall() {
                 return ServiceGenerator.getRecipeApiLiveData().getRecipeAsLiveData(
-                        Constants.API_KEY,
+                        Constants.RECIPES_API_KEY,
                         recipeID
                 );
             }
