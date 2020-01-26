@@ -5,7 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealRetrofitManager;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyNetworkManager;
 
 public class MyApplication extends Application {
@@ -21,7 +21,7 @@ public class MyApplication extends Application {
             applicationInstance = this;
         }
         VolleyNetworkManager.getInstance(this);
-        RetrofitNetworkManager.getClient(this);
+        MealRetrofitManager.getClient(this);
     }
 
     public static MyApplication getInstance(){

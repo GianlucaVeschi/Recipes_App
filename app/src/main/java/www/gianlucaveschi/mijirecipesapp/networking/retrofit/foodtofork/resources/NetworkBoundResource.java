@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources;
 
 import android.util.Log;
 
@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.executors.AppExecutors;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.ApiResponse;
 
 // CacheObject: Type for the Resource data.  (database cache)
 // RequestObject: Type for the API response. (network request)
@@ -110,7 +111,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
                         public void run() {
 
                             // save the response to the local db
-                            saveCallResponsteIntoDB((RequestObject) processResponse((ApiResponse.ApiSuccessResponse)requestObjectApiResponse));
+                            saveCallResponseIntoDB((RequestObject) processResponse((ApiResponse.ApiSuccessResponse)requestObjectApiResponse));
 
                             appExecutors.mainThread().execute(new Runnable() {
                                 @Override
@@ -175,7 +176,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
 
     // Called to save the result of the API response into the database.
     @WorkerThread
-    protected abstract void saveCallResponsteIntoDB(@NonNull RequestObject item);
+    protected abstract void saveCallResponseIntoDB(@NonNull RequestObject item);
 
     // Called with the data in the database to decide whether to fetch
     // potentially updated data from the network.

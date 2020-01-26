@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.Resource;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.Resource;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipeDetailsViewModel;
 

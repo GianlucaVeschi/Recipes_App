@@ -6,10 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import www.gianlucaveschi.mijirecipesapp.models.Meal;
-import www.gianlucaveschi.mijirecipesapp.models.Recipe;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.Resource;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.Resource;
 import www.gianlucaveschi.mijirecipesapp.repositories.MealRepository;
-import www.gianlucaveschi.mijirecipesapp.repositories.RecipeRepository;
 
 public class MealViewModel extends AndroidViewModel {
 
@@ -18,9 +16,9 @@ public class MealViewModel extends AndroidViewModel {
 
     /*--------------------------------- CONSTRUCTOR ----------------------------------------------*/
 
-    public MealViewModel(@NonNull Application application, MealRepository mMealRepository) {
+    public MealViewModel(@NonNull Application application) {
         super(application);
-        this.mMealRepository = mMealRepository;
+        this.mMealRepository = mMealRepository.getInstance(application);
     }
 
     /*--------------------------------- EXECUTION ------------------------------------------------*/

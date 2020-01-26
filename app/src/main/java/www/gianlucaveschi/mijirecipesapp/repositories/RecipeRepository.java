@@ -12,10 +12,10 @@ import www.gianlucaveschi.mijirecipesapp.database.recipesDB.RecipeDAO;
 import www.gianlucaveschi.mijirecipesapp.database.recipesDB.RecipeDatabase;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.executors.AppExecutors;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.ServiceGenerator;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.NetworkBoundResource;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.Resource;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.ApiResponse;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.RecipeRetrofitManager;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.NetworkBoundResource;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.Resource;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.ApiResponse;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeGetResponse;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeSearchResponse;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
@@ -64,7 +64,7 @@ public class RecipeRepository {
         return new NetworkBoundResource<List<Recipe>, RecipeSearchResponse>(AppExecutors.getInstance()){
             //Save response from RETROFIT into the CACHE
             @Override
-            protected void saveCallResponsteIntoDB(@NonNull RecipeSearchResponse searchResponse) {
+            protected void saveCallResponseIntoDB(@NonNull RecipeSearchResponse searchResponse) {
                 if(searchResponse.getRecipes() != null) { // recipe list will be null if api key is expired
 
                     Log.d(TAG, "saveCallResult: OK");
@@ -116,7 +116,7 @@ public class RecipeRepository {
             @Override
             protected LiveData<ApiResponse<RecipeSearchResponse>> createCall() {
                 Log.d(TAG, "createCall: OK");
-                return ServiceGenerator.getRecipeApiLiveData().searchRecipeAsLiveData(
+                return RecipeRetrofitManager.getRecipeApiLiveData().searchRecipeAsLiveData(
                         Constants.RECIPES_API_KEY,
                         query,
                         String.valueOf(pageNumber)
@@ -130,7 +130,7 @@ public class RecipeRepository {
         return new NetworkBoundResource<Recipe, RecipeGetResponse>(AppExecutors.getInstance()){
 
             @Override
-            protected void saveCallResponsteIntoDB(@NonNull RecipeGetResponse item) {
+            protected void saveCallResponseIntoDB(@NonNull RecipeGetResponse item) {
                 // Recipe will be NULL if API key is expired
                 if(item.getRecipe() != null){
                     item.getRecipe().setTimestamp((int)(System.currentTimeMillis() / 1000)); // save time in seconds
@@ -167,7 +167,7 @@ public class RecipeRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<RecipeGetResponse>> createCall() {
-                return ServiceGenerator.getRecipeApiLiveData().getRecipeAsLiveData(
+                return RecipeRetrofitManager.getRecipeApiLiveData().getRecipeAsLiveData(
                         Constants.RECIPES_API_KEY,
                         recipeID
                 );

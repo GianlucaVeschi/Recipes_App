@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.call_adapters;
 
 import java.lang.reflect.Type;
 
@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Callback;
 import retrofit2.Response;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.ApiResponse;
 
 /**
  * Converts the RETROFIT call to LIVE DATA*/

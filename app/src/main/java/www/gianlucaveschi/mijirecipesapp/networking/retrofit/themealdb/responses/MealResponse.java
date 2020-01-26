@@ -25,6 +25,14 @@ public class MealResponse {
         return meals;
     }
 
+    public Meal getSingleMeal(){
+        //A single meal is also treated as an array of meals in the JSON response
+        if(meals != null && meals.size() == 1){
+            return meals.get(0);
+        }
+        return null;
+    }
+
     /*--------------------------------- SETTERS --------------------------------------------------*/
     public void setOrientation(int orientation){
         for(Meal mealSimples: meals){

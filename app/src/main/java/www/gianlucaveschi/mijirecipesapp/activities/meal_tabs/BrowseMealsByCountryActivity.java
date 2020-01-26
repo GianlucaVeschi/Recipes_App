@@ -24,23 +24,21 @@ import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
 import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealRetrofitManager;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.EXTRA_MEAL;
 
 
 public class BrowseMealsByCountryActivity extends AppCompatActivity implements OnMealClickListener {
-
-    //Bind UI
-    //@BindView(R.id.meals_type_name)                 TextView countryMealsTextView;
-    @BindView(R.id.browse_meals_recycler_view)      RecyclerView mealsRecyclerView;
-
-    //Retrofit instance
-    MealAPI mealAPI;
-
     //Logger
     private static final String TAG = "BrowseMealCountryActivi";
+
+    //Bind UI
+    @BindView(R.id.browse_meals_recycler_view)      RecyclerView mealsRecyclerView;
+
+    //API instance
+    MealAPI mealAPI = MealRetrofitManager.getMealAPI();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +62,6 @@ public class BrowseMealsByCountryActivity extends AppCompatActivity implements O
     }
 
     private void displayRecipesByCountryWithRetrofit(String country){
-        mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
         mealAPI.getMealsByCountry(country).enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {

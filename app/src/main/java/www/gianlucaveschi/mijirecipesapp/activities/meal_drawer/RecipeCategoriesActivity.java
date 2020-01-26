@@ -31,7 +31,7 @@ import www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivit
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.OnRecipeListener;
 import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.Resource;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.Resource;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 import www.gianlucaveschi.mijirecipesapp.utils.UI.VerticalSpacingItemDecorator;
 import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModel;
@@ -58,7 +58,6 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
         Slidr.attach(this);
 
         //set View Model
-        //mRecipesCategoriesViewModel = ViewModelProviders.of(this).get(RecipesCategoriesViewModel.class);
         mRecipesCategoriesViewModel = ViewModelProviders.of(this).get(RecipesCategoriesViewModel.class);
 
         initRecyclerView();
@@ -167,7 +166,6 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
     }
 
     private void displaySearchCategories(){
-        //mRecipesCategoriesViewModel.setIsViewingRecipes(false);
         mAdapter.displaySearchCategories();
     }
 
@@ -200,8 +198,6 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
             @Override
             public boolean onQueryTextSubmit(String s) {
 
-                //mAdapter.displayLoading();
-                //mRecipesCategoriesViewModel.searchRecipesApi(s, 1);
                 Log.d(TAG, "onQueryTextSubmit: OK");
                 mRecipesCategoriesViewModel.searchRecipesApi(s, 1);
                 mSearchView.clearFocus();

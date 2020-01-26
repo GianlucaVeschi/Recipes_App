@@ -10,6 +10,8 @@ import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.logging.HttpLoggingInterceptor;
 import www.gianlucaveschi.mijirecipesapp.MyApplication;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.RecipeAPI;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.call_adapters.LiveDataCallAdapterFactory;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyNetworkManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,31 +22,30 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.HEADER_CACHE_CONTROL;
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.HEADER_PRAGMA;
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.MEALS_BASE_URL;
 
-public class RetrofitNetworkManager{
+public class MealRetrofitManager {
 
-    private static final String TAG = "RetrofitNetworkManager";
-    private static Gson gson = new GsonBuilder().create();
+    private static final String TAG = "MealRetrofitManager";
 
-    //Caching
-    private static final long cacheSize = 5 * 1024 * 1024; // 5 MB
-    private static final String HEADER_CACHE_CONTROL = "Cache-Control";
-    private static final String HEADER_PRAGMA = "Pragma";
-    private static Cache cache(){
-        return new Cache(new File(MyApplication.getInstance().getCacheDir(),"someIdentifier"), cacheSize);
-    }
+    /*------------------------------- INTERNAL VARIABLES -----------------------------------------*/
 
     //Retrofit Instance initialized only once
     private static Retrofit retrofit = null;
+    private static Gson gson = new GsonBuilder().create();
+    private static MealAPI mealAPI;
 
-    //Get the Retrofit instance
+    /*------------------------------- RETROFIT BUILDER -------------------------------------------*/
+
     public static synchronized Retrofit getClient(Context context){
         if(retrofit == null){
             retrofit = new Retrofit.Builder()
                     .baseUrl(MEALS_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(okHttpClient())
+                    .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                     .build();
         }
         return retrofit;
@@ -53,24 +54,33 @@ public class RetrofitNetworkManager{
     //Context only has to be passed once
     public static synchronized Retrofit getClient() {
         if (null == retrofit) {
-            throw new IllegalStateException(VolleyNetworkManager.class.getSimpleName() +
+            throw new IllegalStateException(MealRetrofitManager.class.getSimpleName() +
                     " is not initialized, call getInstance(...) first");
         }
         return retrofit;
     }
 
+    /*------------------------------- OkHTTP BUILDER ---------------------------------------------*/
+
     private static OkHttpClient okHttpClient(){
         return new OkHttpClient.Builder()
-                .cache(cache())
                 .addInterceptor(httpLoggingInterceptor())    // used if network off OR on
-                .addNetworkInterceptor(networkInterceptor()) // only used when network is on
-                .addInterceptor(offlineInterceptor())
+                //.addNetworkInterceptor(networkInterceptor()) // only used when network is on
+                //.addInterceptor(offlineInterceptor())
                 .build();
     }
 
-    /**
-     * INTERCEPTORS
-     * */
+    /*------------------------------- GETTERS ----------------------------------------------------*/
+
+    public static MealAPI getMealAPI() {
+        if(mealAPI == null){
+            mealAPI = getClient().create(MealAPI.class);
+        }
+        return mealAPI;
+    }
+
+    /*------------------------------- INTERCEPTORS -----------------------------------------------*/
+
     private static HttpLoggingInterceptor httpLoggingInterceptor () {
         HttpLoggingInterceptor httpLoggingInterceptor =
                 new HttpLoggingInterceptor( new HttpLoggingInterceptor.Logger() {
@@ -83,10 +93,7 @@ public class RetrofitNetworkManager{
         return httpLoggingInterceptor;
     }
 
-    /**
-     * This interceptor will be called ONLY if the network is available
-     * @return
-     */
+    //This interceptor will be called ONLY if the network is available
     private static Interceptor networkInterceptor() {
         return new Interceptor() {
             @Override
@@ -109,10 +116,7 @@ public class RetrofitNetworkManager{
         };
     }
 
-    /**
-     * This interceptor will be called both if the network is available and if the network is not available
-     * @return
-     */
+    //This interceptor will be called both if the network is available and if it is not
     private static Interceptor offlineInterceptor() {
         return new Interceptor() {
             @Override

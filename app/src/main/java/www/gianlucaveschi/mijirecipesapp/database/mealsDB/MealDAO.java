@@ -34,8 +34,8 @@ public interface MealDAO {
     // or even a different database. But they are very very close.
     @Query("SELECT * FROM meals WHERE mealName LIKE '%' || :query || '%'" +
             " ORDER BY idMeal DESC")
-    LiveData<List<Recipe>> searchMeals(String query);
+    LiveData<List<Meal>> searchMeals(String query);
 
     @Query(" SELECT * FROM meals WHERE idMeal = :idMeal")
-    LiveData<Recipe> getMeal(String idMeal);
+    LiveData<Meal> getMeal(String idMeal);
 }

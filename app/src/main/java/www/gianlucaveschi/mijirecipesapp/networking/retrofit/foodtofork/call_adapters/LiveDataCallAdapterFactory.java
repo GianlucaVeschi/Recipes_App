@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.call_adapters;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
@@ -7,6 +7,7 @@ import java.lang.reflect.Type;
 import androidx.lifecycle.LiveData;
 import retrofit2.CallAdapter;
 import retrofit2.Retrofit;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.ApiResponse;
 
 /**
  *  This object will be passed to the constructor of the RETROFIT BUILDER

@@ -22,10 +22,10 @@ import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealRetrofitManager;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
 import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.EXTRA_MEAL;
@@ -37,7 +37,8 @@ public class BrowseMealByIngredientActivity extends AppCompatActivity implements
     @BindView(R.id.toolbar)                     Toolbar toolbar;
     @BindView(R.id.browse_meals_recycler_view)  RecyclerView mealsRecyclerView;
 
-    MealAPI mealAPI;
+    //API instance
+    MealAPI mealAPI = MealRetrofitManager.getMealAPI();
     MealAdapter mealAdapter;
 
     //Logger
@@ -66,7 +67,7 @@ public class BrowseMealByIngredientActivity extends AppCompatActivity implements
     }
 
     private void displayRecipesByIngredientWithRetrofit(String ingredient){
-        mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
+
         mealAPI.getMealsByIngredient(ingredient).enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {

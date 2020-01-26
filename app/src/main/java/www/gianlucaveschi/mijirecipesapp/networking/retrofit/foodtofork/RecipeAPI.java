@@ -1,14 +1,13 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork;
 
 import androidx.lifecycle.LiveData;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized.ApiResponse;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.ApiResponse;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeGetResponse;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.RecipeSearchResponse;
 
-public interface RecipeApiLiveData {
+public interface RecipeAPI {
 
     // The following two calls are exactly like the ones above but the responses are Wrapped
     // into ApiResponse wrapped into LiveData so that they can be observed.
@@ -27,5 +26,4 @@ public interface RecipeApiLiveData {
             @Query("key") String key,
             @Query("rId") String recipe_id
     );
-
 }

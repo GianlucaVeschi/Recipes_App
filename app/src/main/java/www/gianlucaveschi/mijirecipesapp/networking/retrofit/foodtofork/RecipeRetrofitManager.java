@@ -1,10 +1,11 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.call_adapters.LiveDataCallAdapterFactory;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.CONNECTION_TIMEOUT;
@@ -17,7 +18,9 @@ import static www.gianlucaveschi.mijirecipesapp.utils.Constants.WRITE_TIMEOUT;
  https://github.com/brittBarak/NetworkingDemo
  * https://twitter.com/brittbarak
  */
-public class ServiceGenerator {
+public class RecipeRetrofitManager {
+
+    /*------------------------------- OkHTTP BUILDER ---------------------------------------------*/
 
     private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             // establish connection with server
@@ -27,8 +30,9 @@ public class ServiceGenerator {
             // time between each byte sent to server
             .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
             .retryOnConnectionFailure(false)
-
             .build();
+
+    /*------------------------------- RETROFIT BUILDER -------------------------------------------*/
 
     private static Retrofit.Builder retrofitBuilder =
             new Retrofit.Builder()
@@ -39,9 +43,11 @@ public class ServiceGenerator {
 
     private static Retrofit retrofit = retrofitBuilder.build();
 
-    private static RecipeApiLiveData recipeApiLiveData = retrofit.create(RecipeApiLiveData.class);
+    /*------------------------------- GETTERS -------------------------------------------*/
 
-    public static RecipeApiLiveData getRecipeApiLiveData() {
+    private static RecipeAPI recipeApiLiveData = retrofit.create(RecipeAPI.class);
+
+    public static RecipeAPI getRecipeApiLiveData() {
         return recipeApiLiveData;
     }
 

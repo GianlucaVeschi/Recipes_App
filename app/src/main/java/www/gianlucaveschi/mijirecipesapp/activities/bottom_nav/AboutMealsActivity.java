@@ -31,10 +31,10 @@ import www.gianlucaveschi.mijirecipesapp.adapters.FoodCategoryAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
 import www.gianlucaveschi.mijirecipesapp.models.Country;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealRetrofitManager;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
 import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
-import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.RetrofitNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.utils.UI.BottomNavigationViewHelper;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 import www.gianlucaveschi.mijirecipesapp.utils.UI.HorizontalSpacingItemDecorator;
@@ -45,9 +45,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
-import static www.gianlucaveschi.mijirecipesapp.utils.Constants.DEFAULT_SEARCH_COUNTRIES;
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.EXTRA_MEAL;
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.HORIZONTAL_VIEW_TYPE;
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.VERTICAL_VIEW_TYPE;
@@ -187,7 +185,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     }
 
     private void displayRecipesByCountryWithRetrofit(String country, final RecyclerView recyclerView, final int orientation){
-        mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
+        mealAPI = MealRetrofitManager.getClient().create(MealAPI.class);
         mealAPI.getMealsByCountry(country).enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
@@ -210,7 +208,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     }
 
     private void displayRecipesByCategoryWithRetrofit(String category, final RecyclerView recyclerView, final int orientation){
-        mealAPI = RetrofitNetworkManager.getClient().create(MealAPI.class);
+        mealAPI = MealRetrofitManager.getClient().create(MealAPI.class);
         mealAPI.getMealsByCategory(category).enqueue(new Callback<MealResponse>() {
             @Override
             public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {

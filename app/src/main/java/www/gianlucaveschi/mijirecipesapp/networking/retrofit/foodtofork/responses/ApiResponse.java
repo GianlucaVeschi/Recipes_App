@@ -1,11 +1,12 @@
-package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.optimized;
+package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses;
 
 import java.io.IOException;
 
 import retrofit2.Response;
 
 /**
- * Generic class for handling responses from Retrofit
+ * Generic wrapper class for handling responses from Retrofit
+ * This class is used in Both MealAPI and RecipeAPI
  * @param <T>
  */
 public class ApiResponse<T> {

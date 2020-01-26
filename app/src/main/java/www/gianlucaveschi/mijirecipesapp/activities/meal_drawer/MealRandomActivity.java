@@ -19,21 +19,32 @@ import org.json.JSONObject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import www.gianlucaveschi.mijirecipesapp.models.Meal;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.Resource;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealRetrofitManager;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyNetworkManager;
 import www.gianlucaveschi.mijirecipesapp.networking.volley.VolleyRequestListener;
+import www.gianlucaveschi.mijirecipesapp.viewmodels.MealViewModel;
+import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModel;
 
 public class MealRandomActivity extends AppCompatActivity {
 
 
     private static final String TAG = "MealRandomActivity";
 
-
-    //Retrofit instance
-    MealAPI mealAPI;
+    //API instance
+    MealAPI mealAPI = MealRetrofitManager.getMealAPI();
+    MealViewModel mMealViewModel;
 
     @BindView(R.id.refreshLayout)       SwipeRefreshLayout refreshLayout;
     @BindView(R.id.card_view_id)        CardView cardView;
@@ -54,6 +65,10 @@ public class MealRandomActivity extends AppCompatActivity {
         //Slide back to the Previous Activity
         Slidr.attach(this);
 
+        //set View Model
+        mMealViewModel = ViewModelProviders.of(this).get(MealViewModel.class);
+        subscribeObservers();
+
         //Toast
         Toast toast = Toast.makeText(this,"Swipe Up to get another recipe :)",Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER,0,0);
@@ -72,6 +87,33 @@ public class MealRandomActivity extends AppCompatActivity {
         });
     }
 
+    private void subscribeObservers(){
+        mMealViewModel.getMeal("52850").observe(this, new Observer<Resource<Meal>>() {
+            @Override
+            public void onChanged(Resource<Meal> mealResource) {
+                if(mealResource != null){
+                    Log.d(TAG, "onChanged: " + mealResource.status);
+                    Log.d(TAG, "onChanged: " + mealResource.data);
+                }
+            }
+        });
+    }
+
+    private void getRandomRecipeWithRetrofit(){
+        mealAPI.getRandomMeal().enqueue(new Callback<MealResponse>() {
+            @Override
+            public void onResponse(Call<MealResponse> call, Response<MealResponse> response) {
+                Log.d(TAG, "onResponse: " + response.body());
+                Meal meal = response.body().getSingleMeal();
+                Log.d(TAG, "onResponse: " + meal.toString());
+            }
+
+            @Override
+            public void onFailure(Call<MealResponse> call, Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+            }
+        });
+    }
     private void getRandomRecipeWithVolley(){
         VolleyNetworkManager.getInstance().getRandomRecipe(new VolleyRequestListener<JSONObject>() {
             @Override
@@ -117,19 +159,5 @@ public class MealRandomActivity extends AppCompatActivity {
                 .centerInside()
                 .into(imageView);
         cardView.setVisibility(View.VISIBLE);
-
-        /*
-        //ToDo: Find a faster way to load and display images from a remote source
-        //Glide Approach is also slow
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round);
-
-        Glide.with(this)
-                .load(imgUrl)
-                .apply(options)
-                .into(imageView);
-        */
     }
 }
