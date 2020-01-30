@@ -54,6 +54,8 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
 
     private static final String TAG = "AboutMealsActivity";
 
+    /*--------------------------------- INNER VARIABLES ------------------------------------------*/
+
     //Retrofit instance
     MealAPI mealAPI;
     MealAdapter mealAdapter;
@@ -61,7 +63,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     //UI components
     @BindView(R.id.drawer_layout)       DrawerLayout drawer;
     @BindView(R.id.nav_view)            NavigationView navigationView;
-    @BindView(R.id.bottom_nav_view)     BottomNavigationView bottomNavigationView;
+    @BindView(R.id.bottom_nav_view)     BottomNavigationView mBottomNavigationView;
     @BindView(R.id.toolbar)             Toolbar toolbar;
 
     @BindView(R.id.categories_rec_view)     RecyclerView mFoodCategoriesRecView;
@@ -69,32 +71,18 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     @BindView(R.id.central_recycler_view)   RecyclerView centralMealsRecView;
     @BindView(R.id.bottom_recycler_view)    RecyclerView bottomRecView;
 
+    /*--------------------------------- START ACTIVITY ------------------------------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_meals);
         ButterKnife.bind(this);
 
-        //Set the Drawer Layout
-        navigationView.setNavigationItemSelectedListener(this);
-
-        //Set the toolbar
-        setSupportActionBar(toolbar);
-
-        //Adds the "Hamburger" to the toolbar,which opens the drawer layout
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        toggle.syncState(); //Rotates the hamburger Icon
-        drawer.addDrawerListener(toggle);
-
-        //Set the Bottom Navigation Bar
-        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-
-        //Highlight the touched button on the bottom navigation bar
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(0);
-        menuItem.setChecked(true);
+        //Layout settings
+        setBottomNavigation();
+        setHamburger();
+        setSupportActionBar(toolbar); //Set the toolbar
+        setDrawerLayout();
 
         //Init RecyclerViews
         initFoodCategoriesRecView();
@@ -105,6 +93,32 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         displayRecipesByCountryWithRetrofit(Country.getRandomCountry(), centralMealsRecView,HORIZONTAL_VIEW_TYPE);
         displayRecipesByCategoryWithRetrofit("Seafood",bottomRecView,HORIZONTAL_VIEW_TYPE);
     }
+
+    /*--------------------------------- LAYOUT SETTINGS ------------------------------------------*/
+    private void setDrawerLayout() {
+        navigationView.setNavigationItemSelectedListener(this); //Set the Drawer Layout
+    }
+
+    private void setHamburger() {
+        //Adds the "Hamburger" to the toolbar,which opens the drawer layout
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.syncState(); //Rotates the hamburger Icon
+        drawer.addDrawerListener(toggle);
+    }
+
+    private void setBottomNavigation() {
+        //Set the Bottom Navigation Bar
+        mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView);
+
+        //Highlight the touched button
+        Menu menu = mBottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+    }
+
+    /*--------------------------------- SET MORE STUFF AHAHAHAHA ---------------------------------*/
 
     private void initFoodCategoriesRecView() {
         HorizontalSpacingItemDecorator itemDecorator = new HorizontalSpacingItemDecorator(5);

@@ -5,24 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="www.gianlucaveschi.mijirecipesapp.activities.stove_tabs.MijiProductsOverview"
-    android:background="@drawable/kyoto">
+    android:background="@drawable/white_image">
 
-    <TextView
-        android:id="@+id/textViewAboutMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="116dp"
-        android:text="Welcome to the Miji App"
-        android:textSize="30sp" />
 
+    <!-- TOP -->
+    <include layout="@layout/nav_header_about_me"/>
 
     <!-- BOTTOM -->
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/blue"
         android:layout_centerVertical="true"
         android:layout_centerInParent="true"
         android:text="View Miji Products"
