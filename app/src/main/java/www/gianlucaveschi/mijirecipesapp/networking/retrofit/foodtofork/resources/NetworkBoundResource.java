@@ -2,6 +2,8 @@ package www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resourc
 
 import android.util.Log;
 
+import java.util.List;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +11,7 @@ import androidx.annotation.WorkerThread;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.Observer;
+import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.executors.AppExecutors;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.responses.ApiResponse;
 
@@ -87,6 +90,7 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
             }
         });
 
+        //Get DATA from the NETWORK through RETROFIT call
         final LiveData<ApiResponse<RequestObject>> apiResponse = createCall();
 
         results.addSource(apiResponse, new Observer<ApiResponse<RequestObject>>() {
@@ -164,6 +168,9 @@ public abstract class NetworkBoundResource<CacheObject, RequestObject> {
     }
 
     private CacheObject processResponse(ApiResponse.ApiSuccessResponse response){
+        //Prints fresh data from network
+        CacheObject dataFromNetwork = (CacheObject) response.getBody();
+        Log.d(TAG, "processResponse: Data from Network : " +  dataFromNetwork);
         return (CacheObject) response.getBody();
     }
 

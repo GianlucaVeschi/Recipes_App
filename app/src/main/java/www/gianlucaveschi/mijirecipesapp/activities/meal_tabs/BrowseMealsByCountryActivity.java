@@ -8,9 +8,12 @@ import com.gianlucaveschi.load_json_images_picasso.R;
 import com.r0adkll.slidr.Slidr;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -21,30 +24,36 @@ import retrofit2.Response;
 import www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.Resource;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
 import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealRetrofitManager;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
+import www.gianlucaveschi.mijirecipesapp.viewmodels.MealViewModel;
 
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.EXTRA_MEAL;
 
 
 public class BrowseMealsByCountryActivity extends AppCompatActivity implements OnMealClickListener {
+
     //Logger
-    private static final String TAG = "BrowseMealCountryActivi";
+    private static final String TAG = "BrowseMealsByCountry";
 
     //Bind UI
     @BindView(R.id.browse_meals_recycler_view)      RecyclerView mealsRecyclerView;
 
     //API instance
     MealAPI mealAPI = MealRetrofitManager.getMealAPI();
+    MealViewModel mMealViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_recipes_by_country);
         ButterKnife.bind(this);
+        Slidr.attach(this); //Slide back to the Previous Activity
+        mMealViewModel = ViewModelProviders.of(this).get(MealViewModel.class);
 
         //Get Intent
         Intent intent = getIntent();
@@ -52,13 +61,36 @@ public class BrowseMealsByCountryActivity extends AppCompatActivity implements O
         String countryName  = intent.getStringExtra("country_name");
 
         //Set UI
-        //String countryName_str = countryName + " Meals";
-        //countryMealsTextView.setText(countryName_str);
         displayRecipesByCountryWithRetrofit(countryName);
 
-        //Slide back to the Previous Activity
-        Slidr.attach(this);
+        subscribeObservers(countryName);
 
+    }
+
+    private void subscribeObservers(String countryName){
+        mMealViewModel.getMealsByCountry(countryName).observe(this, new Observer<Resource<List<Meal>>>() {
+            @Override
+            public void onChanged(Resource<List<Meal>> listResource) {
+                if(listResource != null){
+                    Log.d(TAG, "onChanged: status " + listResource.status);
+                    if(listResource.data != null){
+                        switch (listResource.status) {
+                            case LOADING: {
+                                // TODO: 30/01/2020
+                                break;
+                            }
+                            case SUCCESS: {
+                                Log.d(TAG, "onChanged: body " + listResource.data);
+                                break;
+                            }
+                            case ERROR: {
+                                // TODO: 30/01/2020
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void displayRecipesByCountryWithRetrofit(String country){

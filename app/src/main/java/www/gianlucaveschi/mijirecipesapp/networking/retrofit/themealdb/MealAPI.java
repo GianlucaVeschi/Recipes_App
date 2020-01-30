@@ -24,7 +24,7 @@ public interface MealAPI {
     Call<MealResponse> getMealsByIngredient(@Query("i") String ingredient);
 
     @GET("lookup.php")
-    Call<MealResponse> getMealById(@Query("i") String mealID); // TODO: 26/01/2020: test this
+    Call<MealResponse> getMealById(@Query("i") String mealID);
 
     @GET("random.php")
     Call<MealResponse> getRandomMeal();

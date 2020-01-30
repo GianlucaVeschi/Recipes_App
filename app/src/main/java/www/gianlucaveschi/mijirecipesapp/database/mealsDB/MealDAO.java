@@ -25,10 +25,9 @@ public interface MealDAO {
     // Custom update statement so timestamp doesn't get removed
     @Query("UPDATE meals " +
             "SET mealname = :mealName,"      +
-            "imgUrl = :imgUrl,"             +
-            "orientationType = :orientationType " +
+            "imgUrl = :imgUrl "             +
             "WHERE idMeal = :idMeal")
-    void updateMeal(String idMeal, String mealName, String imgUrl, int orientationType);
+    void updateMeal(String idMeal, String mealName, String imgUrl);
 
     // NOTE: The SQL query sometimes won't return EXACTLY what the api does since the API might use a different query
     // or even a different database. But they are very very close.

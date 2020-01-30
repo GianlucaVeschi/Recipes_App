@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import www.gianlucaveschi.mijirecipesapp.database.recipesDB.RecipeDAO;
 import www.gianlucaveschi.mijirecipesapp.database.recipesDB.RecipeDatabase;
+import www.gianlucaveschi.mijirecipesapp.models.Meal;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.executors.AppExecutors;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.RecipeRetrofitManager;
@@ -67,7 +68,7 @@ public class RecipeRepository {
             protected void saveCallResponseIntoDB(@NonNull RecipeSearchResponse searchResponse) {
                 if(searchResponse.getRecipes() != null) { // recipe list will be null if api key is expired
 
-                    Log.d(TAG, "saveCallResult: OK");
+                    Log.d(TAG, "saveCallResponseIntoDB: OK");
 
                     //The DAO makes use of varargs... so the Recipes contained in the response
                     // will be stored in an Array
@@ -101,7 +102,7 @@ public class RecipeRepository {
                 //search for anything so writing the logic for updating
                 //it according to the request of a list would require looking up any item in
                 //the list and this is quite expensive.
-                Log.d(TAG, "shouldFetch: OK");
+                Log.d(TAG, "shouldFetchDataFromNetwork: OK");
                 return true;
             }
 
@@ -109,7 +110,9 @@ public class RecipeRepository {
             @Override
             protected LiveData<List<Recipe>> loadFromDb() {
                 Log.d(TAG, "loadFromDb: OK");
-                return recipeDAO.searchRecipes(query, pageNumber);
+                LiveData<List<Recipe>> recipesInTheDb = recipeDAO.searchRecipes(query, pageNumber);
+                //Log.d(TAG, "loadFromDb: " + recipesInTheDb.getValue());
+                return recipesInTheDb;
             }
 
             @NonNull
@@ -167,6 +170,7 @@ public class RecipeRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<RecipeGetResponse>> createCall() {
+                //Return Data from Network
                 return RecipeRetrofitManager.getRecipeApiLiveData().getRecipeAsLiveData(
                         Constants.RECIPES_API_KEY,
                         recipeID

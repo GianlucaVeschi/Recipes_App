@@ -3,6 +3,8 @@ package www.gianlucaveschi.mijirecipesapp.repositories;
 import android.content.Context;
 import android.util.Log;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
@@ -84,4 +86,63 @@ public class MealRepository {
         }.getAsLiveData();
     }
 
+    public LiveData<Resource<List<Meal>>> getMealsByCountryApi(final String countryName){
+        Log.d(TAG, "getMealsByCountryApi: OK");
+        return new NetworkBoundResource<List<Meal>,MealResponse>(AppExecutors.getInstance()){
+            @Override
+            protected void saveCallResponseIntoDB(@NonNull MealResponse response) {
+                Log.d(TAG, "save Call Response Into DB: OK");
+                // Recipe will be NULL if API key is expired
+                if(response.getMeals() != null){
+                    response.getMeals(); // save time in seconds
+
+                    //The DAO makes use of varargs... so the Recipes contained in the response
+                    // will be stored in an Array
+                    Meal[] mealsInTheDB = new Meal[response.getMeals().size()];
+                    Meal[] mealsInTheResponse = response.getMeals().toArray(mealsInTheDB);
+
+                    int index = 0;
+                    for(long rowId: mealDAO.insertMeals(mealsInTheResponse)){ //Array containing the results of the INSERT operation.
+                        if(rowId == -1){ // conflict detected is saved by the INSERT operation as -1
+                            Log.d(TAG, "saveCallResult: CONFLICT... This recipe is already in cache.");
+                            // if already exists, I don't want to set the ingredients or timestamp b/c they will be erased
+                            mealDAO.updateMeal(
+                                    mealsInTheDB[index].getIdMeal(),
+                                    mealsInTheDB[index].getMealName(),
+                                    mealsInTheDB[index].getImgUrl()
+
+                            );
+                        }
+                        index++;
+                    }
+                }
+                else{
+                    Log.d(TAG, "saveCallResponseIntoDB: returned NULL");
+                }
+            }
+
+            @Override
+            protected boolean shouldFetchDataFromNetwork(@Nullable List<Meal> data) {
+                // TODO: 29/01/2020 : Some time stamp
+                Log.d(TAG, "shouldFetchDataFromNetwork: OK");
+                return true;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<List<Meal>> loadFromDb() {
+                Log.d(TAG, "loadFromDb: OK");
+                LiveData<List<Meal>> mealsInTheDb = mealDAO.searchMeals(countryName);
+                //Log.d(TAG, "loadFromDb: " + mealsInTheDb.getValue());
+                return mealsInTheDb;
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<MealResponse>> createCall() {
+                Log.d(TAG, "createCall: OK");
+                return MealRetrofitManager.getMealAPI().getMealsByCountryAsLiveData(countryName);
+            }
+        }.getAsLiveData();
+    }
 }

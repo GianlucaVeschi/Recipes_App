@@ -114,6 +114,8 @@ public class MealRandomActivity extends AppCompatActivity {
             }
         });
     }
+
+    //Get the Ingredients
     private void getRandomRecipeWithVolley(){
         VolleyNetworkManager.getInstance().getRandomRecipe(new VolleyRequestListener<JSONObject>() {
             @Override

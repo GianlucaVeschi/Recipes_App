@@ -98,7 +98,6 @@ public class MealDetailsActivity extends AppCompatActivity {
                 .fit()
                 .centerInside()
                 .into(imageView);
-
     }
 
 }

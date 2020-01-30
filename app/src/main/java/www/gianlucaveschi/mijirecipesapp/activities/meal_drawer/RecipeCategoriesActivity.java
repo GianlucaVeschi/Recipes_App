@@ -40,7 +40,7 @@ import static www.gianlucaveschi.mijirecipesapp.utils.Constants.QUERY_EXHAUSTED;
 
 public class RecipeCategoriesActivity extends AppCompatActivity implements OnRecipeListener {
 
-    private static final String TAG = "RecipeCategoriesActivit";
+    private static final String TAG = "RecipeCategoriesAct";
 
     @BindView(R.id.recipes_categories_list) RecyclerView categoriesRecView;
     @BindView(R.id.search_view)             SearchView mSearchView;
@@ -57,9 +57,7 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
         ButterKnife.bind(this);
         Slidr.attach(this);
 
-        //set View Model
-        mRecipesCategoriesViewModel = ViewModelProviders.of(this).get(RecipesCategoriesViewModel.class);
-
+        initViewModel();
         initRecyclerView();
         subscribeObservers();
         initSearchView();
@@ -70,9 +68,15 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
         }
     }
 
+    private void initViewModel() {
+        mRecipesCategoriesViewModel = ViewModelProviders.of(this)
+                .get(RecipesCategoriesViewModel.class);
+    }
+
     @Override
     public void onBackPressed() {
-        if(mRecipesCategoriesViewModel.getViewState().getValue() == RecipesCategoriesViewModel.ViewState.CATEGORIES){
+        if(mRecipesCategoriesViewModel.getViewState()
+                .getValue() == RecipesCategoriesViewModel.ViewState.CATEGORIES){
             super.onBackPressed();
         }
         else{
@@ -123,7 +127,6 @@ public class RecipeCategoriesActivity extends AppCompatActivity implements OnRec
                                 }
                                 break;
                             }
-
                         }
                     }
                 }

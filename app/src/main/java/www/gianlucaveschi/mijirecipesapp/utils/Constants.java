@@ -41,21 +41,20 @@ public class Constants {
     /*---------------------------------------- MEALS ---------------------------------------------*/
 
     public static final String[] DEFAULT_SEARCH_COUNTRIES = {
-            "Italian",  "Spanish",  "French",
-            "Canadian", "Jamaican", "Chinese",
-            "Indian",   "Japanese", "Mexican",
-            "Moroccan", "Russian",  "Thai",
-            "British",  "American", "Dutch",
-            "Tunisian"
+            "Italian"   ,   "Spanish"   ,   "French",
+            "Canadian"  ,   "Jamaican"  ,   "Chinese",
+            "Indian"    ,   "Japanese"  ,   "Mexican",
+            "Moroccan"  ,   "Thai"      ,   "Tunisian",
+            "British"   ,   "American"  ,   "Dutch"
     };
 
     public static final String[] DEFAULT_SEARCH_COUNTRIES_CODES = {
             "IT","ES","FR",
             "CA","JM","CN",
             "IN","JP","MX",
-            "MA","RU","TH",
-            "GB","US","NL",
-            "TN"
+            "MA","TH","TN",
+            "GB","US","NL"
+
     };
 
     //This could be done for Country and CountryFlagCode....
