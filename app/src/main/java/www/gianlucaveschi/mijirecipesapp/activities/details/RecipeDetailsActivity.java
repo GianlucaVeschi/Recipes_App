@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import www.gianlucaveschi.mijirecipesapp.fragments.FavoriteRecipesFragment;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.Resource;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
@@ -62,6 +63,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "The recipe has (not yet) been added to your favorites", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                //FavoriteRecipesFragment.favRecipesList.add(recipe); Doesn't Work
             }
         });
 
@@ -92,6 +94,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                                 Log.d(TAG, "onChanged: cache has been refreshed.");
                                 Log.d(TAG, "onChanged: status: SUCCESS, Recipe: " + recipeResource.data.getTitle());
                                 showParent();
+                                //recipe = recipeResource.data;
                                 showProgressBar(false);
                                 setRecipeProperties(recipeResource.data);
                                 break;

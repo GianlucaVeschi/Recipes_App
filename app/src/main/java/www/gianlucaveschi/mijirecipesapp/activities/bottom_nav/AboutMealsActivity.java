@@ -1,12 +1,16 @@
 package www.gianlucaveschi.mijirecipesapp.activities.bottom_nav;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -30,7 +34,11 @@ import www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCategories
 import www.gianlucaveschi.mijirecipesapp.adapters.FoodCategoryAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.MealAdapter;
 import www.gianlucaveschi.mijirecipesapp.adapters.meals.OnMealClickListener;
+import www.gianlucaveschi.mijirecipesapp.adapters.recipes.OnRecipeListener;
+import www.gianlucaveschi.mijirecipesapp.adapters.recipes.RecipeAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.Country;
+import www.gianlucaveschi.mijirecipesapp.models.Recipe;
+import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.Resource;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealRetrofitManager;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.responses.MealResponse;
 import www.gianlucaveschi.mijirecipesapp.models.Meal;
@@ -38,19 +46,28 @@ import www.gianlucaveschi.mijirecipesapp.networking.retrofit.themealdb.MealAPI;
 import www.gianlucaveschi.mijirecipesapp.utils.UI.BottomNavigationViewHelper;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
 import www.gianlucaveschi.mijirecipesapp.utils.UI.HorizontalSpacingItemDecorator;
+import www.gianlucaveschi.mijirecipesapp.utils.UI.VerticalSpacingItemDecorator;
+import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipesCategoriesViewModel;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.util.ViewPreloadSizeProvider;
 import com.gianlucaveschi.load_json_images_picasso.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.EXTRA_MEAL;
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.HORIZONTAL_VIEW_TYPE;
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.QUERY_EXHAUSTED;
 import static www.gianlucaveschi.mijirecipesapp.utils.Constants.VERTICAL_VIEW_TYPE;
 
-public class AboutMealsActivity extends AppCompatActivity implements OnMealClickListener, FoodCategoryAdapter.OnFoodCategoryClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class AboutMealsActivity extends AppCompatActivity implements OnMealClickListener, FoodCategoryAdapter.OnFoodCategoryClickListener, NavigationView.OnNavigationItemSelectedListener , OnRecipeListener {
 
     private static final String TAG = "AboutMealsActivity";
 
@@ -59,6 +76,8 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     //Retrofit instance
     MealAPI mealAPI;
     MealAdapter mealAdapter;
+    RecipeAdapter recipeAdapter;
+    RecipesCategoriesViewModel mRecipesCategoriesViewModel;
 
     //UI components
     @BindView(R.id.drawer_layout)       DrawerLayout drawer;
@@ -78,6 +97,11 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         setContentView(R.layout.activity_about_meals);
         ButterKnife.bind(this);
 
+        //Attempt to use View Model
+        initViewModel();
+        subscribeObservers();
+        mRecipesCategoriesViewModel.searchRecipesApi("Italian",1);
+
         //Layout settings
         setBottomNavigation();
         setHamburger();
@@ -92,6 +116,41 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         displayRecipesByCountryWithRetrofit(Country.getRandomCountry(), topRecView,VERTICAL_VIEW_TYPE);
         displayRecipesByCountryWithRetrofit(Country.getRandomCountry(), centralMealsRecView,HORIZONTAL_VIEW_TYPE);
         displayRecipesByCategoryWithRetrofit("Seafood",bottomRecView,HORIZONTAL_VIEW_TYPE);
+    }
+
+    private void initViewModel() {
+        mRecipesCategoriesViewModel = ViewModelProviders.of(this)
+                .get(RecipesCategoriesViewModel.class);
+    }
+
+    private void subscribeObservers() {
+        mRecipesCategoriesViewModel.getRecipes().observe(this, new Observer<Resource<List<Recipe>>>() {
+            @Override
+            public void onChanged(@Nullable Resource<List<Recipe>> listResource) {
+                if (listResource != null) {
+                    Log.d(TAG, "onChanged: status: " + listResource.status);
+                    if (listResource.data != null) {
+                        switch (listResource.status) {
+                            case LOADING: {
+                                Log.d(TAG, "onChanged: loading");
+                                break;
+                            }
+                            case SUCCESS: {
+                                Log.d(TAG, "onChanged: cache has been refreshed.");
+                                Log.d(TAG, "onChanged: status: SUCCESS, #Recipes: " + listResource.data);
+                                break;
+                            }
+                            case ERROR: {
+
+                                Log.e(TAG, "onChanged: cannot refresh cache.");
+                                Log.e(TAG, "onChanged: ERROR message: " + listResource.message);
+                                Log.e(TAG, "onChanged: status: ERROR, #Recipes: " + listResource.data.size());
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
     /*--------------------------------- LAYOUT SETTINGS ------------------------------------------*/
@@ -243,6 +302,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     }
 
 
+    /*--------------------------------- SET ON ITEM CLICKS ---------------------------------------*/
 
     @Override
     public void onItemClick(int position, ArrayList<Meal> mealsList) {
@@ -260,6 +320,16 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         Intent displayFoodCategory = new Intent(AboutMealsActivity.this,RecipeCategoriesActivity.class);
         displayFoodCategory.putExtra(Constants.EXTRA_RECIPE_CAT,categoryName);
         startActivity(displayFoodCategory);
+    }
+
+    @Override
+    public void onRecipeClick(int position) {
+        Log.d(TAG, "onRecipeClick: ");
+    }
+
+    @Override
+    public void onCategoryClick(String category) {
+        Log.d(TAG, "onCategoryClick: ");
     }
 
     @Override
@@ -329,4 +399,5 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
             return false;
         }
     };
+
 }
