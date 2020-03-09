@@ -81,6 +81,7 @@ public class Meal implements Parcelable {
     public int getTimestamp() {
         return timestamp;
     }
+
     /*--------------------------------- SETTERS --------------------------------------------------*/
 
     public void setTimestamp(int timestamp) {

@@ -97,6 +97,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         setContentView(R.layout.activity_about_meals);
         ButterKnife.bind(this);
 
+        // TODO: 07/03/2020 : Set the data to a RecyclerView
         //Attempt to use View Model
         initViewModel();
         subscribeObservers();
@@ -104,7 +105,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
 
         //Layout settings
         setBottomNavigation();
-        setHamburger();
+        setHamburger();         // TODO: 07/03/2020 : Touch hamburger has no effect
         setSupportActionBar(toolbar); //Set the toolbar
         setDrawerLayout();
 
@@ -375,7 +376,6 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
             Toast.makeText(AboutMealsActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     //Handles the logic of the Bottom Navigation View
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
