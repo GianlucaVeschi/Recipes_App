@@ -36,6 +36,7 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
         return inflater.inflate(R.layout.fragment_user_details, container, false);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
