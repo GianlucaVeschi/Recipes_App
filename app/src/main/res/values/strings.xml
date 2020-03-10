@@ -14,8 +14,8 @@
     <string name="action_settings">Settings</string>
     <string name="screen_title_main">Device List</string>
     <string name="tempPlaceHolder">Switch Monitor Temperature ON</string>
-    <string name="tab_text_1">Favorite Recipes</string>
-    <string name="tab_text_2">User Details</string>
+    <string name="tab_text_1">User Details</string>
+    <string name="tab_text_2">Favorite Recipes</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

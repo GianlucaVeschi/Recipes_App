@@ -34,10 +34,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new FavoriteRecipesFragment();
+                fragment = new UserDetailsFragment();
                 break;
             case 1:
-                fragment = new UserDetailsFragment();
+                fragment = new FavoriteRecipesFragment();
                 break;
         }
         return fragment;

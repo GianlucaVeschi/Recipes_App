@@ -65,7 +65,6 @@ public class AboutMeActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
             switch(item.getItemId()){
                 case R.id.navigation_about_miji:
                     Intent intentAboutMiji = new Intent(AboutMeActivity.this, AboutMijiActivity.class);
