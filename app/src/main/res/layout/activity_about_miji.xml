@@ -4,30 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="www.gianlucaveschi.mijirecipesapp.activities.stove_tabs.MijiProductsOverview"
+    tools:context="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMijiActivity"
     android:background="@drawable/white_image">
 
 
     <!-- TOP -->
-    <include layout="@layout/nav_header_about_me"/>
+    <include layout="@layout/nav_header_about_me"
+        android:id="@+id/nav_header_about_me_id"/>
 
-    <!-- BOTTOM -->
-    <Button
+    <!-- CENTRAL -->
+    <ScrollView
+        android:id="@+id/centralScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerInParent="true"
-        android:text="View Miji Products"
-        android:id="@+id/goToProducts_btn"/>
+        android:layout_below="@+id/nav_header_about_me_id">
+        <RelativeLayout
+            android:id="@+id/centralContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/products_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hobs_rec_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/products_recycler_view"
+                android:padding="10dp"/>
+
+        </RelativeLayout>
+    </ScrollView>
 
     <Button
+        android:id="@+id/connectTemperatureSensor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/goToProducts_btn"
-        android:layout_centerInParent="true"
-        android:text="Discover BLE devices"
-        android:id="@+id/goToMainBluetooth_btn"/>
+        android:layout_above="@id/bottom_nav"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/white_to_red"
+        android:text="Scan MIJI Devices"
+        android:textColor="@color/fullBlack" />
 
-    <include layout="@layout/bottom_navigation_bar" />
+    <include layout="@layout/bottom_navigation_bar"
+        android:id="@+id/bottom_nav"/>
 
 </RelativeLayout>

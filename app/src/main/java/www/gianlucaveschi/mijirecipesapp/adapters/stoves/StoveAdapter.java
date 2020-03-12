@@ -45,7 +45,6 @@ public class StoveAdapter extends RecyclerView.Adapter<StoveViewHolder> {
 
         holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView1.setText(currentItem.getTitle());
-        holder.mTextView2.setText(currentItem.getDescription());
     }
 
     @Override

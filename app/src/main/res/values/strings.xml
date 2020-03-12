@@ -6,8 +6,56 @@
     <string name="title_btn_cook">Cook</string>
     <string name="title_btn_about_miji">Miji</string>
     <string name="title_btn_about_me">About Me</string>
-    <string name="Gala_El_1600W_desc">Resistant aluminum die-cast housing outside and German technology inside – an uncompromising pledge to quality and performance.</string>
-    <string name="Neo_El_1600W_desc">Smart energy control with ergonomic knob and energy saving German technology ensure fast and efficient cooking. </string>
+    <string name="Gala_El_1600W">
+        Thanks to the timeless design, the Miji GALA EI 1600 W is the classic table-top cooker. The air flows out evenly through the installed cooling ducts and ensures noiseless cooking pleasure.
+        Robust die-cast aluminum housing, paired with modern German technology, give an uncompromising promise of quality and performance.
+        Easy-to-clean dual-circuit hob thanks to the high-quality SCHOTT CERAN® glass ceramic surface. Integrated residual heat indicator and overheating protection offer a high level of safety and reliability.
+        Stepless energy control using the conveniently operated rotary control and energy-saving HiLight® technology ensure fast and efficient heating.
+    </string>
+    <string name="Gala_El_2000W">
+        Portable hob in a timeless design. It can be used anywhere: in the office, for parties, when camping, in a garden house or in a second home.
+        Cold air flows through the integrated cooling channels into the interior of the appliance and allows a noiseless cooking experience.
+        A die-cast aluminum housing on the outside and modern German technology on the inside - an uncompromising promise of quality and performance.
+        High quality SCHOTT CERAN® glass ceramic surface for easy cleaning.
+        Residual heat indicator and overheating protection for a high level of safety.
+        Stepless heat control with ergonomic control dial and energy-saving HiLight® technology for fast and efficient cooking.
+    </string>
+    <string name="Gourmet_EITP_2800_FI">
+        Compact double induction hob to complement the fitted kitchen and kitchens with limited space. Maximum flexibility - Mobile use at any socket. Bridge function for connecting successive cooking zones to form a large cooking zone with common control. Ideal for roasters.
+        Intuitive temperature control of the cooking zones using ergonomic slide touch control. Easy and precise to operate by sliding with your finger or by finger pressure using direct setting
+        Almost cold surface thanks to advanced induction technology - for easy cleaning after cooking.
+        High-quality SCHOTT CERAN glass ceramic surface paired with white LED light for the trendy kitchen.
+    </string>
+    <string name="Star_5_Chef_Domino">
+        Compact double induction hob to complement the fitted kitchen and kitchens with limited space. Maximum flexibility - Mobile use at any socket. Bridge function for connecting successive cooking zones to form a large cooking zone with common control. Ideal for roasters.
+        Intuitive temperature control of the cooking zones using ergonomic slide touch control. Easy and precise to operate by sliding with your finger or by finger pressure using direct setting.
+        Almost cold surface thanks to advanced induction technology - for easy cleaning after cooking.
+        High-quality SCHOTT CERAN glass ceramic surface paired with white LED light for the trendy kitchen.
+    </string>
+    <string name="Star_3_Twist">
+        With the Miji Cooking Pad you decide where to cook. Because the induction cooking device with its intelligent functions will improve your cooking experience. Take it with you and cook wherever you want. All you need is an outlet. Then a tap of the finger is enough - and the joy of cooking and eating can begin.
+        Innovative pasta cooking function for pasta with the right twist. The twin engine technology ensures permanent movement in the pasta water, preventing the pasta from sticking to the bottom of the pot. Thanks to its built-in electronics, the mobile induction cooker with its timeless, ergonomic design is a powerful cooking device for everywhere.
+        The Miji Star consists of a heat-resistant, fiberglass-reinforced inner housing and a high-quality designer outer housing. Cooking is carried out on a glass ceramic cooktop from SCHOTT CERAN®. The temperature can be set intuitively using the slide touch controller.
+    </string>
+    <string name="Star_5_Plus_Domino">
+        Kompakt gebautes Induktionskochfeld für Küchen mit geringem Platzangebot.
+        Bridge-Funktion zum Zusammenschalten hintereinanderliegender Kochzonen zu einer großen Kochstelle mit gemeinsamer Steuerung.
+        Direkte intuitive und einfache Regelung der Kochfelder mit Slide Touch Control.
+        Oberfläche bleibt nahezu kalt dank fortschrittlicher Induktionstechnologie für die einfache Reinigung nach dem Kochen.
+        SCHOTT CERAN® CLEARTRANS Glaskeramikoberfläche in edler Metalloptik für die individuelle und trendige Küche.
+    </string>
+    <string name="Star_5_Miradur_Quadro">
+        Vier Kochzonen für maximalen Spass beim Kochen. Flexibilität pur - Die Bridge-Funktion verwandelt das Induktionskochfeld in einen professionellen Kochplatz mit zwei Temperaturzonen, auf dem Töpfe und Pfannen beliebig verschoben werden können.
+        Intuitive Temperaturregelung der Kochzonen mittels ergonomischer Slide Touch Control. Einfach und präzise durch Gleiten mit dem Finger oder per Fingerdruck mittels Direct Setting zu bedienen.
+        Nahezu kalte Oberfläche dank fortschrittlicher Induktionstechnologie – für die einfache Reinigung nach dem Kochen.
+        SCHOTT CERAN® Miradur® die erste und einzige Glaskeramik entwickelt, die fast so hart ist wie ein Diamant. Für ein makellos schönes Aussehen. Tag für Tag. Viele Jahre.
+    </string>
+    <string name="Star_5_Miradur_v12">
+        Mit sechs Kochzonen für höchste Flexibilität - Kochen wie die Profis. Die Bridge - Funktion verwandelt das Induktionskochfeld in einen professionellen Kochplatz mit drei Temperaturzonen, auf dem Töpfe und Pfannen beliebig verschoben werden können.
+        Intuitive Temperaturregelung der Kochzonen mittels ergonomischer Slide Touch Control. Einfach und präzise durch Gleiten mit dem Finger oder per Fingerdruck mittels Direct Setting zu bedienen.
+        Nahezu kalte Oberfläche dank fortschrittlicher Induktionstechnologie - für die einfache Reinigung nach dem Kochen.
+        SCHOTT CERAN Miradur, die erste und einzige Glaskeramik die fast so hart ist wie ein Diamant. Für ein makellos schönes Aussehen. Tag für Tag. Viele Jahre.
+    </string>
     <string name="Meat">Meat</string>
     <string name="Vegetables">Vegetables</string>
     <string name="Cheese">Cheese</string>

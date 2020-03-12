@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import com.gianlucaveschi.load_json_images_picasso.R;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import androidx.annotation.NonNull;
@@ -66,8 +68,18 @@ public class UserDetailsFragment extends Fragment implements View.OnClickListene
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RESULT_LOAD_IMAGE && resultCode == Activity.RESULT_OK && data != null){
-            Uri selectedImage = data.getData();
-            profilePicture.setImageURI(selectedImage);
+            Uri selectedImageURI = data.getData();
+            profilePicture.setImageURI(selectedImageURI);
+            Log.d(TAG, "onActivityResult: Image URI : " + selectedImageURI.toString());
+
+            //Save the picture in the memory
+
         }
+    }
+
+    private void addToGallery(Uri picUri) {
+        Intent galleryIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        galleryIntent.setData(picUri);
+        getContext().sendBroadcast(galleryIntent);
     }
 }
