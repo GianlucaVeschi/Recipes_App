@@ -1,79 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/White">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
 
     <RelativeLayout
-        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mainview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="8dp"
-        tools:context="www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity">
+        android:layout_height="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_view_id"
-            android:layout_height="380dp"
+        <androidx.core.widget.NestedScrollView
+
             android:layout_width="match_parent"
-            android:layout_margin="2dp"
-            app:cardCornerRadius="8dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:background="@color/White">
 
-            <ImageView
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:id="@+id/image_view_recipe_detail"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/ic_launcher" />
+                android:orientation="vertical">
 
-        </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view_id"
+                    android:layout_height="380dp"
+                    android:layout_width="match_parent"
+                    android:layout_margin="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:id="@+id/image_view_recipe_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/white_image" />
 
 
 
-        <RelativeLayout
-            android:id="@+id/ingredients_wrapper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/LightBlueGrey"
-            android:layout_below="@id/card_view_id">
-            <TextView
-                android:id="@+id/name_recipe_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="Recipe title"
-                android:textColor="@android:color/black"
-                android:textSize="34sp"/>
+                </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/ingredients_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ingredients"
-                android:textSize="24sp"
-                android:layout_marginStart="12dp"
-                android:textColor="@android:color/black"
-                android:layout_below="@id/name_recipe_detail">
-            </TextView>
+                <RelativeLayout
+                    android:id="@+id/ingredients_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/White"
+                    android:layout_below="@id/card_view_id">
+                    <TextView
+                        android:id="@+id/name_recipe_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="Recipe title"
+                        android:textColor="@android:color/black"
+                        android:textSize="34sp"/>
 
-            <TextView
-                android:id="@+id/ingredients_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="ingredients list"
-                android:layout_marginStart="12dp"
-                android:layout_alignParentLeft="true"
-                android:textColor="@android:color/black"
-                android:layout_below="@+id/ingredients_title"
-                android:paddingTop="5dp"
-                android:paddingBottom="20dp">
-            </TextView>
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/ingredients_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name_recipe_detail"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Ingredients"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp"/>
+
+                    <TextView
+                        android:id="@+id/ingredients_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="ingredients list"
+                        android:layout_marginStart="12dp"
+                        android:layout_alignParentLeft="true"
+                        android:textColor="@android:color/black"
+                        android:layout_below="@+id/ingredients_title"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="20dp">
+                    </TextView>
+                </RelativeLayout>
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
+    <!--   Fix THIS    -->
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_bar"
+        android:visibility="gone"
+        app:layout_anchor="@id/mainview"
+        app:layout_anchorGravity="center"
+        style="@style/Widget.AppCompat.ProgressBar" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:backgroundTint="@color/lightRed"
+        app:layout_anchor="@id/mainview"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="16dp" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-</androidx.core.widget.NestedScrollView>

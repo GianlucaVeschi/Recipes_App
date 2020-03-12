@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import static www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMealsActivity.EXTRA_MEAL;
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.EXTRA_MEAL;
 
 public class MealDetailsActivity extends AppCompatActivity {
 
@@ -98,20 +98,6 @@ public class MealDetailsActivity extends AppCompatActivity {
                 .fit()
                 .centerInside()
                 .into(imageView);
-
-        /*
-        //ToDo: Find a faster way to load and display images from a remote source
-        //Glide Approach is also slow
-        RequestOptions options = new RequestOptions()
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round);
-
-        Glide.with(this)
-                .load(imgUrl)
-                .apply(options)
-                .into(imageView);
-        */
     }
 
 }

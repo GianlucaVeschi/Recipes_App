@@ -30,8 +30,12 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     private int LIMIT_LIST_ITEMS = 100;
 
     /**
-     * ADAPTER CONSTRUCTOR
+     * ADAPTER CONSTRUCTORS
      * */
+    public MealAdapter(Context context) {
+        mContext = context;
+    }
+
     public MealAdapter(Context context, ArrayList<Meal> mealsList) {
         mContext = context;
         mMealsList = mealsList;

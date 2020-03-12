@@ -27,6 +27,9 @@ import www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealsByCount
 import www.gianlucaveschi.mijirecipesapp.adapters.countries.CountryAdapter;
 import www.gianlucaveschi.mijirecipesapp.models.Country;
 
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.DEFAULT_SEARCH_COUNTRIES;
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.DEFAULT_SEARCH_COUNTRIES_CODES;
+
 
 public class MealCountriesFlagsActivity extends AppCompatActivity {
 
@@ -79,24 +82,14 @@ public class MealCountriesFlagsActivity extends AppCompatActivity {
     }
 
     private void createCountriesList(){
-        countriesList.add(new Country("Italian",        "IT"));
-        countriesList.add(new Country("Spanish",        "ES"));
-        //countriesList.add(new Country("American",       "US"));
-        countriesList.add(new Country("French",         "FR"));
-        countriesList.add(new Country("Canadian",       "CA"));
-        countriesList.add(new Country("Jamaican",       "JM"));
-        countriesList.add(new Country("Chinese",        "CN"));
-        //countriesList.add(new Country("Egyptian",       "EG"));
-        countriesList.add(new Country("Greek",          "GR"));
-        countriesList.add(new Country("Indian",         "IN"));
-        //countriesList.add(new Country("Kenyan",         "KE"));
-        countriesList.add(new Country("Japanese",       "JP"));
-        countriesList.add(new Country("Mexican",        "MX"));
-        countriesList.add(new Country("Moroccan",       "MA"));
-        countriesList.add(new Country("Portuguese",     "PT"));
-        countriesList.add(new Country("Russian",        "RU"));
-        countriesList.add(new Country("Thai",           "TH"));
-        //countriesList.add(new Country("Argentinian",    "AR"));
+        if(DEFAULT_SEARCH_COUNTRIES.length == DEFAULT_SEARCH_COUNTRIES_CODES.length) {
+            for (int i = 0; i < (DEFAULT_SEARCH_COUNTRIES.length - 1); i++) {
+                countriesList.add(new Country(DEFAULT_SEARCH_COUNTRIES[i], DEFAULT_SEARCH_COUNTRIES_CODES[i]));
+            }
+        }
+        else{
+            Log.d(TAG, "createCountriesList: Some country doesn't have a flag or viceversa");
+        }
     }
 
     private void buildRecyclerView() {

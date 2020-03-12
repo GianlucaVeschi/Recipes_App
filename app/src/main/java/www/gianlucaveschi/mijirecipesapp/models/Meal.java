@@ -8,35 +8,59 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "meals")
 public class Meal implements Parcelable {
 
 
-
+    /*--------------------------------- INNER VARIABLES ------------------------------------------*/
+    @PrimaryKey
+    @NonNull
     @SerializedName("idMeal")
     private String idMeal;
 
     @SerializedName("strMeal")
+    @ColumnInfo(name = "mealName")
     private String mealName;
 
     @SerializedName("strMealThumb")
+    @ColumnInfo(name = "imgUrl")
     private String imgUrl;
 
-    private String strInstructions;
+    @ColumnInfo(name = "orientationType")
+    private int orientationType;    //diff between vertical and horizontal item view in the adapter
 
-    private String displayedInActivity = "";
+    @ColumnInfo(name = "timestamp") //Saves current timestamp in **SECONDS**
+    private int timestamp;
 
-    //private identifier
-    private int orientationType ;
+    /*--------------------------------- CONSTRUCTOR ----------------------------------------------*/
 
-    private Map<String,String> ingredients;
-
-    public Meal(String mealName, String imgUrl, String idMeal , int orientationType) {
+    public Meal(@NonNull String idMeal, String mealName, String imgUrl, int orientationType, int timestamp) {
+        this.idMeal = idMeal;
         this.mealName = mealName;
         this.imgUrl = imgUrl;
-        this.idMeal = idMeal;
         this.orientationType = orientationType;
+        this.timestamp = timestamp;
     }
+
+    @Ignore
+    public Meal() {
+    }
+
+    @Ignore
+    public Meal(Meal meal){
+        this.idMeal     = meal.idMeal;
+        this.mealName   = meal.mealName;
+        this.imgUrl     = meal.imgUrl;
+        this.orientationType = meal.orientationType;
+        this.timestamp  = meal.timestamp;
+    }
+
+    /*--------------------------------- GETTERS --------------------------------------------------*/
 
     public String getMealName() {
         return mealName;
@@ -54,51 +78,37 @@ public class Meal implements Parcelable {
         return orientationType;
     }
 
+    public int getTimestamp() {
+        return timestamp;
+    }
+
+    /*--------------------------------- SETTERS --------------------------------------------------*/
+
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
+    }
+
     public void setOrientationType(int orientationType) {
         this.orientationType = orientationType;
-    }
-
-    public String getInstructions(){
-        return strInstructions;
-    }
-
-    public Map<String,String> getIngredients() {
-        return ingredients;
-    }
-
-    public void setStrInstructions(String strInstructions) {
-        this.strInstructions = strInstructions;
-    }
-
-    public String getDisplayedInActivity() {
-        return displayedInActivity;
-    }
-
-    public void setDisplayedInActivity(String displayedInActivity) {
-        this.displayedInActivity = displayedInActivity;
     }
 
     @NonNull
     @Override
     public String toString() {
-        String result =
-                "Name: " + this.mealName + "\n" +
+        return "Name: " + this.mealName + "\n" +
                 "ID: "   + this.idMeal + "\n" +
                 "URL: "  + this.imgUrl + "\n";
-        return result;
     }
 
-    /**
-     * Implement Parcelable Interface
-     *
-     * ReadString() and WriteString() have to be in the same order.
-     * */
+    /*--------------------------------- PARCELABLE -----------------------------------------------*/
 
+    //ReadString() and WriteString() have to be in the same order.
     protected Meal(Parcel in) {
         mealName = in.readString();
         imgUrl = in.readString();
         idMeal = in.readString();
         orientationType = in.readInt();
+        timestamp = in.readInt();
     }
 
     public static final Creator<Meal> CREATOR = new Creator<Meal>() {
@@ -124,5 +134,6 @@ public class Meal implements Parcelable {
         dest.writeString(imgUrl);
         dest.writeString(idMeal);
         dest.writeInt(orientationType);
+        dest.writeInt(timestamp);
     }
 }

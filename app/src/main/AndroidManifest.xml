@@ -7,11 +7,12 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name="www.gianlucaveschi.mijirecipesapp.MyApplication"
@@ -22,63 +23,54 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.login.ui.login.LoginActivity"
+            android:label="@string/title_activity_login"></activity>
         <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMijiActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- MEAL ACTIVITIES-->
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesFlagsActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.stove_tabs.MijiProductsOverview"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealsByCountryActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealByIngredientActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseRecipesByCountryActivity_DEPRECATED"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <!-- RECIPE ACTIVITIES -->
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCategoriesActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
-
-        <!-- BLUETOOTH -->
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.MainBluetoothActivity"
-            android:theme="@style/AppTheme.SlidrActivityTheme"/>
+        </activity> <!-- MEAL ACTIVITIES -->
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealCountriesFlagsActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealMainIngredientActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.MealRandomActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.details.StoveDetailsActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealsByCountryActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_tabs.BrowseMealByIngredientActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" /> <!-- RECIPE ACTIVITIES -->
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.meal_drawer.RecipeCategoriesActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.activities.details.RecipeDetailsActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" /> <!-- BLUETOOTH -->
+        <activity
+            android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.MainBluetoothActivity"
+            android:theme="@style/AppTheme.SlidrActivityTheme" />
         <activity android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.MijiTemperatureControlActivity" />
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.BleBoardControlActivity"/>
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.BleBoardControlActivity" />
+
         <service
             android:name="www.gianlucaveschi.mijirecipesapp.bluetooth.services.BleAdapterService"
-            android:enabled="true" />
-
-        <!-- BOTTOM NAV -->
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeActivity"/>
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMealsActivity"/>
-
+            android:enabled="true" /> <!-- BOTTOM NAV -->
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMeActivity" />
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMealsActivity" />
     </application>
-
 
 </manifest>

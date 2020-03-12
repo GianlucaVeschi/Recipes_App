@@ -1,5 +1,9 @@
 package www.gianlucaveschi.mijirecipesapp.models;
 
+import java.util.Random;
+
+import static www.gianlucaveschi.mijirecipesapp.utils.Constants.DEFAULT_SEARCH_COUNTRIES;
+
 public class Country {
     private String name;
     private StringBuilder flag_img_url = new StringBuilder("https://www.countryflags.io/");
@@ -20,5 +24,10 @@ public class Country {
 
     public String getFlag_img_url() {
         return flag_img_url.toString();
+    }
+
+    public static String getRandomCountry() {
+        int randomCountry = new Random().nextInt(DEFAULT_SEARCH_COUNTRIES.length);
+        return DEFAULT_SEARCH_COUNTRIES[randomCountry];
     }
 }

@@ -67,7 +67,13 @@ public class StoveDetailsActivity extends AppCompatActivity {
         Log.d(TAG, "setProductDescription: for product " + imageName);
         switch (imageName){
             case "Miji GALA":
-                return getString(R.string.Gala_El_1600W_desc);
+                return getString(R.string.Gala_El_2000W);
+            case "Miji STAR 3 TWIST":
+                return getString(R.string.Star_3_Twist);
+            case "Miji STAR 5 CHEF":
+                return getString(R.string.Star_5_Chef_Domino);
+            case "Miji GOURMET":
+                return getString(R.string.Gourmet_EITP_2800_FI);
             default:
                 return "No description available yet";
         }
