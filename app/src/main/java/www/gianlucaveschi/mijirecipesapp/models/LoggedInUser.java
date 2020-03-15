@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.login.data.model;
+package www.gianlucaveschi.mijirecipesapp.models;
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository

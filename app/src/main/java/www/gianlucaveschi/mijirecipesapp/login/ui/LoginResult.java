@@ -1,4 +1,4 @@
-package www.gianlucaveschi.mijirecipesapp.login.ui.login;
+package www.gianlucaveschi.mijirecipesapp.login.ui;
 
 import androidx.annotation.Nullable;
 

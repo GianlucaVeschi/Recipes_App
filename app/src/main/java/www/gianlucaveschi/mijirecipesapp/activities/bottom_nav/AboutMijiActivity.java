@@ -80,12 +80,12 @@ public class AboutMijiActivity extends AppCompatActivity implements View.OnClick
         mRecyclerView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this,2);
-        StoveAdapter mAdapter = new StoveAdapter(mStovesList);
+        StoveAdapter stoveAdapter = new StoveAdapter(mStovesList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(stoveAdapter);
 
-        mAdapter.setOnStoveClickListener(new OnStoveClickListener() {
+        stoveAdapter.setOnStoveClickListener(new OnStoveClickListener() {
             @Override
             public void onItemClick(int position) {
 
@@ -108,23 +108,38 @@ public class AboutMijiActivity extends AppCompatActivity implements View.OnClick
         hobsRecView.setHasFixedSize(true);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this,RecyclerView.HORIZONTAL, false);
-        StoveAdapter mAdapter = new StoveAdapter(mHobsList);
+        StoveAdapter hobsAdapter = new StoveAdapter(mHobsList);
 
         HorizontalSpacingItemDecorator itemDecorator = new HorizontalSpacingItemDecorator(30);
         hobsRecView.addItemDecoration(itemDecorator);
 
         hobsRecView.setLayoutManager(mLayoutManager);
-        hobsRecView.setAdapter(mAdapter);
+        hobsRecView.setAdapter(hobsAdapter);
+
+        hobsAdapter.setOnStoveClickListener(new OnStoveClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+                //Get Stove Informations of the clicked stove
+                String hobTitle = mHobsList.get(position).getTitle();
+                int hobImgResource = mHobsList.get(position).getImageResource();
+
+                //Pass it to the intent
+                Intent intent = new Intent(AboutMijiActivity.this, StoveDetailsActivity.class);
+                intent.putExtra("stove_image_resource", hobImgResource);
+                intent.putExtra("stove_title", hobTitle );
+
+                startActivity(intent);
+            }
+        });
     }
     
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case (R.id.connectTemperatureSensor):
-                Toast.makeText(this, "connect to miji device", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(AboutMijiActivity.this, MainBluetoothActivity.class);
-                startActivity(intent);
-                break;
+        if (v.getId() == R.id.connectTemperatureSensor) {
+            Toast.makeText(this, "connect to miji device", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(AboutMijiActivity.this, MainBluetoothActivity.class);
+            startActivity(intent);
         }
     }
 

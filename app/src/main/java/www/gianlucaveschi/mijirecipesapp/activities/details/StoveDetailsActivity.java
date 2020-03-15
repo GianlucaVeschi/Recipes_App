@@ -77,6 +77,6 @@ public class StoveDetailsActivity extends AppCompatActivity {
             default:
                 return "No description available yet";
         }
-
     }
+    
 }

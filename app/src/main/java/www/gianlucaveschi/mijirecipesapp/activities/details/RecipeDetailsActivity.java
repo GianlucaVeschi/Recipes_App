@@ -25,10 +25,13 @@ import www.gianlucaveschi.mijirecipesapp.fragments.FavoriteRecipesFragment;
 import www.gianlucaveschi.mijirecipesapp.models.Recipe;
 import www.gianlucaveschi.mijirecipesapp.networking.retrofit.foodtofork.resources.Resource;
 import www.gianlucaveschi.mijirecipesapp.utils.Constants;
+import www.gianlucaveschi.mijirecipesapp.utils.SavedRecipes;
 import www.gianlucaveschi.mijirecipesapp.viewmodels.RecipeDetailsViewModel;
 
+import static www.gianlucaveschi.mijirecipesapp.utils.SavedRecipes.favRecipesList;
 
-public class RecipeDetailsActivity extends AppCompatActivity {
+
+public class RecipeDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "RecipeDetailsActivity";
 
@@ -40,9 +43,9 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     @BindView(R.id.progress_bar) ProgressBar mProgressBar;
     @BindView(R.id.fab) FloatingActionButton fab;
 
-
     //private RecipeDetailsViewModel mRecipeDetailsViewModel;
     private RecipeDetailsViewModel mRecipeDetailsViewModel;
+    private Recipe mRecipe;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,25 +59,14 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
         //Internally calls subscribeObservers()
         getIncomingIntent();
-
-        //// TODO: 30/01/2020 : put this outside onCreate 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "The recipe has (not yet) been added to your favorites", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                //FavoriteRecipesFragment.favRecipesList.add(recipe); Doesn't Work
-            }
-        });
-
     }
 
     private void getIncomingIntent() {
         if (getIntent().hasExtra(Constants.EXTRA_RECIPE)) {
-            Recipe recipe = getIntent().getParcelableExtra(Constants.EXTRA_RECIPE);
-            Log.d(TAG, "getIncomingIntent: " + recipe.getTitle());
-            Log.d(TAG, "getIncomingIntent: " + recipe.toString());
-            subscribeObservers(recipe.getRecipe_id());
+            Recipe recipeFromIntent = getIntent().getParcelableExtra(Constants.EXTRA_RECIPE);
+            Log.d(TAG, "getIncomingIntent: " + recipeFromIntent.getTitle());
+            Log.d(TAG, "getIncomingIntent: " + recipeFromIntent.toString());
+            subscribeObservers(recipeFromIntent.getRecipe_id());
         }
     }
 
@@ -115,6 +107,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     }
 
     private void setRecipeProperties(Recipe recipe) {
+        mRecipe = recipe;
         Log.d(TAG, "setRecipeProperties: " + recipe.toString());
         setImage(recipe.getImage_url());
         textViewRecipeTitle.setText(recipe.getTitle());
@@ -148,5 +141,19 @@ public class RecipeDetailsActivity extends AppCompatActivity {
 
     private void showParent() {
         //mScrollView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.fab) {
+            if (SavedRecipes.containsRecipe(mRecipe)) {
+                Snackbar.make(view, "The recipe is already among your favorites", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            } else {
+                Snackbar.make(view, "The recipe has been added to your favorites", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                SavedRecipes.addRecipe(mRecipe);
+            }
+        }
     }
 }

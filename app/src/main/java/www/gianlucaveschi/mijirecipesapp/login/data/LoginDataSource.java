@@ -1,6 +1,6 @@
 package www.gianlucaveschi.mijirecipesapp.login.data;
 
-import www.gianlucaveschi.mijirecipesapp.login.data.model.LoggedInUser;
+import www.gianlucaveschi.mijirecipesapp.models.LoggedInUser;
 
 import java.io.IOException;
 
@@ -9,17 +9,17 @@ import java.io.IOException;
  */
 public class LoginDataSource {
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public LoginResult<LoggedInUser> login(String username, String password) {
 
         try {
             // TODO: handle loggedInUser authentication
             LoggedInUser fakeUser =
                     new LoggedInUser(
                             java.util.UUID.randomUUID().toString(),
-                            "Jane Doe");
-            return new Result.Success<>(fakeUser);
+                            username);
+            return new LoginResult.Success<>(fakeUser);
         } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
+            return new LoginResult.Error(new IOException("Error logging in", e));
         }
     }
 

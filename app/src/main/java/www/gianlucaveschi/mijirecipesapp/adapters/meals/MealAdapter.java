@@ -52,10 +52,10 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
         switch(viewType){
             case HORIZONTAL_VIEW_TYPE :
                view = LayoutInflater.from(mContext).inflate(R.layout.list_item_meal_horizontal, parent, false);
-                return new HorizontalViewHolder(view,mListener,mMealsList);
+                return new HorizontalMealViewHolder(view,mListener,mMealsList);
             case VERTICAL_VIEW_TYPE :
                 view = LayoutInflater.from(mContext).inflate(R.layout.list_item_meal_vertical, parent, false);
-                return new VerticalViewHolder(view,mListener,mMealsList);
+                return new VerticalMealViewHolder(view,mListener,mMealsList);
             default:
                 throw new RuntimeException("The type has to be VERTICAL or HORIZONTAL");
         }
@@ -65,12 +65,12 @@ public class MealAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> i
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         if (getItemViewType(position) == HORIZONTAL_VIEW_TYPE) {
-            HorizontalViewHolder horizontalViewHolder = (HorizontalViewHolder) holder;
-            horizontalViewHolder.initHorizLayout(horizontalViewHolder,position,mMealsList);
+            HorizontalMealViewHolder horizontalMealViewHolder = (HorizontalMealViewHolder) holder;
+            horizontalMealViewHolder.initHorizLayout(horizontalMealViewHolder,position,mMealsList);
         }
         else {
-            VerticalViewHolder verticalViewHolder = (VerticalViewHolder) holder;
-            verticalViewHolder.initVertLayout(verticalViewHolder,position,mMealsList);
+            VerticalMealViewHolder verticalMealViewHolder = (VerticalMealViewHolder) holder;
+            verticalMealViewHolder.initVertLayout(verticalMealViewHolder,position,mMealsList);
         }
     }
 

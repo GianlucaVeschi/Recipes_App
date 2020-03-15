@@ -78,12 +78,12 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     MealAdapter mealAdapter;
     RecipeAdapter recipeAdapter;
     RecipesCategoriesViewModel mRecipesCategoriesViewModel;
+    DrawerLayout mDrawer;
+    Toolbar mToolbar;
 
     //UI components
-    @BindView(R.id.drawer_layout)       DrawerLayout drawer;
     @BindView(R.id.nav_view)            NavigationView navigationView;
     @BindView(R.id.bottom_nav_view)     BottomNavigationView mBottomNavigationView;
-    @BindView(R.id.toolbar)             Toolbar toolbar;
 
     @BindView(R.id.categories_rec_view)     RecyclerView mFoodCategoriesRecView;
     @BindView(R.id.top_recycler_view)       RecyclerView topRecView;
@@ -97,17 +97,16 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         setContentView(R.layout.activity_about_meals);
         ButterKnife.bind(this);
 
-        // TODO: 07/03/2020 : Set the data to a RecyclerView
         //Attempt to use View Model
-        initViewModel();
-        subscribeObservers();
-        mRecipesCategoriesViewModel.searchRecipesApi("Italian",1);
+//        initViewModel();
+//        subscribeObservers();
+//        mRecipesCategoriesViewModel.searchRecipesApi("Italian",1);
 
         //Layout settings
-        setBottomNavigation();
-        setHamburger();         // TODO: 07/03/2020 : Touch hamburger has no effect
-        setSupportActionBar(toolbar); //Set the toolbar
+        setToolbar();
         setDrawerLayout();
+        setHamburger();
+        setBottomNavigation();
 
         //Init RecyclerViews
         initFoodCategoriesRecView();
@@ -117,6 +116,12 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
         displayRecipesByCountryWithRetrofit(Country.getRandomCountry(), topRecView,VERTICAL_VIEW_TYPE);
         displayRecipesByCountryWithRetrofit(Country.getRandomCountry(), centralMealsRecView,HORIZONTAL_VIEW_TYPE);
         displayRecipesByCategoryWithRetrofit("Seafood",bottomRecView,HORIZONTAL_VIEW_TYPE);
+    }
+
+    private void setToolbar() {
+        //Toolbar settings
+        mToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar); //Set the toolbar
     }
 
     private void initViewModel() {
@@ -156,15 +161,16 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
 
     /*--------------------------------- LAYOUT SETTINGS ------------------------------------------*/
     private void setDrawerLayout() {
+        mDrawer = findViewById(R.id.drawer_layout);
         navigationView.setNavigationItemSelectedListener(this); //Set the Drawer Layout
     }
 
     private void setHamburger() {
         //Adds the "Hamburger" to the toolbar,which opens the drawer layout
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+        ActionBarDrawerToggle toggleDrawer = new ActionBarDrawerToggle(this, mDrawer, mToolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        toggle.syncState(); //Rotates the hamburger Icon
-        drawer.addDrawerListener(toggle);
+        mDrawer.addDrawerListener(toggleDrawer);
+        toggleDrawer.syncState(); //Rotates the hamburger Icon
     }
 
     private void setBottomNavigation() {
@@ -251,8 +257,8 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
     //If the user presses the Back button while the drawer is open
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -360,7 +366,7 @@ public class AboutMealsActivity extends AppCompatActivity implements OnMealClick
                 sendEmailToMiji();
                 break;
         }
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

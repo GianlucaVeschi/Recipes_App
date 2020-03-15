@@ -61,7 +61,7 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu"
         android:fadeScrollbars="true"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
 

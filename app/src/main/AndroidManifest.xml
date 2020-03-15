@@ -24,15 +24,20 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="www.gianlucaveschi.mijirecipesapp.login.ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
-        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMijiActivity">
+            android:name="www.gianlucaveschi.mijirecipesapp.login.ui.LoginActivity"
+            android:label="@string/title_activity_login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- MEAL ACTIVITIES -->
+        </activity>
+
+        <activity android:name="www.gianlucaveschi.mijirecipesapp.activities.bottom_nav.AboutMijiActivity">
+
+        </activity>
+
+        <!-- MEAL ACTIVITIES -->
         <activity
             android:name="www.gianlucaveschi.mijirecipesapp.activities.details.MealDetailsActivity"
             android:theme="@style/AppTheme.SlidrActivityTheme" />

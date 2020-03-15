@@ -9,13 +9,13 @@
     app:cardCornerRadius="8dp"
     android:padding="4dp">
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:background="@color/LightBlueGrey"/>
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -24,9 +24,8 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_horizontal"
         android:text="Product title"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
-
 
 </androidx.cardview.widget.CardView>

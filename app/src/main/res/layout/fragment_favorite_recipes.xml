@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/LightBlueGrey">
+    android:background="@color/White">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fav_recipes_rec_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/noFavoriteRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You don't have any favorite recipe yet :("
+        android:textAlignment="center"
+        android:textSize="33sp"
+        android:textColor="@color/fullBlack"
+        android:visibility="visible"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
