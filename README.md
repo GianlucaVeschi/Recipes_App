@@ -1,16 +1,12 @@
 ###### 2020 MIJI DESIGN GERMANY
 
-# Mobile Application
-
-# Development Report
+# Mobile Application Development Report
 
 ## Gianluca Veschi
 
-```
-Miji Design Germany
-Shanghai, China – Hamburg, Germany
-01/03/
-```
+Miji Design Germany  
+Shanghai, China – Hamburg, Germany  
+February 2020  
 
 ## 1 Internship Introduction and statement of goals.
 
@@ -36,125 +32,102 @@ documentation.
 
 ### ● About Recipes
 
-```
 The user is able to scroll through different types of recipes and categories of food. When clicking
 on one of them, information about the Ingredients, Recipe and other details is shown. The
 information shown here is retrieved by a server so the Internet connection Is Necessary at first.
 Once the user clicks on a Recipe this gets saved in the internal cache of the phone, so that it can
-also be seen offline without having a connection to the server.
-```
+also be seen offline without having a connection to the server.  
+
 ### ● About Miji
 
 #### Stove Control
 
-```
+
 The user is able to connect the phone to the Temperature Sensor of Miji and see the
 temperature on the screen. In a future development the user can also connect the device to the
 cooking stove and set the time and temperature. This goal has not been fully accomplished to
 the outbreak of COVID-19, which caused my early departure from China.
-```
+
 #### Products Overview
 
-```
+
 The user is able to scroll through the products of the company. When clicking one of the them,
 Images, description, price and other details are shown.
-```
+
 ### ● User Overview
 
-```
 The user can set his password and details. Here he can also see the recipes saved to his phone.
-```
+
 ![](MijiApp_Diagram.jpg)
 ```
-Figure 2. : Bluetooth Low Energy Technology
+Figure 1. : Activity Flow Diagram
 ```
-Copyright © 2020 Miji Design Germany | Overview
-3
-
 
 ## 3 Subsystems Overview
 
 ### ● About Miji (AboutMijiActivity.java):
 
-```
 This is the starting point for the application. On this View the user is presented with some of the
 products of the company such as Stoves and Hobs. The pictures and descriptions are mostly for
 test purposes as the data is directly saved inside the application and not retrieved from a server.
 A more detailed design would require a API connection with the official MIJI website, where the
-products details are already available.
-```
-```
+products details are already available.  
+  
 On the same view there is a button which Scans for “Bluetooth Low Energy devices”, more
 specifically the “Miji Thermometer”. The button brings the user to the MainBluetoothActivity,
 which internally contains an instance of BleScanner. This is the object responsible for requiring
 permission from the User to activate the BT and start the scanning mode, which finally returns
 the found devices and displays them in List. For test purposes, all BLE devices in the area are
 found but there is also a filter setting which only targets the MAC of the Miji thermometer.
-```
-```
+  
 Once the Thermometer is found, the app can connect to it and automatically start receiving the
 measurement. The process behind it is well documented in the code but basically the
 ControlPeripheralActivity binds itself to the BleAdapterService, which can run in background and
 discover the services offered by thermometer and “subscribe” to their descriptors.
-```
-```
+  
 The Bluetooth package inside the software is also able to log the Services, Characteristics and
 Descriptors of any BLE device. For a more detailed description of the BLE stack it is advised
 to look up the Documentation on the official website :
 https://developer.android.com/guide/topics/connectivity/bluetooth-le
-```
-```
+
+![](images/ble_tech.png)
+
 Figure 2. : Bluetooth Low Energy Technology
-```
 
 ### ● About Recipes (AboutMealsActivity.java):
 
-##### According to my competitor's analysis, the users do not only want an App to control
 
-##### their personal device but also a space from where they can get Inspiration about recipes
+According to my competitor's analysis, the users do not only want an App to control 
+their personal device but also a space from where they can get Inspiration about recipes
+and meals according to their tastes. For this reason I put a big focus on this activity
+component.
 
-##### and meals according to their tastes. For this reason I put a big focus on this activity
+The User is shown a set of four different horizontal lists, implemented as RecyclerViews.
+On the top the user can scroll through different categories. (In a future update the
+feature to customize this list could be easily added). By tapping on a category the app
+jumps to the “BrowseRecipesByCategoryActivity.java”, where a list of recipes is shown
+and the user can pick up its favourite one and save it among its favourites.
 
-##### component.
+The same design is applied to the central layout, which is filled with other RecylerViews
+showing different types of meals with two different styles, respectively Vertical and
+Horizontal View Holders. In particular this set of meals is retrieved randomly from the
+ones available in the databases. This is done to simulate the behaviour of a real application, 
+where the content is often updated.
 
-##### The User is shown a set of four different horizontal lists, represented as RecyclerViews.
-
-##### On the top the user can scroll through different categories. (In a future update the
-
-##### feature to customize this list could be easily added). By tapping on a category the app
-
-##### jumps to the “BrowseRecipesByCategoryActivity.java”, where a list of recipes is shown
-
-##### and the user can pick up its favourite one and save it among its favourites.
-
-##### The same design is applied to the central layout, which is filled with other RecylerViews
-
-##### showing different types of meals with two different styles, respectively Vertical and
-
-##### Horizontal View Holders. In particular this set of meals is retrieved randomly from the
-
-##### ones available in the databases. This is done to simulate the behaviour of a real
-
-##### application, where the content is often updated.
-
-##### A handy drawer layout can be accessed by swiping from left to right or by tapping on
-
-##### the “hamburger” Icon on the top left corner, as it is the norm according to Android
-
-##### documentation. Here the user can choose among Recipes by Category, Nationality, Main
-
-##### Ingredient or also pick a random meal.
+A handy drawer layout can be accessed by swiping from left to right or by tapping on
+the “hamburger” Icon on the top left corner, as it is the norm according to Android
+documentation. Here the user can choose among Recipes by Category, Nationality, Main
+Ingredient or also pick a random meal.
 
 ### ● About User (AboutMeActivity.java):
 
-```
 This Activity consists of two fragments, namely FavoriteRecipesFragment.java and
 UserDetailsFrament.java. In the first one the user can set his Username, Picture and other
 details. By swiping to the right the recipes saved into the phone are shown.
-```
+
 ## 3.1 Disadvantages of the previous application
 
-The old Miji's Application basically has the great advantage to be written in C++, which means the same
+Miji's old Application basically has the great advantage to be written in C++, which means the same
 code is valid for both iOS and Android, but this also presents big disadvantages as non native
 development is by definition not optimal for ones's specific operative system.
 
@@ -165,12 +138,6 @@ Here is a list of the points which should be improved or are not optimal:
 - There are only a few recipes from which the user get inspiration but they are always the same
     and never change. This bores the user and doesn't make him want to use the app.
 - Poor Design. Pictures get distorted when one clicks on them.
-
-```
-Copyright © 2020 Miji Design Germany | Overview
-5
-```
-
 - The App is heavy (267MB). In comparison aKitchen is (3MB). Reason is, the images are not saved
     in a server but in the phone.
 - The App is not “scalable”. The code is commented in Chinese, written with a technology that is
@@ -215,18 +182,15 @@ achieved :
 
 - **Software architectural pattern :**
 
-```
 The whole business logic could be totally implemented inside the Activity without problems but
 a structured arrangement is optimal for debugging and better understanding the workflow of
 the application.
 The data is organized according to the MVVM Pattern. The reason why I chose this approach is
 because of its compartmentalization of the various components in a project.
-```
 - The UI components are kept away from the business logic
 - The business logic is kept away from the database operations
 - It's easy to read (because everything has specific places to live)
 
-```
 As a brief explanation there are different stages where the information flows before arriving to
 the Activity where it is displayed.
 ViewModels can tell other components to retrieve data (for example a repository), and it can
@@ -235,10 +199,10 @@ fragments and basically separates the act of retrieving or updating data sets.
 Repositories are mediators between different data sources, such as persistent models, web
 services, and caches. They are literally hubs for incoming and outgoing data.
 Notice that each component depends only on the component one level below it.
-```
-_Figure 3. : MVVM structure_
-Copyright © 2020 Miji Design Germany | Overview
-7
+
+![](images/mvvm_structure.png)
+Figure 3. : MVVM Structure
+
 
 
 - **Database :**
@@ -255,39 +219,18 @@ Copyright © 2020 Miji Design Germany | Overview
     Activities, doesn't know where if the data comes from the Database or the Network. This
     information is of course logged to the console for debugging
 
-## 7 Project Timeline
 
-###### 星期一 星期二 星期三 星期四 星期五
-
-```
-第 1 个星期 12 月 Recipe overview Recipe overview Recipe overview Recipe overview Recipe overview
-第 2 个星期 12 月 Recipe overview Recipe overview Recipe overview Recipe overview Recipe overview
-第 3 个星期 12 月 Stove control Stove control Stove control Stove control Stove control
-第 4 个星期 12 月 Stove control Stove control Stove control Stove control Stove control
-```
-
-## 8 Screenshots
+## 7 Screenshots
 ![](images/AboutMeScreen.png)
 
 
-```
-Copyright © 2020 Miji Design Germany | Overview
-9
-```
-
-
-## 9 Conclusion
+## 8 Conclusion
 
 It has been a pleasure for me to work at Miji and to challenge my own knowledge about programming
 while at the same time learning about project development and planning by doing. It has indisputably
 been a very valuable experience and I'll be ready to help the ones who are going to take my place in the
 future.
 
-```
 Gianluca Veschi
-```
-```
-Copyright © 2020 Miji Design Germany | Overview
-11
-```
+
 
