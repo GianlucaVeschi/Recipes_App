@@ -268,8 +268,6 @@ Copyright © 2020 Miji Design Germany | Overview
 
 ## 8 Screenshots
 ![](images/AboutMeScreen.png)
-![](images/NavLayoutScreen.jpg)
-![](images/FlagsScreen.jpg)
 
 
 ```
