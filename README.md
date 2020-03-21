@@ -64,7 +64,7 @@ Images, description, price and other details are shown.
 ```
 The user can set his password and details. Here he can also see the recipes saved to his phone.
 ```
-
+![](MijiApp_Diagram.jpg)
 ```
 Figure 2. : Bluetooth Low Energy Technology
 ```
@@ -267,6 +267,10 @@ Copyright © 2020 Miji Design Germany | Overview
 ```
 
 ## 8 Screenshots
+![](images/AboutMeScreen.png)
+![](images/NavLayoutScreen.jpg)
+![](images/FlagsScreen.jpg)
+
 
 ```
 Copyright © 2020 Miji Design Germany | Overview
