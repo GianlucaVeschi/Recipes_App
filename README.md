@@ -92,7 +92,9 @@ https://developer.android.com/guide/topics/connectivity/bluetooth-le
 
 ![](images/ble_tech.png)
 
+```
 Figure 2. : Bluetooth Low Energy Technology
+```
 
 ### ● About Recipes (AboutMealsActivity.java):
 
@@ -201,8 +203,10 @@ services, and caches. They are literally hubs for incoming and outgoing data.
 Notice that each component depends only on the component one level below it.
 
 ![](images/mvvm_structure.png)
-Figure 3. : MVVM Structure
 
+```
+Figure 3. : MVVM Structure
+```
 
 
 - **Database :**
@@ -222,7 +226,9 @@ Figure 3. : MVVM Structure
 
 ## 7 Screenshots
 ![](images/AboutMeScreen.png)
-
+```
+Figure 4 : Bottom Navigation bar
+```
 
 ## 8 Conclusion
 
