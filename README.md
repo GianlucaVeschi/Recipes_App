@@ -240,7 +240,7 @@ future.
 Gianluca Veschi
 
 ## 9 Credits
-CodingWithMitch.com
-CodingInFlow.com
+- CodingWithMitch.com
+- CodingInFlow.com
 
 
